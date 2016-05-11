@@ -9,13 +9,14 @@ public class TabbyController: UIViewController {
     return tabby
   }()
 
-  var controllers: [UIViewController] = []
+  public var controllers: [UIViewController] = [] {
+    didSet {
+      setupConstraints()
+    }
+  }
 
-  public init(controllers: [UIViewController]) {
-    self.controllers = controllers
-    super.init(nibName: nil, bundle: nil)
-
-    setupConstraints()
+  public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+    super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
   }
 
   public required init?(coder aDecoder: NSCoder) {

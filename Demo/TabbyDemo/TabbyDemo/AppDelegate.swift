@@ -4,18 +4,25 @@ import Tabby
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-  var window: UIWindow?
+  lazy var mainController: TabbyController = { [unowned self] in
+    let controller = UITabbyController()
+    controller.controllers = [self.firstNavigation, self.secondController, self.thirdNavigation]
 
-  lazy var navigationController: UINavigationController = { [unowned self] in
-    let controller = UINavigationController(rootViewController: self.viewController)
     return controller
-    }()
+  }()
 
-  lazy var viewController: ViewController = ViewController()
+  lazy var firstNavigation: UINavigationController = UINavigationController(rootViewController: self.firstController)
+  lazy var thirdNavigation: UINavigationController = UINavigationController(rootViewController: self.thirdController)
+
+  lazy var firstController: FirstController = FirstController()
+  lazy var secondController: SecondController = SecondController()
+  lazy var thirdController: ThirdController = ThirdController()
+
+  var window: UIWindow?
 
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
     window = UIWindow(frame: UIScreen.mainScreen().bounds)
-    window?.rootViewController = navigationController
+    window?.rootViewController = mainController
     window?.makeKeyAndVisible()
 
     return true

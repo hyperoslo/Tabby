@@ -43,16 +43,16 @@ public class TabbyBar: UIView {
       button.adjustsImageWhenHighlighted = false
 
       let label = UILabel()
-      label.font = Constant.Font.Tabs.title
-      label.textColor = Constant.Color.TabBar.disabled
+      label.font = Constant.Font.title
+      label.textColor = Constant.Color.disabled
       label.text = controllers[index].title
 
       [button, label].forEach { addSubview($0) }
 
       if index == 1 {
-        button.backgroundColor = Constant.Color.TabBar.background
+        button.backgroundColor = Constant.Color.background
         button.layer.cornerRadius = 5
-        button.prepareShadow(Constant.Color.TabBar.whiteShadow)
+        button.prepareShadow(Constant.Color.whiteShadow)
         button.layer.shadowOffset.height = -10
         button.imageEdgeInsets.bottom = 5
       }
@@ -61,7 +61,7 @@ public class TabbyBar: UIView {
       titles.append(label)
     }
 
-    for (index, image) in Constant.Image.enumerate() {
+    for (index, image) in images.enumerate() {
       guard let image = image else { break }
 
 
@@ -71,7 +71,7 @@ public class TabbyBar: UIView {
         let image = image.imageWithRenderingMode(.AlwaysTemplate)
 
         buttons[index].setImage(image, forState: .Normal)
-        buttons[index].tintColor = Color.TabBar.disabled
+        buttons[index].tintColor = Constant.Color.disabled
       } else if let image = selectedImage[index] {
         selectedIcons.append(image)
 
@@ -79,13 +79,13 @@ public class TabbyBar: UIView {
       }
     }
 
-    prepareShadow(Constant.Color.TabBar.shadow, height: CGFloat(-3))
+    prepareShadow(Constant.Color.shadow, height: CGFloat(-3))
     layer.shadowRadius = 2
     setupConstraints()
     configureController(selectedController)
   }
 
-  required init?(coder aDecoder: NSCoder) {
+  public required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
 
@@ -97,9 +97,9 @@ public class TabbyBar: UIView {
 
   func buttonDidPress(button: UIButton) {
     if selectedIcons.isEmpty {
-      for button in buttons { button.tintColor = Constant.Color.TabBar.disabled }
+      for button in buttons { button.tintColor = Constant.Color.disabled }
 
-      button.tintColor = Constant.Color.TabBar.selected
+      button.tintColor = Constant.Color.selected
     } else {
       for (index, button) in buttons.enumerate() {
         button.setImage(icons[index], forState: .Normal)
@@ -108,10 +108,10 @@ public class TabbyBar: UIView {
       button.setImage(selectedIcons[button.tag], forState: .Normal)
     }
 
-    for label in titles { label.textColor = Constant.Color.TabBar.disabled }
+    for label in titles { label.textColor = Constant.Color.disabled }
 
     if let index = buttons.indexOf(button) where index < titles.count {
-      titles[index].textColor = Constant.Color.TabBar.selected
+      titles[index].textColor = Constant.Color.selected
     }
 
     delegate?.tabbyButtonDidPress(button.tag)

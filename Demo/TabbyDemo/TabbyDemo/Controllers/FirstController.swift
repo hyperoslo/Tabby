@@ -1,7 +1,7 @@
 import UIKit
 import Tabby
 
-class ViewController: UIViewController {
+class FirstController: UIViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
