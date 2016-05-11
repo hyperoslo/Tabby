@@ -105,8 +105,7 @@ public class TabbyBar: UIView {
       titles.append(label)
     }
 
-    //prepareShadow(Constant.Color.shadow, height: CGFloat(-3))
-    layer.shadowRadius = 2
+    prepareShadow(Constant.Color.shadow, height: CGFloat(-2))
     setupConstraints()
     configureController(selectedController)
   }
@@ -132,7 +131,7 @@ public class TabbyBar: UIView {
         NSLayoutConstraint(
           item: button, attribute: .Top,
           relatedBy: .Equal, toItem: self,
-          attribute: .Top, multiplier: 1, constant: -6.5),
+          attribute: .Top, multiplier: 1, constant: label.text == nil ? 0 : -6.5),
 
         NSLayoutConstraint(
           item: button, attribute: .Left,

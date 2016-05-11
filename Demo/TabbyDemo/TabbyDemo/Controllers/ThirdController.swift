@@ -6,5 +6,6 @@ class ThirdController: UIViewController {
     super.viewDidLoad()
 
     view.backgroundColor = UIColor.blueColor()
+    title = "Fish".uppercaseString
   }
 }

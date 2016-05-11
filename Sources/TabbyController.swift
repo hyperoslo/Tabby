@@ -2,7 +2,7 @@ import UIKit
 
 public class TabbyController: UIViewController {
 
-  lazy var tabbyBar: TabbyBar = { [unowned self] in
+  public lazy var tabbyBar: TabbyBar = { [unowned self] in
     let tabby = TabbyBar()
     tabby.translatesAutoresizingMaskIntoConstraints = false
     tabby.delegate = self
@@ -13,6 +13,12 @@ public class TabbyController: UIViewController {
   public var controllers: [(controller: UIViewController, image: UIImage?)] = [] {
     didSet {
       tabbyBar.prepare(controllers)
+    }
+  }
+
+  public var index = 0 {
+    didSet {
+      tabbyBar.selectedController = index
     }
   }
 
@@ -64,7 +70,7 @@ extension TabbyController: TabbyBarDelegate {
     let controller = controllers[index].controller
     controller.view.translatesAutoresizingMaskIntoConstraints = false
 
-    view.addSubview(controller.view)
+    view.insertSubview(controller.view, belowSubview: tabbyBar)
 
     constraint(controller.view, attributes: [.Width, .Top, .Right])
 
