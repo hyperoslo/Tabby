@@ -2,21 +2,29 @@ import UIKit
 
 public class TabbyController: UIViewController {
 
-  lazy var tabbyBar: UIView = {
-    let tabby = UIView()
+  lazy var tabbyBar: TabbyBar = { [unowned self] in
+    let tabby = TabbyBar()
     tabby.translatesAutoresizingMaskIntoConstraints = false
+    tabby.delegate = self
 
     return tabby
   }()
 
   public var controllers: [UIViewController] = [] {
+    willSet {
+      controllers.forEach { $0.view.removeFromSuperview() }
+    }
+
     didSet {
+      controllers.forEach { view.addSubview($0.view) }
       setupConstraints()
     }
   }
 
   public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+
+    view.addSubview(tabbyBar)
   }
 
   public required init?(coder aDecoder: NSCoder) {
@@ -36,6 +44,7 @@ public class TabbyController: UIViewController {
       ])
 
     for controller in controllers {
+      controller.view.translatesAutoresizingMaskIntoConstraints = false
       constraint(controller.view, attributes: [.Width, .Right, .Bottom])
     }
   }

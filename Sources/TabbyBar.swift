@@ -52,7 +52,7 @@ public class TabbyBar: UIView {
       if index == 1 {
         button.backgroundColor = Constant.Color.background
         button.layer.cornerRadius = 5
-        button.prepareShadow(Constant.Color.whiteShadow)
+        //button.prepareShadow(Constant.Color.whiteShadow)
         button.layer.shadowOffset.height = -10
         button.imageEdgeInsets.bottom = 5
       }
@@ -67,19 +67,19 @@ public class TabbyBar: UIView {
 
       icons.append(image)
 
-      if selectedImage.isEmpty {
+      if selected.isEmpty {
         let image = image.imageWithRenderingMode(.AlwaysTemplate)
 
         buttons[index].setImage(image, forState: .Normal)
         buttons[index].tintColor = Constant.Color.disabled
-      } else if let image = selectedImage[index] {
+      } else if let image = selected[index] {
         selectedIcons.append(image)
 
         buttons[index].setImage(icons[index], forState: .Normal)
       }
     }
 
-    prepareShadow(Constant.Color.shadow, height: CGFloat(-3))
+    //prepareShadow(Constant.Color.shadow, height: CGFloat(-3))
     layer.shadowRadius = 2
     setupConstraints()
     configureController(selectedController)
@@ -92,7 +92,8 @@ public class TabbyBar: UIView {
   // MARK: - Action methods
 
   func buttonDidTouchDown(button: UIButton) {
-    button.buttonDown()
+//    button.buttonDown()
+    // TODO: Perform the animation.
   }
 
   func buttonDidPress(button: UIButton) {
