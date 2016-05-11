@@ -25,6 +25,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   var window: UIWindow?
 
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+
+    Tabby.Constant.Color.background = UIColor.whiteColor()
+    Tabby.Constant.Color.selected = UIColor(red:0.22, green:0.81, blue:0.99, alpha:1.00)
+    Tabby.Constant.Color.shadow = UIColor.clearColor()
+    
+    Tabby.Constant.Dimension.height = 44
+
     window = UIWindow(frame: UIScreen.mainScreen().bounds)
     window?.rootViewController = mainController
     window?.makeKeyAndVisible()

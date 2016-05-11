@@ -11,15 +11,22 @@ public struct Constant {
     public static var disabled = UIColor.lightGrayColor()
     public static var enabled = UIColor.whiteColor()
     public static var selected = UIColor.whiteColor()
+    public static var separator = UIColor.lightGrayColor()
+    public static var indicator = Color.selected
     public static var shadow = UIColor.blackColor().colorWithAlphaComponent(0.4)
-  }
-
-  public struct Image {
-    
   }
 
   public struct Dimension {
     public static var width = UIScreen.mainScreen().bounds.width
     public static var height: CGFloat = 50
+
+    public struct Indicator {
+      public static var width: CGFloat = 25
+      public static var height: CGFloat = 4
+    }
+
+    public struct Separator {
+      public static var height: CGFloat = 0.25
+    }
   }
 }

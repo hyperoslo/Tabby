@@ -7,6 +7,22 @@ public protocol TabbyBarDelegate {
 
 public class TabbyBar: UIView {
 
+  public lazy var indicator: UIView = {
+    let view = UIView()
+    view.backgroundColor = Constant.Color.indicator
+    view.translatesAutoresizingMaskIntoConstraints = false
+    
+    return view
+  }()
+
+  public lazy var separator: UIView = {
+    let view = UIView()
+    view.backgroundColor = Constant.Color.separator
+    view.translatesAutoresizingMaskIntoConstraints = false
+
+    return view
+  }()
+
   public var selectedController = 0 {
     didSet {
       configureController(selectedController)
@@ -20,7 +36,11 @@ public class TabbyBar: UIView {
   public var titles: [UILabel] = []
   public var delegate: TabbyBarDelegate?
 
-  var selectedIndex = 0
+  var selectedIndex = 0 {
+    didSet {
+      animateIndicator(selectedIndex)
+    }
+  }
 
   // MARK: - Initializers
 
@@ -28,6 +48,8 @@ public class TabbyBar: UIView {
     super.init(frame: frame)
 
     backgroundColor = Constant.Color.background
+
+    [indicator, separator].forEach { addSubview($0) }
   }
   
   public required init?(coder aDecoder: NSCoder) {
@@ -64,11 +86,18 @@ public class TabbyBar: UIView {
     selectedIndex = button.tag
   }
 
+  // MARK: - Animations
+
+  func animateIndicator(index: Int) {
+    UIView.animateWithDuration(0.7, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0, options: [.CurveEaseIn], animations: {
+      self.indicator.center.x = self.buttons[index].center.x
+      }, completion: nil)
+  }
+
   // MARK: - Helper methods
 
   func configureController(index: Int) {
     guard index < buttons.count else { return }
-
     buttonDidPress(buttons[index])
   }
 
@@ -110,9 +139,39 @@ public class TabbyBar: UIView {
     configureController(selectedController)
   }
 
+  func constraint(subview: UIView, attributes: [NSLayoutAttribute]) {
+    for attribute in attributes {
+      addConstraint(NSLayoutConstraint(
+        item: subview, attribute: attribute,
+        relatedBy: .Equal, toItem: self,
+        attribute: attribute, multiplier: 1, constant: 0)
+      )
+    }
+  }
+
   // MARK: - Constraints
 
   func setupConstraints() {
+    constraint(indicator, attributes: [.Left, .Bottom])
+    constraint(separator, attributes: [.Width, .Top, .Right])
+
+    addConstraints([
+      NSLayoutConstraint(
+        item: indicator, attribute: .Width,
+        relatedBy: .Equal, toItem: nil,
+        attribute: .NotAnAttribute, multiplier: 1, constant: Constant.Dimension.Indicator.width),
+
+      NSLayoutConstraint(
+        item: indicator, attribute: .Height,
+        relatedBy: .Equal, toItem: nil,
+        attribute: .NotAnAttribute, multiplier: 1, constant: Constant.Dimension.Indicator.height),
+
+      NSLayoutConstraint(
+        item: separator, attribute: .Height,
+        relatedBy: .Equal, toItem: nil,
+        attribute: .NotAnAttribute, multiplier: 1, constant: Constant.Dimension.Separator.height)
+      ])
+
     for (index, button) in buttons.enumerate() {
       let label = titles[index]
       let leftOffset = Constant.Dimension.width * CGFloat(index) / CGFloat(buttons.count)

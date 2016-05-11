@@ -22,6 +22,8 @@ public class TabbyController: UIViewController {
     }
   }
 
+  // MARK: - Initializers
+
   public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
 
@@ -32,6 +34,14 @@ public class TabbyController: UIViewController {
 
   public required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
+  }
+
+  // MARK: - View lifecycle
+
+  public override func viewDidAppear(animated: Bool) {
+    super.viewDidAppear(animated)
+
+    tabbyBar.indicator.center.x = tabbyBar.buttons[tabbyBar.selectedIndex].center.x
   }
 
   // MARK: - Constraints
