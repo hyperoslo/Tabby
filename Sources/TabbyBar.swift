@@ -72,14 +72,16 @@ public class TabbyBar: UIView {
     for (index, tuple) in tuples.enumerate() {
       let button = UIButton()
       button.tag = index
+      button.adjustsImageWhenHighlighted = false
+      button.translatesAutoresizingMaskIntoConstraints = false
       button.addTarget(self, action: #selector(buttonDidTouchDown(_:)), forControlEvents: .TouchDown)
       button.addTarget(self, action: #selector(buttonDidPress(_:)), forControlEvents: .TouchUpInside)
-      button.adjustsImageWhenHighlighted = false
 
       let label = UILabel()
+      label.text = tuple.controller.title
       label.font = Constant.Font.title
       label.textColor = Constant.Color.disabled
-      label.text = tuple.controller.title
+      label.translatesAutoresizingMaskIntoConstraints = false
 
       [button, label].forEach { addSubview($0) }
 
@@ -107,27 +109,37 @@ public class TabbyBar: UIView {
       let label = titles[index]
       let leftOffset = Constant.Dimension.width * CGFloat(index) / CGFloat(buttons.count)
 
-      
+      addConstraints([
+        NSLayoutConstraint(
+          item: button, attribute: .Width,
+          relatedBy: .Equal, toItem: self,
+          attribute: .Width, multiplier: 1 / CGFloat(buttons.count), constant: 0),
 
-      constrain(button, label) { button, label in
-        button.width == button.superview!.width / CGFloat(buttons.count)
+        NSLayoutConstraint(
+          item: button, attribute: .Height,
+          relatedBy: .Equal, toItem: self,
+          attribute: .Height, multiplier: 1, constant: 0),
 
-        label.centerX == button.centerX
+        NSLayoutConstraint(
+          item: button, attribute: .Top,
+          relatedBy: .Equal, toItem: self,
+          attribute: .Top, multiplier: 1, constant: -6.5),
 
-        if index == 1 {
-          button.height == button.superview!.height - 1.5
-          button.top == button.superview!.top - 7
+        NSLayoutConstraint(
+          item: button, attribute: .Left,
+          relatedBy: .Equal, toItem: self,
+          attribute: .Left, multiplier: 1, constant: leftOffset),
 
-          label.bottom == label.superview!.bottom - 6
-        } else {
-          button.height == button.superview!.height
-          button.top == button.superview!.top - 6.5
+        NSLayoutConstraint(
+          item: label, attribute: .CenterX,
+          relatedBy: .Equal, toItem: button,
+          attribute: .CenterX, multiplier: 1, constant: 0),
 
-          label.bottom == label.superview!.bottom - 5
-        }
-
-        button.left == button.superview!.left + leftOffset
-      }
+        NSLayoutConstraint(
+          item: label, attribute: .Bottom,
+          relatedBy: .Equal, toItem: self,
+          attribute: .Bottom, multiplier: 1, constant: -5)
+        ])
     }
   }
 }

@@ -6,6 +6,5 @@ class SecondController: UIViewController {
     super.viewDidLoad()
 
     view.backgroundColor = UIColor.redColor()
-    title = "Second"
   }
 }

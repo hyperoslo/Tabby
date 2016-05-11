@@ -3,7 +3,7 @@ import UIKit
 public struct Constant {
 
   public struct Font {
-    public static var title = UIFont.systemFontOfSize(14)
+    public static var title = UIFont.systemFontOfSize(13)
   }
 
   public struct Color {

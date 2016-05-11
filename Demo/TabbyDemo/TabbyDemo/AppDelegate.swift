@@ -15,11 +15,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     return controller
   }()
 
-  lazy var firstNavigation: UINavigationController = UINavigationController(rootViewController: self.firstController)
-  lazy var thirdNavigation: UINavigationController = UINavigationController(rootViewController: self.thirdController)
+  lazy var firstNavigation: UINavigationController = {
+    let controller = UINavigationController(rootViewController: self.firstController)
+    controller.title = "First"
+    
+    return controller
+  }()
+
+  lazy var secondController: SecondController = {
+    let controller = SecondController()
+    controller.title = "Second"
+
+    return controller
+  }()
+
+  lazy var thirdNavigation: UINavigationController = {
+    let controller = UINavigationController(rootViewController: self.thirdController)
+    controller.title = "Third"
+
+    return controller
+  }()
 
   lazy var firstController: FirstController = FirstController()
-  lazy var secondController: SecondController = SecondController()
   lazy var thirdController: ThirdController = ThirdController()
 
   var window: UIWindow?

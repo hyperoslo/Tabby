@@ -7,7 +7,6 @@ class FirstController: UIViewController {
     super.viewDidLoad()
 
     view.backgroundColor = UIColor.orangeColor()
-    title = "First"
   }
 }
 
