@@ -5,7 +5,9 @@ class FirstController: UIViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    view.backgroundColor = UIColor.redColor()
+
+    view.backgroundColor = UIColor.orangeColor()
+    title = "First"
   }
 }
 

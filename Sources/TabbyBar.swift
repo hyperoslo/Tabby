@@ -65,7 +65,7 @@ public class TabbyBar: UIView {
     buttonDidPress(buttons[index])
   }
 
-  func prepareButtons(tuples: [(controller: UIViewController, image: UIImage?)]) {
+  func prepare(tuples: [(controller: UIViewController, image: UIImage?)]) {
     buttons = []
     titles = []
 
@@ -107,25 +107,27 @@ public class TabbyBar: UIView {
       let label = titles[index]
       let leftOffset = Constant.Dimension.width * CGFloat(index) / CGFloat(buttons.count)
 
-//      constrain(button, label) { button, label in
-//        button.width == button.superview!.width / CGFloat(buttons.count)
-//
-//        label.centerX == button.centerX
-//
-//        if index == 1 {
-//          button.height == button.superview!.height - 1.5
-//          button.top == button.superview!.top - 7
-//
-//          label.bottom == label.superview!.bottom - 6
-//        } else {
-//          button.height == button.superview!.height
-//          button.top == button.superview!.top - 6.5
-//
-//          label.bottom == label.superview!.bottom - 5
-//        }
-//
-//        button.left == button.superview!.left + leftOffset
-//      }
+      
+
+      constrain(button, label) { button, label in
+        button.width == button.superview!.width / CGFloat(buttons.count)
+
+        label.centerX == button.centerX
+
+        if index == 1 {
+          button.height == button.superview!.height - 1.5
+          button.top == button.superview!.top - 7
+
+          label.bottom == label.superview!.bottom - 6
+        } else {
+          button.height == button.superview!.height
+          button.top == button.superview!.top - 6.5
+
+          label.bottom == label.superview!.bottom - 5
+        }
+
+        button.left == button.superview!.left + leftOffset
+      }
     }
   }
 }

@@ -11,13 +11,8 @@ public class TabbyController: UIViewController {
   }()
 
   public var controllers: [(controller: UIViewController, image: UIImage?)] = [] {
-    willSet {
-      controllers.forEach { $0.controller.view.removeFromSuperview() }
-    }
-
     didSet {
-      controllers.forEach { view.addSubview($0.controller.view) }
-      setupConstraints()
+      tabbyBar.prepare(controllers)
     }
   }
 
@@ -25,6 +20,8 @@ public class TabbyController: UIViewController {
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
 
     view.addSubview(tabbyBar)
+
+    setupConstraints()
   }
 
   public required init?(coder aDecoder: NSCoder) {
@@ -42,11 +39,6 @@ public class TabbyController: UIViewController {
         relatedBy: .Equal, toItem: view,
         attribute: .Width, multiplier: 1, constant: 0)
       ])
-
-    for tuple in controllers {
-      tuple.controller.view.translatesAutoresizingMaskIntoConstraints = false
-      constraint(tuple.controller.view, attributes: [.Width, .Right, .Bottom])
-    }
   }
 
   // MARK: - Helper methods
@@ -59,5 +51,28 @@ public class TabbyController: UIViewController {
         attribute: attribute, multiplier: 1, constant: 0)
       )
     }
+  }
+}
+
+extension TabbyController: TabbyBarDelegate {
+
+  public func tabbyButtonDidPress(index: Int) {
+    controllers.forEach { $0.controller.view.removeFromSuperview() }
+
+    guard index < controllers.count else { return }
+
+    let controller = controllers[index].controller
+    controller.view.translatesAutoresizingMaskIntoConstraints = false
+
+    view.addSubview(controller.view)
+
+    constraint(controller.view, attributes: [.Width, .Top, .Right])
+
+    view.addConstraints([
+      NSLayoutConstraint(
+        item: controller.view, attribute: .Height,
+        relatedBy: .Equal, toItem: view,
+        attribute: .Height, multiplier: 1, constant: -Constant.Dimension.height)
+      ])
   }
 }

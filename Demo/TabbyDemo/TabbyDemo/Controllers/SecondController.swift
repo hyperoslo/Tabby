@@ -4,6 +4,8 @@ class SecondController: UIViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    view.backgroundColor = UIColor.blueColor()
+
+    view.backgroundColor = UIColor.redColor()
+    title = "Second"
   }
 }

@@ -8,7 +8,7 @@ public struct Constant {
 
   public struct Color {
     public static var background = UIColor.blackColor()
-    public static var disabled = UIColor.whiteColor()
+    public static var disabled = UIColor.lightGrayColor()
     public static var enabled = UIColor.whiteColor()
     public static var selected = UIColor.whiteColor()
     public static var shadow = UIColor.blackColor()

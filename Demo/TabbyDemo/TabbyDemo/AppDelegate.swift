@@ -6,7 +6,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
   lazy var mainController: TabbyController = { [unowned self] in
     let controller = TabbyController()
-    controller.controllers = [self.firstNavigation, self.secondController, self.thirdNavigation]
+    controller.controllers = [
+      (self.firstNavigation, nil),
+      (self.secondController, nil),
+      (self.thirdNavigation, nil)
+    ]
 
     return controller
   }()
