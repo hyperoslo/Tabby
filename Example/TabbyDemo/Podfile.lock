@@ -1,0 +1,16 @@
+PODS:
+  - Tabby (0.1.0)
+
+DEPENDENCIES:
+  - Tabby (from `../../`)
+
+EXTERNAL SOURCES:
+  Tabby:
+    :path: ../../
+
+SPEC CHECKSUMS:
+  Tabby: 5ffbd92b76f0562c9e9216addd147bb3b6eee08f
+
+PODFILE CHECKSUM: 969b89b5cc63f36e763767e64effe35a9e7e51d7
+
+COCOAPODS: 1.0.0.beta.6
