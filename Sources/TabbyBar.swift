@@ -19,7 +19,6 @@ public class TabbyBar: UIView {
     }
   }
 
-  public var controllers: [UIViewController]
   public var icons: [UIImage] = []
   public var selectedIcons: [UIImage] = []
   public var buttons: [UIButton] = []
@@ -27,67 +26,6 @@ public class TabbyBar: UIView {
   public var delegate: TabbyBarDelegate?
 
   var selectedIndex = 0
-
-  public init(controllers: [UIViewController], images: [UIImage?], selected: [UIImage?] = []) {
-    self.controllers = controllers
-
-    super.init(frame: CGRectZero)
-
-    guard controllers.count == images.count else { return }
-
-    for index in 0..<controllers.count {
-      let button = UIButton()
-      button.tag = index
-      button.addTarget(self, action: #selector(buttonDidTouchDown(_:)), forControlEvents: .TouchDown)
-      button.addTarget(self, action: #selector(buttonDidPress(_:)), forControlEvents: .TouchUpInside)
-      button.adjustsImageWhenHighlighted = false
-
-      let label = UILabel()
-      label.font = Constant.Font.title
-      label.textColor = Constant.Color.disabled
-      label.text = controllers[index].title
-
-      [button, label].forEach { addSubview($0) }
-
-      if index == 1 {
-        button.backgroundColor = Constant.Color.background
-        button.layer.cornerRadius = 5
-        //button.prepareShadow(Constant.Color.whiteShadow)
-        button.layer.shadowOffset.height = -10
-        button.imageEdgeInsets.bottom = 5
-      }
-
-      buttons.append(button)
-      titles.append(label)
-    }
-
-    for (index, image) in images.enumerate() {
-      guard let image = image else { break }
-
-
-      icons.append(image)
-
-      if selected.isEmpty {
-        let image = image.imageWithRenderingMode(.AlwaysTemplate)
-
-        buttons[index].setImage(image, forState: .Normal)
-        buttons[index].tintColor = Constant.Color.disabled
-      } else if let image = selected[index] {
-        selectedIcons.append(image)
-
-        buttons[index].setImage(icons[index], forState: .Normal)
-      }
-    }
-
-    //prepareShadow(Constant.Color.shadow, height: CGFloat(-3))
-    layer.shadowRadius = 2
-    setupConstraints()
-    configureController(selectedController)
-  }
-
-  public required init?(coder aDecoder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
-  }
 
   // MARK: - Action methods
 
@@ -119,6 +57,49 @@ public class TabbyBar: UIView {
     selectedIndex = button.tag
   }
 
+  // MARK: - Helper methods
+
+  func configureController(index: Int) {
+    guard index < buttons.count else { return }
+
+    buttonDidPress(buttons[index])
+  }
+
+  func prepareButtons(tuples: [(controller: UIViewController, image: UIImage?)]) {
+    buttons = []
+    titles = []
+
+    for (index, tuple) in tuples.enumerate() {
+      let button = UIButton()
+      button.tag = index
+      button.addTarget(self, action: #selector(buttonDidTouchDown(_:)), forControlEvents: .TouchDown)
+      button.addTarget(self, action: #selector(buttonDidPress(_:)), forControlEvents: .TouchUpInside)
+      button.adjustsImageWhenHighlighted = false
+
+      let label = UILabel()
+      label.font = Constant.Font.title
+      label.textColor = Constant.Color.disabled
+      label.text = tuple.controller.title
+
+      [button, label].forEach { addSubview($0) }
+
+      buttons.append(button)
+      titles.append(label)
+
+      if let image = tuple.image {
+        icons.append(image)
+
+        button.setImage(image.imageWithRenderingMode(.AlwaysTemplate), forState: .Normal)
+        button.tintColor = Constant.Color.disabled
+      }
+    }
+
+    //prepareShadow(Constant.Color.shadow, height: CGFloat(-3))
+    layer.shadowRadius = 2
+    setupConstraints()
+    configureController(selectedController)
+  }
+
   // MARK: - Constraints
 
   func setupConstraints() {
@@ -146,13 +127,5 @@ public class TabbyBar: UIView {
 //        button.left == button.superview!.left + leftOffset
 //      }
     }
-  }
-  
-  // MARK: - Helper methods
-  
-  func configureController(index: Int) {
-    guard index < buttons.count else { return }
-    
-    buttonDidPress(buttons[index])
   }
 }

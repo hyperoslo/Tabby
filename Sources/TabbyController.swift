@@ -10,13 +10,13 @@ public class TabbyController: UIViewController {
     return tabby
   }()
 
-  public var controllers: [UIViewController] = [] {
+  public var controllers: [(controller: UIViewController, image: UIImage?)] = [] {
     willSet {
-      controllers.forEach { $0.view.removeFromSuperview() }
+      controllers.forEach { $0.controller.view.removeFromSuperview() }
     }
 
     didSet {
-      controllers.forEach { view.addSubview($0.view) }
+      controllers.forEach { view.addSubview($0.controller.view) }
       setupConstraints()
     }
   }
@@ -43,9 +43,9 @@ public class TabbyController: UIViewController {
         attribute: .Width, multiplier: 1, constant: 0)
       ])
 
-    for controller in controllers {
-      controller.view.translatesAutoresizingMaskIntoConstraints = false
-      constraint(controller.view, attributes: [.Width, .Right, .Bottom])
+    for tuple in controllers {
+      tuple.controller.view.translatesAutoresizingMaskIntoConstraints = false
+      constraint(tuple.controller.view, attributes: [.Width, .Right, .Bottom])
     }
   }
 
