@@ -1,8 +1,8 @@
 import UIKit
 
-public protocol TabBarViewDelegate {
+public protocol TabbyBarDelegate {
 
-  func buttonDidPress(index: Int)
+  func tabbyButtonDidPress(index: Int)
 }
 
 public class TabbyBar: UIView {
@@ -24,7 +24,7 @@ public class TabbyBar: UIView {
   public var selectedIcons: [UIImage] = []
   public var buttons: [UIButton] = []
   public var titles: [UILabel] = []
-  public var delegate: TabBarViewDelegate?
+  public var delegate: TabbyBarDelegate?
 
   var selectedIndex = 0
 
@@ -43,16 +43,16 @@ public class TabbyBar: UIView {
       button.adjustsImageWhenHighlighted = false
 
       let label = UILabel()
-      label.font = Font.Tabs.title
-      label.textColor = Color.TabBar.disabled
+      label.font = Constant.Font.Tabs.title
+      label.textColor = Constant.Color.TabBar.disabled
       label.text = controllers[index].title
 
       [button, label].forEach { addSubview($0) }
 
       if index == 1 {
-        button.backgroundColor = Color.TabBar.background
+        button.backgroundColor = Constant.Color.TabBar.background
         button.layer.cornerRadius = 5
-        button.prepareShadow(Color.TabBar.whiteShadow)
+        button.prepareShadow(Constant.Color.TabBar.whiteShadow)
         button.layer.shadowOffset.height = -10
         button.imageEdgeInsets.bottom = 5
       }
@@ -61,7 +61,7 @@ public class TabbyBar: UIView {
       titles.append(label)
     }
 
-    for (index, image) in Image.enumerate() {
+    for (index, image) in Constant.Image.enumerate() {
       guard let image = image else { break }
 
 
@@ -79,7 +79,7 @@ public class TabbyBar: UIView {
       }
     }
 
-    prepareShadow(Color.TabBar.shadow, height: CGFloat(-3))
+    prepareShadow(Constant.Color.TabBar.shadow, height: CGFloat(-3))
     layer.shadowRadius = 2
     setupConstraints()
     configureController(selectedController)
@@ -97,9 +97,9 @@ public class TabbyBar: UIView {
 
   func buttonDidPress(button: UIButton) {
     if selectedIcons.isEmpty {
-      for button in buttons { button.tintColor = Color.TabBar.disabled }
+      for button in buttons { button.tintColor = Constant.Color.TabBar.disabled }
 
-      button.tintColor = Color.TabBar.selected
+      button.tintColor = Constant.Color.TabBar.selected
     } else {
       for (index, button) in buttons.enumerate() {
         button.setImage(icons[index], forState: .Normal)
@@ -108,13 +108,13 @@ public class TabbyBar: UIView {
       button.setImage(selectedIcons[button.tag], forState: .Normal)
     }
 
-    for label in titles { label.textColor = Color.TabBar.disabled }
+    for label in titles { label.textColor = Constant.Color.TabBar.disabled }
 
     if let index = buttons.indexOf(button) where index < titles.count {
-      titles[index].textColor = Color.TabBar.selected
+      titles[index].textColor = Constant.Color.TabBar.selected
     }
 
-    delegate?.buttonDidPress(button.tag)
+    delegate?.tabbyButtonDidPress(button.tag)
     selectedIndex = button.tag
   }
 
@@ -123,7 +123,7 @@ public class TabbyBar: UIView {
   func setupConstraints() {
     for (index, button) in buttons.enumerate() {
       let label = titles[index]
-      let leftOffset = Dimensions.width * CGFloat(index) / CGFloat(buttons.count)
+      let leftOffset = Constant.Dimension.width * CGFloat(index) / CGFloat(buttons.count)
 
 //      constrain(button, label) { button, label in
 //        button.width == button.superview!.width / CGFloat(buttons.count)

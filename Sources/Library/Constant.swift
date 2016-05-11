@@ -1,6 +1,6 @@
 import UIKit
 
-public struct Configure {
+public struct Constant {
 
   public struct Font {
 
