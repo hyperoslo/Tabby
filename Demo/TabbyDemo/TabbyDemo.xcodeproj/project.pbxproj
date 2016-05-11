@@ -67,8 +67,8 @@
 		D5C7F7421C3BC9CE008CDDBA /* TabbyDemo */ = {
 			isa = PBXGroup;
 			children = (
-				D5C7F7561C3BCA1E008CDDBA /* Resources */,
 				D5C7F7581C3BCA1E008CDDBA /* Sources */,
+				D5C7F7561C3BCA1E008CDDBA /* Resources */,
 				D5C7F7551C3BC9EA008CDDBA /* Supporting Files */,
 			);
 			path = TabbyDemo;

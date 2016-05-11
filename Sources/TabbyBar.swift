@@ -5,7 +5,7 @@ public protocol TabBarViewDelegate {
   func buttonDidPress(index: Int)
 }
 
-public class TabBarView: UIView {
+public class TabbyBar: UIView {
 
   lazy var backgroundView: UIView = {
     let view = UIView()
