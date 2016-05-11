@@ -7,11 +7,6 @@ public protocol TabbyBarDelegate {
 
 public class TabbyBar: UIView {
 
-  lazy var backgroundView: UIView = {
-    let view = UIView()
-    return view
-  }()
-
   public var selectedController = 0 {
     didSet {
       configureController(selectedController)
@@ -26,6 +21,18 @@ public class TabbyBar: UIView {
   public var delegate: TabbyBarDelegate?
 
   var selectedIndex = 0
+
+  // MARK: - Initializers
+
+  public override init(frame: CGRect) {
+    super.init(frame: frame)
+
+    backgroundColor = Constant.Color.background
+  }
+  
+  public required init?(coder aDecoder: NSCoder) {
+    fatalError("init(coder:) has not been implemented")
+  }
 
   // MARK: - Action methods
 
@@ -68,6 +75,7 @@ public class TabbyBar: UIView {
   func prepare(tuples: [(controller: UIViewController, image: UIImage?)]) {
     buttons = []
     titles = []
+    icons = []
 
     for (index, tuple) in tuples.enumerate() {
       let button = UIButton()
@@ -83,17 +91,18 @@ public class TabbyBar: UIView {
       label.textColor = Constant.Color.disabled
       label.translatesAutoresizingMaskIntoConstraints = false
 
+      if let image = tuple.image {
+        let icon = image.imageWithRenderingMode(.AlwaysTemplate)
+        icons.append(icon)
+
+        button.setImage(icon, forState: .Normal)
+        button.tintColor = Constant.Color.disabled
+      }
+
       [button, label].forEach { addSubview($0) }
 
       buttons.append(button)
       titles.append(label)
-
-      if let image = tuple.image {
-        icons.append(image)
-
-        button.setImage(image.imageWithRenderingMode(.AlwaysTemplate), forState: .Normal)
-        button.tintColor = Constant.Color.disabled
-      }
     }
 
     //prepareShadow(Constant.Color.shadow, height: CGFloat(-3))

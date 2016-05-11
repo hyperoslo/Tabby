@@ -36,8 +36,8 @@ public class TabbyController: UIViewController {
     view.addConstraints([
       NSLayoutConstraint(
         item: tabbyBar, attribute: .Height,
-        relatedBy: .Equal, toItem: view,
-        attribute: .Width, multiplier: 1, constant: 0)
+        relatedBy: .Equal, toItem: nil,
+        attribute: .NotAnAttribute, multiplier: 1, constant: Constant.Dimension.height)
       ])
   }
 

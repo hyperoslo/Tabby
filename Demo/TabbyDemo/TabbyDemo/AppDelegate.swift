@@ -7,9 +7,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   lazy var mainController: TabbyController = { [unowned self] in
     let controller = TabbyController()
     controller.controllers = [
-      (self.firstNavigation, nil),
-      (self.secondController, nil),
-      (self.thirdNavigation, nil)
+      (self.firstNavigation, UIImage(named: "cow")),
+      (self.secondController, UIImage(named: "donut")),
+      (self.thirdNavigation, UIImage(named: "fish"))
     ]
 
     return controller
@@ -17,21 +17,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
   lazy var firstNavigation: UINavigationController = {
     let controller = UINavigationController(rootViewController: self.firstController)
-    controller.title = "First"
+    controller.title = "Cows"
     
     return controller
   }()
 
   lazy var secondController: SecondController = {
     let controller = SecondController()
-    controller.title = "Second"
+    controller.title = "Donuts"
 
     return controller
   }()
 
   lazy var thirdNavigation: UINavigationController = {
     let controller = UINavigationController(rootViewController: self.thirdController)
-    controller.title = "Third"
+    controller.title = "Fish"
 
     return controller
   }()
