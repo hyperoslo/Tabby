@@ -11,10 +11,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     return controller
     }()
 
-  lazy var viewController: ViewController = {
-    let controller = ViewController()
-    return controller
-    }()
+  lazy var viewController: ViewController = ViewController()
 
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
     window = UIWindow(frame: UIScreen.mainScreen().bounds)
