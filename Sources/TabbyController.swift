@@ -63,9 +63,10 @@ public class TabbyController: UIViewController {
 extension TabbyController: TabbyBarDelegate {
 
   public func tabbyButtonDidPress(index: Int) {
-    controllers.forEach { $0.controller.view.removeFromSuperview() }
-
     guard index < controllers.count else { return }
+    guard !view.subviews.contains(controllers[index].controller.view) else { return }
+
+    controllers.forEach { $0.controller.view.removeFromSuperview() }
 
     let controller = controllers[index].controller
     controller.view.translatesAutoresizingMaskIntoConstraints = false

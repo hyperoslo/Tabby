@@ -11,7 +11,7 @@ public struct Constant {
     public static var disabled = UIColor.lightGrayColor()
     public static var enabled = UIColor.whiteColor()
     public static var selected = UIColor.whiteColor()
-    public static var shadow = UIColor.blackColor().colorWithAlphaComponent(0.2)
+    public static var shadow = UIColor.blackColor().colorWithAlphaComponent(0.4)
   }
 
   public struct Image {
