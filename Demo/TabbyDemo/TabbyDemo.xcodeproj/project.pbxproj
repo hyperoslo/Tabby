@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		298F6CAD1CE4A9BE00F2558F /* GeneralController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298F6CAC1CE4A9BE00F2558F /* GeneralController.swift */; };
 		29E9FD311CE31E2C003F9384 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E9FD301CE31E2C003F9384 /* AppDelegate.swift */; };
 		29E9FD341CE31E41003F9384 /* FirstController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E9FD331CE31E41003F9384 /* FirstController.swift */; };
 		29E9FD361CE31E4D003F9384 /* SecondController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E9FD351CE31E4D003F9384 /* SecondController.swift */; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		298F6CAC1CE4A9BE00F2558F /* GeneralController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneralController.swift; sourceTree = "<group>"; };
 		29E9FD301CE31E2C003F9384 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		29E9FD331CE31E41003F9384 /* FirstController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstController.swift; sourceTree = "<group>"; };
 		29E9FD351CE31E4D003F9384 /* SecondController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecondController.swift; sourceTree = "<group>"; };
@@ -48,6 +50,7 @@
 				29E9FD331CE31E41003F9384 /* FirstController.swift */,
 				29E9FD351CE31E4D003F9384 /* SecondController.swift */,
 				29E9FD371CE31E55003F9384 /* ThirdController.swift */,
+				298F6CAC1CE4A9BE00F2558F /* GeneralController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -239,6 +242,7 @@
 				29E9FD361CE31E4D003F9384 /* SecondController.swift in Sources */,
 				29E9FD341CE31E41003F9384 /* FirstController.swift in Sources */,
 				29E9FD311CE31E2C003F9384 /* AppDelegate.swift in Sources */,
+				298F6CAD1CE4A9BE00F2558F /* GeneralController.swift in Sources */,
 				29E9FD381CE31E55003F9384 /* ThirdController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
