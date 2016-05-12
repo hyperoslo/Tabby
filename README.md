@@ -1,9 +1,15 @@
 # Tabby
 
-[![Version](https://img.shields.io/cocoapods/v/Tabby.svg?style=flat)](http://cocoadocs.org/docsets/Tabby)
-[![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
-[![License](https://img.shields.io/cocoapods/l/Tabby.svg?style=flat)](http://cocoadocs.org/docsets/Tabby)
-[![Platform](https://img.shields.io/cocoapods/p/Tabby.svg?style=flat)](http://cocoadocs.org/docsets/Tabby)
+<div align = "center">
+<br>
+<a href="https://github.com/Carthage/Carthage" target="blank"><img src="https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat" /></a>
+<a href="http://cocoadocs.org/docsets/Tabby" target="blank"><img src="https://img.shields.io/cocoapods/v/Tabby.svg?style=flat" /></a>
+<a href="http://cocoadocs.org/docsets/Tabby" target="blank"><img src="https://img.shields.io/cocoapods/l/Tabby.svg?style=flat" /></a>
+<a href="http://cocoadocs.org/docsets/Tabby" target="blank"><img src="https://img.shields.io/cocoapods/p/Tabby.svg?style=flat" /></a>
+<a href="http://cocoadocs.org/docsets/Tabby" target="blank"><img src="https://img.shields.io/cocoapods/metrics/doc-percent/Tabby.svg?style=flat" /></a>
+<img src="https://img.shields.io/badge/%20in-swift%202.2-orange.svg" />
+<br><br>
+</div>
 
 ## Description
 
