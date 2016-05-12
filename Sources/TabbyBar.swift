@@ -67,8 +67,15 @@ public class TabbyBar: UIView {
   // MARK: - Action methods
 
   func buttonDidTouchDown(button: UIButton) {
-//    button.buttonDown()
-    // TODO: Perform the animation.
+    UIView.animateWithDuration(0.1, animations: {
+      button.transform = CGAffineTransformMakeScale(0.8, 0.8)
+    })
+  }
+
+  func buttonDidCancel(button: UIButton) {
+    UIView.animateWithDuration(0.2, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0, options: [.CurveEaseInOut], animations: {
+      button.transform = CGAffineTransformIdentity
+      }, completion: nil)
   }
 
   func buttonDidPress(button: UIButton) {
@@ -133,6 +140,9 @@ public class TabbyBar: UIView {
       button.adjustsImageWhenHighlighted = false
       button.translatesAutoresizingMaskIntoConstraints = false
       button.addTarget(self, action: #selector(buttonDidTouchDown(_:)), forControlEvents: .TouchDown)
+      button.addTarget(self, action: #selector(buttonDidTouchDown(_:)), forControlEvents: .TouchDragEnter)
+      button.addTarget(self, action: #selector(buttonDidCancel(_:)), forControlEvents: .TouchCancel)
+      button.addTarget(self, action: #selector(buttonDidCancel(_:)), forControlEvents: .TouchDragExit)
       button.addTarget(self, action: #selector(buttonDidPress(_:)), forControlEvents: .TouchUpInside)
 
       let label = UILabel()

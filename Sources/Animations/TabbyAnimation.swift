@@ -16,7 +16,7 @@ public struct TabbyAnimation {
         }, completion: { _ in
           UIView.animateWithDuration(0.4, delay: 0, usingSpringWithDamping: 0.4,
             initialSpringVelocity: 0, options: [.CurveEaseInOut], animations: {
-            view.transform = CGAffineTransformMakeScale(1, 1)
+            view.transform = CGAffineTransformIdentity
             }, completion: nil)
       })
     case .Flip:

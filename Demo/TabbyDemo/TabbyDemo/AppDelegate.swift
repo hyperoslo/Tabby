@@ -13,7 +13,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     ]
 
     controller.animations = [
-      TabbyAnimation.Kind.PushDown,
+      TabbyAnimation.Kind.Flip,
       TabbyAnimation.Kind.Morph,
       TabbyAnimation.Kind.Swing
     ]
