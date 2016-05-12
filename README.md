@@ -41,7 +41,7 @@ A part from the typical constants, you'll be able to change the translucency, th
 ```swift
 controller.translucent = true
 controller.showSeparator = false
-
+controller.showIndicator = false
 controller.animations = [
   TabbyAnimation.Kind.Flip,
   TabbyAnimation.Kind.Morph,
