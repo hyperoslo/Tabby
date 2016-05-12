@@ -1,11 +1,11 @@
 import UIKit
 
-class ThirdController: UIViewController {
+class ThirdController: GeneralController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    view.backgroundColor = UIColor.blueColor()
     title = "Fish".uppercaseString
+    titleLabel.text = "Fish... Am I right?"
   }
 }

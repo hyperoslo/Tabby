@@ -12,6 +12,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       (self.thirdNavigation, UIImage(named: "fish"))
     ]
 
+    controller.translucent = true
     controller.animations = [
       TabbyAnimation.Kind.Flip,
       TabbyAnimation.Kind.Morph,

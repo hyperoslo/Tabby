@@ -12,7 +12,9 @@ class GeneralController: UIViewController {
   lazy var titleLabel: UILabel = {
     let label = UILabel()
     label.numberOfLines = 0
-    label.font = UIFont.boldSystemFontOfSize(15)
+    label.font = UIFont.boldSystemFontOfSize(16)
+    label.textColor = UIColor.lightGrayColor()
+    label.textAlignment = .Center
 
     return label
   }()
@@ -20,7 +22,12 @@ class GeneralController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    [imageView, titleLabel].forEach { view.addSubview($0) }
+    view.backgroundColor = UIColor.whiteColor()
+
+    [imageView, titleLabel].forEach {
+      $0.translatesAutoresizingMaskIntoConstraints = false
+      view.addSubview($0)
+    }
 
     setupConstraints()
   }
@@ -31,17 +38,17 @@ class GeneralController: UIViewController {
     constraint(titleLabel, attributes: [.CenterX, .CenterY])
     constraint(imageView, attributes: [.CenterX])
 
-    view.addConstraint(NSLayoutConstraint(
-      item: titleLabel, attribute: .Width,
-      relatedBy: .Equal, toItem: self,
-      attribute: .Width, multiplier: 1, constant: -200)
-    )
+    view.addConstraints([
+      NSLayoutConstraint(
+        item: imageView, attribute: .Bottom,
+        relatedBy: .Equal, toItem: titleLabel,
+        attribute: .Top, multiplier: 1, constant: -200),
 
-    view.addConstraint(NSLayoutConstraint(
-      item: imageView, attribute: .Bottom,
-      relatedBy: .Equal, toItem: titleLabel,
-      attribute: .Top, multiplier: 1, constant: -200)
-    )
+      NSLayoutConstraint(
+        item: titleLabel, attribute: .Width,
+        relatedBy: .Equal, toItem: view,
+        attribute: .Width, multiplier: 1, constant: -200)
+    ])
   }
 
   // MARK: - Helper methods
@@ -50,7 +57,7 @@ class GeneralController: UIViewController {
     for attribute in attributes {
       view.addConstraint(NSLayoutConstraint(
         item: subview, attribute: attribute,
-        relatedBy: .Equal, toItem: self,
+        relatedBy: .Equal, toItem: view,
         attribute: attribute, multiplier: 1, constant: 0)
       )
     }

@@ -1,10 +1,10 @@
 import UIKit
 
-class SecondController: UIViewController {
+class SecondController: GeneralController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    view.backgroundColor = UIColor.redColor()
+    titleLabel.text = "Who doesn't like some donuts?"
   }
 }
