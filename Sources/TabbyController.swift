@@ -1,12 +1,21 @@
 import UIKit
 
+/**
+ The protocol that will inform you when an item of the tab bar is tapped.
+ */
 public protocol TabbyDelegate {
 
   func tabbyDidPress(button: UIButton, _ label: UILabel)
 }
 
+/**
+ TabbyController is the controller that will contain all the other controllers.
+ */
 public class TabbyController: UIViewController {
 
+  /**
+   The actual tab bar that will contain the buttons, indicator, separator, etc.
+   */
   public lazy var tabbyBar: TabbyBar = { [unowned self] in
     let tabby = TabbyBar()
     tabby.translatesAutoresizingMaskIntoConstraints = false
@@ -15,18 +24,32 @@ public class TabbyController: UIViewController {
     return tabby
   }()
 
+  /**
+   An array of tuples with multiple parameters that will create and build the tab bar.
+   
+   For the tuple:
+
+   - Parameter controller: The actual controller, can be any.
+   - Parameter kind: The image that will appear in the tab bar.
+   */
   public var controllers: [(controller: UIViewController, image: UIImage?)] = [] {
     didSet {
       tabbyBar.prepare(controllers)
     }
   }
 
-  public var index = 0 {
+  /**
+   The property to set the current tab bar index.
+   */
+  public var setIndex = 0 {
     didSet {
-      tabbyBar.selectedController = index
+      tabbyBar.selectedController = setIndex
     }
   }
 
+  /**
+   Weather the tab bar is translucent or not, this will make you to have to care about the offsets in your controller.
+   */
   public var translucent: Bool = false {
     didSet {
       let controller = controllers[tabbyBar.selectedIndex].controller
@@ -38,12 +61,18 @@ public class TabbyController: UIViewController {
     }
   }
 
+  /**
+   Weather or not it should show the indicator or not to show in which tab the user is in.
+   */
   public var showIndicator: Bool = true {
     didSet {
       tabbyBar.indicator.alpha = showIndicator ? 1 : 0
     }
   }
 
+  /**
+   Weather or not it should display a separator or a shadow.
+   */
   public var showSeparator: Bool = true {
     didSet {
       tabbyBar.separator.alpha = showSeparator ? 1 : 0
@@ -51,16 +80,25 @@ public class TabbyController: UIViewController {
     }
   }
 
+  /**
+   The animations that the tab bar will use when tapping the items.
+   */
   public var animations: [TabbyAnimation.Kind] = [] {
     didSet {
       tabbyBar.animations = animations
     }
   }
 
+  /**
+   The delegate that will tell you when a tab bar is tapped.
+   */
   public var delegate: TabbyDelegate?
 
   // MARK: - Initializers
 
+  /**
+   Initialier.
+   */
   public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
 
@@ -69,12 +107,18 @@ public class TabbyController: UIViewController {
     setupConstraints()
   }
 
+  /**
+   Initializer.
+   */
   public required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
 
   // MARK: - View lifecycle
 
+  /**
+   Did appear.
+   */
   public override func viewDidAppear(animated: Bool) {
     super.viewDidAppear(animated)
 
@@ -120,6 +164,10 @@ public class TabbyController: UIViewController {
 
 extension TabbyController: TabbyBarDelegate {
 
+  /**
+   The delegate method comming from the tab bar.
+   - Parameter index: The index that was just tapped.
+   */
   public func tabbyButtonDidPress(index: Int) {
     guard index < controllers.count else { return }
 
