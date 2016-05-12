@@ -1,5 +1,7 @@
 # Tabby
 
+// TODO: Add the image here.
+
 <div align = "center">
 <br>
 <a href="https://github.com/Carthage/Carthage" target="blank"><img src="https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat" /></a>
@@ -32,7 +34,7 @@ And there you have it, your controller with different images set for you.
 
 #### Customization
 
-As stated before, there are lots of customization points in **Tabby**, you can find the [constants](https://www.github.com) file here, with fonts, colors and animations.
+As stated before, there are lots of customization points in **Tabby**, you can find the [constants](https://github.com/hyperoslo/Tabby/blob/master/Sources/Library/Constant.swift#L3) file here, with fonts, colors and animations.
 
 A part from the typical constants, you'll be able to change the translucency, the indicator and the separator between the tab and the controller, with the possibility to add a shadow if you want.
 
@@ -49,7 +51,7 @@ controller.animations = [
 
 #### Animations
 
-There are lots of default animations that you can use, but if you are not satisfied with it, you have a delegate method that will inform you when the button was just tapped.
+There are lots of default [animations](https://github.com/hyperoslo/Tabby/blob/master/Sources/Animations/TabbyAnimation.swift#L5) that you can use, but if you are not satisfied with it, you have a delegate method that will inform you when the button was just tapped.
 
 ```swift
 func tabbyButtonDidPress(index: Int)
