@@ -65,6 +65,8 @@ The default animations are:
 Pop, Flip, Morph, Shake, Swing, PushUp, PushDown, None
 ```
 
+Be sure to check our [demo](https://github.com/hyperoslo/Tabby/tree/master/Demo/TabbyDemo) if you have any further questions! :)
+
 ## Installation
 
 **Tabby** is available through [CocoaPods](http://cocoapods.org). To install
