@@ -43,7 +43,7 @@ class GeneralController: UIViewController {
       NSLayoutConstraint(
         item: imageView, attribute: .Bottom,
         relatedBy: .Equal, toItem: titleLabel,
-        attribute: .Top, multiplier: 1, constant: -10),
+        attribute: .Top, multiplier: 1, constant: -20),
 
       NSLayoutConstraint(
         item: imageView, attribute: .Width,
