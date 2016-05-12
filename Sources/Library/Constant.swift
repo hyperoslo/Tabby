@@ -29,4 +29,8 @@ public struct Constant {
       public static var height: CGFloat = 0.25
     }
   }
+
+  public struct Animation {
+    public static var initial: TabbyAnimations.Kind = .Pop
+  }
 }
