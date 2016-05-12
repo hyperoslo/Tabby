@@ -27,6 +27,17 @@ public class TabbyController: UIViewController {
     }
   }
 
+  public var translucent: Bool = false {
+    didSet {
+      let controller = controllers[tabbyBar.selectedIndex].controller
+      controller.view.removeFromSuperview()
+
+      view.insertSubview(controller.view, belowSubview: tabbyBar)
+      tabbyBar.prepareTranslucency(translucent)
+      applyNewConstraints(controller.view)
+    }
+  }
+
   public var delegate: TabbyDelegate?
 
   // MARK: - Initializers
@@ -75,6 +86,17 @@ public class TabbyController: UIViewController {
       )
     }
   }
+
+  func applyNewConstraints(subview: UIView) {
+    constraint(subview, attributes: [.Width, .Top, .Right])
+
+    view.addConstraints([
+      NSLayoutConstraint(
+        item: subview, attribute: .Height,
+        relatedBy: .Equal, toItem: view,
+        attribute: .Height, multiplier: 1, constant: translucent ? 0 : -Constant.Dimension.height)
+      ])
+  }
 }
 
 extension TabbyController: TabbyBarDelegate {
@@ -96,13 +118,6 @@ extension TabbyController: TabbyBarDelegate {
 
     view.insertSubview(controller.view, belowSubview: tabbyBar)
 
-    constraint(controller.view, attributes: [.Width, .Top, .Right])
-
-    view.addConstraints([
-      NSLayoutConstraint(
-        item: controller.view, attribute: .Height,
-        relatedBy: .Equal, toItem: view,
-        attribute: .Height, multiplier: 1, constant: -Constant.Dimension.height)
-      ])
+    applyNewConstraints(controller.view)
   }
 }

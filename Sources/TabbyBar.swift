@@ -7,6 +7,13 @@ public protocol TabbyBarDelegate {
 
 public class TabbyBar: UIView {
 
+  public lazy var translucentView: UIVisualEffectView = {
+    let view = UIVisualEffectView(effect: UIBlurEffect(style: UIBlurEffectStyle.ExtraLight))
+    view.translatesAutoresizingMaskIntoConstraints = false
+
+    return view
+  }()
+
   public lazy var indicator: UIView = {
     let view = UIView()
     view.backgroundColor = Constant.Color.indicator
@@ -99,6 +106,18 @@ public class TabbyBar: UIView {
   func configureController(index: Int) {
     guard index < buttons.count else { return }
     buttonDidPress(buttons[index])
+  }
+
+  func prepareTranslucency(translucent: Bool) {
+    translucentView.removeFromSuperview()
+
+    if translucent {
+      insertSubview(translucentView, atIndex: 0)
+      constraint(translucentView, attributes: [.Width, .Height, .Top, .Left])
+      backgroundColor = UIColor.clearColor()
+    } else {
+      backgroundColor = Constant.Color.background
+    }
   }
 
   func prepare(tuples: [(controller: UIViewController, image: UIImage?)]) {
