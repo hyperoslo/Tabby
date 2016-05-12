@@ -17,6 +17,8 @@
 
 **Tabby** is the new solution for your tab bar. It's a full substitution for those UITabBarControllers, UITabBars and UITabBarItems that are not customizable at all. **Tabby** on the other hand is fully customizable and it has the easiness you would expect from any of our libraries.
 
+// TODO: Add a gif here.
+
 ## Usage
 
 There are multiple ways to use Tabby, either you subclass it and make a controller out of it, or you create a variable of it and make it your main controller as you would for your UITabBarController.
