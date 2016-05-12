@@ -5,6 +5,7 @@ class GeneralController: UIViewController {
   lazy var imageView: UIImageView = {
     let imageView = UIImageView()
     imageView.contentMode = .ScaleAspectFit
+    imageView.image = UIImage(named: "chef")
 
     return imageView
   }()
@@ -42,7 +43,17 @@ class GeneralController: UIViewController {
       NSLayoutConstraint(
         item: imageView, attribute: .Bottom,
         relatedBy: .Equal, toItem: titleLabel,
-        attribute: .Top, multiplier: 1, constant: -200),
+        attribute: .Top, multiplier: 1, constant: -10),
+
+      NSLayoutConstraint(
+        item: imageView, attribute: .Width,
+        relatedBy: .Equal, toItem: nil,
+        attribute: .NotAnAttribute, multiplier: 1, constant: 100),
+
+      NSLayoutConstraint(
+        item: imageView, attribute: .Height,
+        relatedBy: .Equal, toItem: nil,
+        attribute: .Height, multiplier: 1, constant: 100),
 
       NSLayoutConstraint(
         item: titleLabel, attribute: .Width,
