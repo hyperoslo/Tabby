@@ -2,12 +2,23 @@ import UIKit
 import Morgan
 import Walker
 
+/**
+ TabbyAnimation is the animation creator.
+ */
 public struct TabbyAnimation {
 
+  /**
+   The animation that will perform in the tap for the tab bar.
+   */
   public enum Kind {
     case Pop, Flip, Morph, Shake, Swing, PushUp, PushDown, None
   }
 
+  /**
+   This function will animate based on the default kind from the TabbyAnimation.
+   - Parameter view: The view that will be animated.
+   - Parameter kind: The kind of the animation from the TabbyAnimation struct.
+   */
   public static func animate(view: UIView, kind: Kind) {
     switch kind {
     case .Pop:
