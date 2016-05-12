@@ -1,12 +1,21 @@
 import UIKit
 
+/**
+ The tab bar delegate that will tell you when a button in the tab bar was pressed.
+ */
 public protocol TabbyBarDelegate {
 
   func tabbyButtonDidPress(index: Int)
 }
 
+/**
+ The actual tab bar.
+ */
 public class TabbyBar: UIView {
 
+  /**
+   A translucent view that will simulate a blur effect for your tab bar.
+   */
   public lazy var translucentView: UIVisualEffectView = {
     let view = UIVisualEffectView(effect: UIBlurEffect(style: UIBlurEffectStyle.Light))
     view.translatesAutoresizingMaskIntoConstraints = false
@@ -14,6 +23,9 @@ public class TabbyBar: UIView {
     return view
   }()
 
+  /**
+   The indicator that lives in the tab bar telling the user in which tab bar she is currently in.
+   */
   public lazy var indicator: UIView = {
     let view = UIView()
     view.backgroundColor = Constant.Color.indicator
@@ -22,6 +34,9 @@ public class TabbyBar: UIView {
     return view
   }()
 
+  /**
+   The separator between the controller and the tab bar.
+   */
   public lazy var separator: UIView = {
     let view = UIView()
     view.backgroundColor = Constant.Color.separator
@@ -30,6 +45,9 @@ public class TabbyBar: UIView {
     return view
   }()
 
+  /**
+   The selected controller that needs to be displayed.
+   */
   public var selectedController = 0 {
     didSet {
       configureController(selectedController)
@@ -37,11 +55,34 @@ public class TabbyBar: UIView {
     }
   }
 
+  /**
+   The general icons.
+   */
   public var icons: [UIImage] = []
+
+  /**
+   The selected icons, if you don't want tint but want to change completely the icon.
+   */
   public var selectedIcons: [UIImage] = []
+
+  /**
+   The list of buttons of the tab bar.
+   */
   public var buttons: [UIButton] = []
+
+  /**
+   The labels that contain the titles.
+   */
   public var titles: [UILabel] = []
+
+  /**
+   The animations that the icons will have when the button is tapped.
+   */
   public var animations : [TabbyAnimation.Kind] = []
+
+  /**
+   The delegate that will inform when an item was tapped.
+   */
   public var delegate: TabbyBarDelegate?
 
   var selectedIndex = 0 {
@@ -52,6 +93,9 @@ public class TabbyBar: UIView {
 
   // MARK: - Initializers
 
+  /**
+   Initializer
+   */
   public override init(frame: CGRect) {
     super.init(frame: frame)
 
@@ -59,7 +103,10 @@ public class TabbyBar: UIView {
 
     [indicator, separator].forEach { addSubview($0) }
   }
-  
+
+  /**
+   Initializer.
+   */
   public required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
