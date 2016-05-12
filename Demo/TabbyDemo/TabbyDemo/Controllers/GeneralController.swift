@@ -12,7 +12,7 @@ class GeneralController: UIViewController {
   lazy var titleLabel: UILabel = {
     let label = UILabel()
     label.numberOfLines = 0
-    label.font = UIFont.boldSystemFontOfSize(16)
+    label.font = UIFont.boldSystemFontOfSize(18)
     label.textColor = UIColor.lightGrayColor()
     label.textAlignment = .Center
 
