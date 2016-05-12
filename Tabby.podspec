@@ -15,4 +15,5 @@ Pod::Spec.new do |s|
 
   s.requires_arc = true
   s.ios.source_files = 'Sources/**/*'
+  s.dependency 'Morgan'
 end

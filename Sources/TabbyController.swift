@@ -44,6 +44,12 @@ public class TabbyController: UIViewController {
     }
   }
 
+  public var animations: [TabbyAnimation.Kind] = [] {
+    didSet {
+      tabbyBar.animations = animations
+    }
+  }
+
   public var delegate: TabbyDelegate?
 
   // MARK: - Initializers
@@ -113,9 +119,22 @@ extension TabbyController: TabbyBarDelegate {
     let button = tabbyBar.buttons[index]
 
     delegate?.tabbyDidPress(button, tabbyBar.titles[index])
-    TabbyAnimation.animate(button, kind: tabbyBar.animations[index])
+    TabbyAnimation.animate(button, kind: tabbyBar.animations.count != controllers.count
+      ? Constant.Animation.initial : tabbyBar.animations[index])
 
-    guard !view.subviews.contains(controllers[index].controller.view) else { return }
+    guard !view.subviews.contains(controllers[index].controller.view) else {
+      if let navigationController = controllers[index].controller as? UINavigationController {
+        navigationController.popViewControllerAnimated(true)
+      } else {
+        for subview in controllers[index].controller.view.subviews {
+          if let scrollView = subview as? UIScrollView {
+            scrollView.setContentOffset(CGPointZero, animated: true)
+          }
+        }
+      }
+
+      return
+    }
 
     controllers.forEach { $0.controller.view.removeFromSuperview() }
 

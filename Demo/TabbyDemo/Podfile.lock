@@ -1,7 +1,12 @@
 PODS:
-  - Tabby (0.1.0)
+  - Morgan (0.9.1):
+    - Walker
+  - Tabby (0.1.0):
+    - Morgan
+  - Walker (0.9.1)
 
 DEPENDENCIES:
+  - Morgan
   - Tabby (from `../../`)
 
 EXTERNAL SOURCES:
@@ -9,8 +14,10 @@ EXTERNAL SOURCES:
     :path: ../../
 
 SPEC CHECKSUMS:
-  Tabby: 589a2ded61ba8eeaea60ad5f70f91c2157205302
+  Morgan: 9cb6cdfd5eaafcdc98af5c05620cad575ace77de
+  Tabby: 88961cdd310f87dabfa937e456853940a737cb9b
+  Walker: 9a765e7f35adb19ce59079e26d425c1e8c463241
 
-PODFILE CHECKSUM: 4342d04cb342656f0422a5981c4fdd766badfa5b
+PODFILE CHECKSUM: 312b4cf16bc8a8c9f8d71cf2bb3ea69550aa532b
 
 COCOAPODS: 1.0.0

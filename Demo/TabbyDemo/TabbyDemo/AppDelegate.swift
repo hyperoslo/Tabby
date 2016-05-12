@@ -12,7 +12,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       (self.thirdNavigation, UIImage(named: "fish"))
     ]
 
-    controller.tabbyBar.animations[0] = TabbyAnimation.Kind.None
+    controller.animations = [
+      TabbyAnimation.Kind.PushDown,
+      TabbyAnimation.Kind.Morph,
+      TabbyAnimation.Kind.Swing
+    ]
 
     return controller
   }()

@@ -1,9 +1,11 @@
 import UIKit
+import Morgan
+import Walker
 
 public struct TabbyAnimation {
 
   public enum Kind {
-    case Pop, None
+    case Pop, Flip, Morph, Shake, Swing, PushUp, PushDown, None
   }
 
   public static func animate(view: UIView, kind: Kind) {
@@ -17,6 +19,30 @@ public struct TabbyAnimation {
             view.transform = CGAffineTransformMakeScale(1, 1)
             }, completion: nil)
       })
+    case .Flip:
+      view.flip(0.4)
+    case .Morph:
+      view.morph(0.075)
+    case .Swing:
+      view.swing(0.075)
+    case .PushUp:
+      view.pushUp()
+    case .PushDown:
+      view.pushDown()
+    case .Shake:
+      let duration = 0.075
+      let x: CGFloat = 10
+      let y: CGFloat = 0
+
+      Walker.animate(view, duration: duration) {
+        $0.transform = CGAffineTransformMakeTranslation(-x, -y)
+      }.chain(duration: duration) {
+        $0.transform = CGAffineTransformMakeTranslation(x, y)
+      }.chain(duration: duration) {
+        $0.transform = CGAffineTransformMakeTranslation(-x / 2, -y / 2)
+      }.chain(duration: duration) {
+        $0.transform = CGAffineTransformIdentity
+      }
     case .None:
       break
     }
