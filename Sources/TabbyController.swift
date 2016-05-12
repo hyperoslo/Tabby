@@ -1,5 +1,10 @@
 import UIKit
 
+public protocol TabbyDelegate {
+
+  func tabbyDidPress(button: UIButton, _ label: UILabel)
+}
+
 public class TabbyController: UIViewController {
 
   public lazy var tabbyBar: TabbyBar = { [unowned self] in
@@ -21,6 +26,8 @@ public class TabbyController: UIViewController {
       tabbyBar.selectedController = index
     }
   }
+
+  public var delegate: TabbyDelegate?
 
   // MARK: - Initializers
 
@@ -74,6 +81,12 @@ extension TabbyController: TabbyBarDelegate {
 
   public func tabbyButtonDidPress(index: Int) {
     guard index < controllers.count else { return }
+
+    let button = tabbyBar.buttons[index]
+
+    delegate?.tabbyDidPress(button, tabbyBar.titles[index])
+    TabbyAnimations.animate(button, kind: Constant.Animation.initial)
+
     guard !view.subviews.contains(controllers[index].controller.view) else { return }
 
     controllers.forEach { $0.controller.view.removeFromSuperview() }
