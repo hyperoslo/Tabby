@@ -13,7 +13,7 @@ public struct Constant {
     public static var selected = UIColor.whiteColor()
     public static var separator = UIColor.lightGrayColor()
     public static var indicator = Color.selected
-    public static var shadow = UIColor.blackColor().colorWithAlphaComponent(0.4)
+    public static var shadow = UIColor.blackColor().colorWithAlphaComponent(0.1)
   }
 
   public struct Dimension {

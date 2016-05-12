@@ -168,9 +168,11 @@ public class TabbyBar: UIView {
       animations.append(Constant.Animation.initial)
     }
 
-    prepareShadow(Constant.Color.shadow, height: CGFloat(-2))
+    prepareShadow(Constant.Color.shadow, height: CGFloat(-1))
     setupConstraints()
     configureController(selectedController)
+
+    layer.shadowOpacity = 0
   }
 
   func constraint(subview: UIView, attributes: [NSLayoutAttribute]) {

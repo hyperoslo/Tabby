@@ -40,7 +40,14 @@ public class TabbyController: UIViewController {
 
   public var showIndicator: Bool = true {
     didSet {
-      tabbyBar.indicator.alpha = 0
+      tabbyBar.indicator.alpha = showIndicator ? 1 : 0
+    }
+  }
+
+  public var showSeparator: Bool = true {
+    didSet {
+      tabbyBar.separator.alpha = showSeparator ? 1 : 0
+      tabbyBar.layer.shadowOpacity = showSeparator ? 0 : 1
     }
   }
 

@@ -13,6 +13,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     ]
 
     controller.translucent = true
+    controller.showSeparator = false
     controller.animations = [
       TabbyAnimation.Kind.Flip,
       TabbyAnimation.Kind.Morph,
@@ -35,7 +36,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     Tabby.Constant.Color.background = UIColor.whiteColor()
     Tabby.Constant.Color.selected = UIColor(red:0.22, green:0.81, blue:0.99, alpha:1.00)
-    Tabby.Constant.Color.shadow = UIColor.clearColor()
 
     window = UIWindow(frame: UIScreen.mainScreen().bounds)
     window?.rootViewController = mainController
