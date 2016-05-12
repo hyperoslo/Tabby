@@ -11,6 +11,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       (self.secondController, UIImage(named: "donut")),
       (self.thirdNavigation, UIImage(named: "fish"))
     ]
+    controller.translucent = true
 
     return controller
   }()

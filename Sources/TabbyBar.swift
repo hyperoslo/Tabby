@@ -41,6 +41,7 @@ public class TabbyBar: UIView {
   public var selectedIcons: [UIImage] = []
   public var buttons: [UIButton] = []
   public var titles: [UILabel] = []
+  public var animations : [TabbyAnimation.Kind] = []
   public var delegate: TabbyBarDelegate?
 
   var selectedIndex = 0 {

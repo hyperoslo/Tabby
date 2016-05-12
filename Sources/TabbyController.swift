@@ -38,6 +38,12 @@ public class TabbyController: UIViewController {
     }
   }
 
+  public var showIndicator: Bool = true {
+    didSet {
+      tabbyBar.indicator.alpha = 0
+    }
+  }
+
   public var delegate: TabbyDelegate?
 
   // MARK: - Initializers
