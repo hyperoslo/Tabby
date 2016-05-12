@@ -115,7 +115,7 @@ public class TabbyBar: UIView {
     if translucent {
       insertSubview(translucentView, atIndex: 0)
       constraint(translucentView, attributes: [.Width, .Height, .Top, .Left])
-      backgroundColor = Constant.Color.background.colorWithAlphaComponent(0.8)
+      backgroundColor = Constant.Color.background.colorWithAlphaComponent(0.85)
     } else {
       backgroundColor = Constant.Color.background
     }
@@ -125,6 +125,7 @@ public class TabbyBar: UIView {
     buttons = []
     titles = []
     icons = []
+    animations = []
 
     for (index, tuple) in tuples.enumerate() {
       let button = UIButton()
@@ -152,6 +153,7 @@ public class TabbyBar: UIView {
 
       buttons.append(button)
       titles.append(label)
+      animations.append(Constant.Animation.initial)
     }
 
     prepareShadow(Constant.Color.shadow, height: CGFloat(-2))

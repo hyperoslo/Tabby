@@ -12,6 +12,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       (self.thirdNavigation, UIImage(named: "fish"))
     ]
 
+    controller.animations[0] = TabbyAnimation.Kind.None
+
     return controller
   }()
 

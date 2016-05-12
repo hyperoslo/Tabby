@@ -44,6 +44,16 @@ public class TabbyController: UIViewController {
     }
   }
 
+  public var animations: [TabbyAnimation.Kind] {
+    get {
+      return tabbyBar.animations
+    }
+
+    set {
+      tabbyBar.animations = animations
+    }
+  }
+
   public var delegate: TabbyDelegate?
 
   // MARK: - Initializers
@@ -113,7 +123,7 @@ extension TabbyController: TabbyBarDelegate {
     let button = tabbyBar.buttons[index]
 
     delegate?.tabbyDidPress(button, tabbyBar.titles[index])
-    TabbyAnimation.animate(button, kind: Constant.Animation.initial)
+    TabbyAnimation.animate(button, kind: animations[index])
 
     guard !view.subviews.contains(controllers[index].controller.view) else { return }
 
