@@ -1,6 +1,6 @@
 import UIKit
 
-public struct TabbyAnimations {
+public struct TabbyAnimation {
 
   public enum Kind {
     case Pop, None

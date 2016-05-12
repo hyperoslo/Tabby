@@ -31,6 +31,6 @@ public struct Constant {
   }
 
   public struct Animation {
-    public static var initial: TabbyAnimations.Kind = .Pop
+    public static var initial: TabbyAnimation.Kind = .Pop
   }
 }

@@ -85,7 +85,7 @@ extension TabbyController: TabbyBarDelegate {
     let button = tabbyBar.buttons[index]
 
     delegate?.tabbyDidPress(button, tabbyBar.titles[index])
-    TabbyAnimations.animate(button, kind: Constant.Animation.initial)
+    TabbyAnimation.animate(button, kind: Constant.Animation.initial)
 
     guard !view.subviews.contains(controllers[index].controller.view) else { return }
 
