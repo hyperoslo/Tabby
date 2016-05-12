@@ -20,7 +20,7 @@ public struct TabbyAnimation {
             }, completion: nil)
       })
     case .Flip:
-      view.flip(0.4)
+      view.flip(0.2)
     case .Morph:
       view.morph(0.075)
     case .Swing:

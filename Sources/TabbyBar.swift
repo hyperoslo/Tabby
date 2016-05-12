@@ -79,6 +79,8 @@ public class TabbyBar: UIView {
   }
 
   func buttonDidPress(button: UIButton) {
+    buttonDidCancel(button)
+
     if selectedIcons.isEmpty {
       for button in buttons { button.tintColor = Constant.Color.disabled }
 
