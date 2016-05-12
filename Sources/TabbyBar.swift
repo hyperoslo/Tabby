@@ -8,7 +8,7 @@ public protocol TabbyBarDelegate {
 public class TabbyBar: UIView {
 
   public lazy var translucentView: UIVisualEffectView = {
-    let view = UIVisualEffectView(effect: UIBlurEffect(style: UIBlurEffectStyle.ExtraLight))
+    let view = UIVisualEffectView(effect: UIBlurEffect(style: UIBlurEffectStyle.Light))
     view.translatesAutoresizingMaskIntoConstraints = false
 
     return view
@@ -115,7 +115,7 @@ public class TabbyBar: UIView {
     if translucent {
       insertSubview(translucentView, atIndex: 0)
       constraint(translucentView, attributes: [.Width, .Height, .Top, .Left])
-      backgroundColor = UIColor.clearColor()
+      backgroundColor = Constant.Color.background.colorWithAlphaComponent(0.8)
     } else {
       backgroundColor = Constant.Color.background
     }
