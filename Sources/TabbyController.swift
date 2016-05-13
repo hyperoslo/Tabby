@@ -53,8 +53,10 @@ public class TabbyController: UIViewController {
   public var translucent: Bool = false {
     didSet {
       let controller = controllers[tabbyBar.selectedIndex].controller
+      controller.removeFromParentViewController()
       controller.view.removeFromSuperview()
 
+      addChildViewController(controller)
       view.insertSubview(controller.view, belowSubview: tabbyBar)
       tabbyBar.prepareTranslucency(translucent)
       applyNewConstraints(controller.view)
@@ -191,11 +193,15 @@ extension TabbyController: TabbyBarDelegate {
       return
     }
 
-    controllers.forEach { $0.controller.view.removeFromSuperview() }
+    controllers.forEach {
+      $0.controller.removeFromParentViewController()
+      $0.controller.view.removeFromSuperview()
+    }
 
     let controller = controllers[index].controller
     controller.view.translatesAutoresizingMaskIntoConstraints = false
 
+    addChildViewController(controller)
     view.insertSubview(controller.view, belowSubview: tabbyBar)
 
     applyNewConstraints(controller.view)
