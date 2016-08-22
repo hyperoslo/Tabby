@@ -30,7 +30,7 @@ public class TabbyBar: UIView {
     let view = UIView()
     view.backgroundColor = Constant.Color.indicator
     view.translatesAutoresizingMaskIntoConstraints = false
-    
+
     return view
   }()
 
