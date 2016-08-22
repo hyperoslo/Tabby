@@ -109,6 +109,12 @@ public class TabbyController: UIViewController {
     setupConstraints()
   }
 
+  public convenience init(controllers controllers: [(controller: UIViewController, image: UIImage?)]) {
+    self.init(nibName: nil, bundle: nil)
+
+    self.controllers = controllers
+  }
+
   /**
    Initializer.
    */
