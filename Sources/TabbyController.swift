@@ -26,7 +26,6 @@ public class TabbyController: UIViewController {
 
   /**
    An array of tuples with multiple parameters that will create and build the tab bar.
-   
 
    For the tuple:
 
