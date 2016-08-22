@@ -13,7 +13,7 @@ EXTERNAL SOURCES:
   Morgan:
     :git: https://github.com/RamonGilabert/Morgan.git
   Tabby:
-    :path: ../../
+    :path: "../../"
 
 CHECKOUT OPTIONS:
   Morgan:
@@ -27,4 +27,4 @@ SPEC CHECKSUMS:
 
 PODFILE CHECKSUM: 73a313b102a252bdb5a1c8d818f505821df3d40f
 
-COCOAPODS: 1.0.0
+COCOAPODS: 1.0.1
