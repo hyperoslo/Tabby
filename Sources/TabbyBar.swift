@@ -30,7 +30,7 @@ public class TabbyBar: UIView {
     let view = UIView()
     view.backgroundColor = Constant.Color.indicator
     view.translatesAutoresizingMaskIntoConstraints = false
-    
+
     return view
   }()
 
@@ -188,10 +188,8 @@ public class TabbyBar: UIView {
       button.tag = index
       button.adjustsImageWhenHighlighted = false
       button.translatesAutoresizingMaskIntoConstraints = false
-      button.addTarget(self, action: #selector(buttonDidTouchDown(_:)), forControlEvents: .TouchDown)
-      button.addTarget(self, action: #selector(buttonDidTouchDown(_:)), forControlEvents: .TouchDragEnter)
-      button.addTarget(self, action: #selector(buttonDidCancel(_:)), forControlEvents: .TouchCancel)
-      button.addTarget(self, action: #selector(buttonDidCancel(_:)), forControlEvents: .TouchDragExit)
+      button.addTarget(self, action: #selector(buttonDidTouchDown(_:)), forControlEvents: [.TouchDown, .TouchDragEnter])
+      button.addTarget(self, action: #selector(buttonDidCancel(_:)), forControlEvents: [.TouchCancel, .TouchDragExit])
       button.addTarget(self, action: #selector(buttonDidPress(_:)), forControlEvents: .TouchUpInside)
 
       let label = UILabel()
