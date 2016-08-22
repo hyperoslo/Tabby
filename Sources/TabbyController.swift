@@ -27,6 +27,7 @@ public class TabbyController: UIViewController {
   /**
    An array of tuples with multiple parameters that will create and build the tab bar.
    
+
    For the tuple:
 
    - Parameter controller: The actual controller, can be any.
@@ -183,10 +184,8 @@ extension TabbyController: TabbyBarDelegate {
       if let navigationController = controllers[index].controller as? UINavigationController {
         navigationController.popViewControllerAnimated(true)
       } else {
-        for subview in controllers[index].controller.view.subviews {
-          if let scrollView = subview as? UIScrollView {
-            scrollView.setContentOffset(CGPointZero, animated: true)
-          }
+        for case let subview as UIScrollView in controllers[index].controller.view.subviews {
+          subview.setContentOffset(CGPointZero, animated: true)
         }
       }
 
