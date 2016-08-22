@@ -109,6 +109,12 @@ public class TabbyController: UIViewController {
     setupConstraints()
   }
 
+  public convenience init(controllers controllers: [(controller: UIViewController, image: UIImage?)]) {
+    self.init(nibName: nil, bundle: nil)
+
+    self.controllers = controllers
+  }
+
   /**
    Initializer.
    */
@@ -124,6 +130,7 @@ public class TabbyController: UIViewController {
   public override func viewDidAppear(animated: Bool) {
     super.viewDidAppear(animated)
 
+    guard tabbyBar.selectedIndex < controllers.count else { return }
     tabbyBar.indicator.center.x = tabbyBar.buttons[tabbyBar.selectedIndex].center.x
   }
 
