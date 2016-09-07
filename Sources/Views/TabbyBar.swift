@@ -13,11 +13,22 @@ public protocol TabbyBarDelegate {
  */
 public class TabbyBar: UIView {
 
-  public lazy var collectionView: UICollectionView = {
-    let collectionView = UICollectionView()
+  lazy var layout: TabbyLayout = TabbyLayout()
+
+  public lazy var collectionView: UICollectionView = { [unowned self] in
+    let collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.layout)
 
     return collectionView
   }()
+
+  var items: [TabbyBarItem] {
+    didSet {
+      // TODO: Configure the did set and delete the reload.
+      collectionView.reloadData()
+    }
+  }
+
+  var delegate: TabbyBarDelegate?
 
   // MARK: - Initializers
 
@@ -28,6 +39,9 @@ public class TabbyBar: UIView {
     super.init(frame: frame)
 
     backgroundColor = Constant.Color.background
+
+    setupCollectionView()
+    setupConstraints()
   }
 
   /**
@@ -37,11 +51,66 @@ public class TabbyBar: UIView {
     fatalError("init(coder:) has not been implemented")
   }
 
+  // MARK: - Collection View setup
+
+  func setupCollectionView() {
+    collectionView.delegate = self
+    collectionView.dataSource = self
+
+    collectionView.registerClass(
+      TabbyCell.self, forCellWithReuseIdentifier: TabbyCell.reusableIdentifier)
+  }
+
   // MARK: - Constraints
 
   func setupConstraints() {
-    
+
+    addConstraints([
+      NSLayoutConstraint(item: collectionView,
+        attribute: .Top, relatedBy: .Equal,
+        toItem: self, attribute: .Top,
+        multiplier: 1, constant: 0),
+
+      NSLayoutConstraint(item: collectionView,
+        attribute: .Bottom, relatedBy: .Equal,
+        toItem: self, attribute: .Bottom,
+        multiplier: 1, constant: 0),
+
+      NSLayoutConstraint(item: collectionView,
+        attribute: .Leading, relatedBy: .Equal,
+        toItem: self, attribute: .Leading,
+        multiplier: 1, constant: 0),
+
+      NSLayoutConstraint(item: collectionView,
+        attribute: .Trailing, relatedBy: .Equal,
+        toItem: self, attribute: .Trailing,
+        multiplier: 1, constant: 0)
+      ])
   }
+}
+
+extension TabbyBar: UICollectionViewDelegate {
+
+  public func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    delegate?.tabbyButtonDidPress(indexPath.row)
+  }
+}
+
+extension TabbyBar: UICollectionViewDataSource {
+
+  public func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    return items.count
+  }
+
+  public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+    guard let cell = collectionView.dequeueReusableCellWithReuseIdentifier(
+      TabbyCell.reusableIdentifier, forIndexPath: indexPath) as? TabbyCell else { return UICollectionViewCell() }
+
+    cell.configureCell(items[indexPath.row])
+
+    return cell
+  }
+}
 
 //  /**
 //   A translucent view that will simulate a blur effect for your tab bar.
@@ -293,4 +362,3 @@ public class TabbyBar: UIView {
 //        ])
 //    }
 //  }
-}

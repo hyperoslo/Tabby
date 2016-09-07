@@ -32,7 +32,7 @@ public class TabbyController: UIViewController {
    - Parameter controller: The actual controller, can be any.
    - Parameter kind: The image that will appear in the tab bar.
    */
-  public var controllers: [(controller: UIViewController, image: UIImage?)] = [] {
+  public var items: [TabbyBarItems] = [] {
     didSet {
       tabbyBar.prepare(controllers)
     }
