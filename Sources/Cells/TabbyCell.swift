@@ -30,6 +30,10 @@ class TabbyCell: UICollectionViewCell {
     label.text = item.controller.title
     label.textColor = color
 
+    if selected {
+      TabbyAnimation.animate(imageView, kind: item.animation)
+    }
+
     setupConstraints()
   }
 

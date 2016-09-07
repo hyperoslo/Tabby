@@ -16,11 +16,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     controller.delegate = self
     controller.translucent = true
     controller.showSeparator = false
-    controller.animations = [
-      TabbyAnimation.Kind.Flip,
-      TabbyAnimation.Kind.Morph,
-      TabbyAnimation.Kind.Swing
-    ]
 
     return controller
   }()

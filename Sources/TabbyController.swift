@@ -25,12 +25,10 @@ public class TabbyController: UIViewController {
   }()
 
   /**
-   An array of tuples with multiple parameters that will create and build the tab bar.
+   An array of TabbyBarItems. The initializer contains the following parameters:
 
-   For the tuple:
-
-   - Parameter controller: The actual controller, can be any.
-   - Parameter kind: The image that will appear in the tab bar.
+   - Parameter controller: The controller that you set as the one that will appear when tapping the view.
+   - Parameter image: The image that will appear in the TabbyBarItem.
    */
   public var items: [TabbyBarItem] {
     didSet {
@@ -68,7 +66,7 @@ public class TabbyController: UIViewController {
    */
   public var showIndicator: Bool = true {
     didSet {
-//      tabbyBar.indicator.alpha = showIndicator ? 1 : 0
+      tabbyBar.indicator.alpha = showIndicator ? 1 : 0
     }
   }
 
@@ -77,17 +75,8 @@ public class TabbyController: UIViewController {
    */
   public var showSeparator: Bool = true {
     didSet {
-//      tabbyBar.separator.alpha = showSeparator ? 1 : 0
+      tabbyBar.separator.alpha = showSeparator ? 1 : 0
       tabbyBar.layer.shadowOpacity = showSeparator ? 0 : 1
-    }
-  }
-
-  /**
-   The animations that the tab bar will use when tapping the items.
-   */
-  public var animations: [TabbyAnimation.Kind] = [] {
-    didSet {
-//      tabbyBar.animations = animations
     }
   }
 

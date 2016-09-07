@@ -20,12 +20,19 @@ public class TabbyBar: UIView {
     return layout
   }()
 
-  public lazy var collectionView: UICollectionView =
+  lazy var collectionView: UICollectionView =
     UICollectionView(frame: .zero, collectionViewLayout: self.layout)
 
-  public lazy var indicator: UIView = {
+  lazy var indicator: UIView = {
     let view = UIView()
     view.backgroundColor = Constant.Color.indicator
+
+    return view
+  }()
+
+  lazy var separator: UIView = {
+    let view = UIView()
+    view.backgroundColor = Constant.Color.separator
 
     return view
   }()
@@ -144,6 +151,30 @@ public class TabbyBar: UIView {
         toItem: self, attribute: .Bottom,
         multiplier: 1, constant: 0)
       ])
+
+    separator.translatesAutoresizingMaskIntoConstraints = false
+    addSubview(separator)
+    addConstraints([
+      NSLayoutConstraint(item: separator,
+        attribute: .Width, relatedBy: .Equal,
+        toItem: self, attribute: .Width,
+        multiplier: 1, constant: 0),
+
+      NSLayoutConstraint(item: separator,
+        attribute: .Top, relatedBy: .Equal,
+        toItem: self, attribute: .Top,
+        multiplier: 1, constant: 0),
+
+      NSLayoutConstraint(item: separator,
+        attribute: .Right, relatedBy: .Equal,
+        toItem: self, attribute: .Right,
+        multiplier: 1, constant: 0),
+
+      NSLayoutConstraint(item: separator,
+        attribute: .Height, relatedBy: .Equal,
+        toItem: nil, attribute: .NotAnAttribute,
+        multiplier: 1, constant: Constant.Dimension.Separator.height)
+      ])
   }
 }
 
@@ -153,14 +184,6 @@ extension TabbyBar: UICollectionViewDelegate {
     let position = indexPath.row
 
     selectedItem = position
-
-    // TODO: Perform the animation
-    //    let button = tabbyBar.buttons[index]
-    //
-    //    delegate?.tabbyDidPress(button, tabbyBar.titles[index])
-    //    TabbyAnimation.animate(button, kind: tabbyBar.animations.count != controllers.count
-    //      ? Constant.Animation.initial : tabbyBar.animations[index])
-
     delegate?.tabbyButtonDidPress(position)
   }
 }
@@ -198,13 +221,6 @@ extension TabbyBar: UICollectionViewDataSource {
 //  /**
 //   The separator between the controller and the tab bar.
 //   */
-//  public lazy var separator: UIView = {
-//    let view = UIView()
-//    view.backgroundColor = Constant.Color.separator
-//    view.translatesAutoresizingMaskIntoConstraints = false
-//
-//    return view
-//  }()
 //
 //  /**
 //   The selected controller that needs to be displayed.
@@ -239,7 +255,6 @@ extension TabbyBar: UICollectionViewDataSource {
 //  /**
 //   The animations that the icons will have when the button is tapped.
 //   */
-//  public var animations : [TabbyAnimation.Kind] = []
 //
 //  /**
 //   The delegate that will inform when an item was tapped.
