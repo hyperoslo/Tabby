@@ -42,6 +42,11 @@ public struct Constant {
     public static var separator = UIColor.lightGrayColor()
 
     /**
+     The color of the collection view.
+     */
+    public static var collection = UIColor.clearColor()
+
+    /**
      The color of the indicator in the tab bar.
      */
     public static var indicator = Color.selected

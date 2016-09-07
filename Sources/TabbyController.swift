@@ -43,7 +43,7 @@ public class TabbyController: UIViewController {
    */
   public var setIndex = 0 {
     didSet {
-//      tabbyBar.selectedController = setIndex
+      tabbyBar.selectedItem = setIndex
     }
   }
 
@@ -133,13 +133,14 @@ public class TabbyController: UIViewController {
   // MARK: - Constraints
 
   func setupConstraints() {
-    constraint(tabbyBar, attributes: [.Width, .Right, .Bottom])
+    constraint(tabbyBar, attributes: [.Leading, .Trailing, .Bottom])
 
     view.addConstraints([
       NSLayoutConstraint(
         item: tabbyBar, attribute: .Height,
         relatedBy: .Equal, toItem: nil,
-        attribute: .NotAnAttribute, multiplier: 1, constant: Constant.Dimension.height)
+        attribute: .NotAnAttribute,
+        multiplier: 1, constant: Constant.Dimension.height)
       ])
   }
 
@@ -156,13 +157,14 @@ public class TabbyController: UIViewController {
   }
 
   func applyNewConstraints(subview: UIView) {
-    constraint(subview, attributes: [.Width, .Top, .Right])
+    constraint(subview, attributes: [.Leading, .Trailing, .Top])
 
     view.addConstraints([
       NSLayoutConstraint(
         item: subview, attribute: .Height,
         relatedBy: .Equal, toItem: view,
-        attribute: .Height, multiplier: 1, constant: translucent ? 0 : -Constant.Dimension.height)
+        attribute: .Height, multiplier: 1,
+        constant: translucent ? 0 : -Constant.Dimension.height)
       ])
   }
 }
@@ -171,6 +173,7 @@ extension TabbyController: TabbyBarDelegate {
 
   /**
    The delegate method comming from the tab bar.
+
    - Parameter index: The index that was just tapped.
    */
   public func tabbyButtonDidPress(index: Int) {

@@ -29,6 +29,12 @@ public class TabbyBar: UIView {
     }
   }
 
+  var selectedItem: Int = 0 {
+    didSet {
+      collectionView.reloadData()
+    }
+  }
+
   var delegate: TabbyBarDelegate?
 
   // MARK: - Initializers
@@ -59,6 +65,7 @@ public class TabbyBar: UIView {
   func setupCollectionView() {
     collectionView.delegate = self
     collectionView.dataSource = self
+    collectionView.backgroundColor = Constant.Color.collection
 
     collectionView.registerClass(
       TabbyCell.self, forCellWithReuseIdentifier: TabbyCell.reusableIdentifier)
@@ -111,7 +118,7 @@ extension TabbyBar: UICollectionViewDataSource {
     guard let cell = collectionView.dequeueReusableCellWithReuseIdentifier(
       TabbyCell.reusableIdentifier, forIndexPath: indexPath) as? TabbyCell else { return UICollectionViewCell() }
 
-    cell.configureCell(items[indexPath.row])
+    cell.configureCell(items[indexPath.row], selected: selectedItem == indexPath.row)
 
     return cell
   }
@@ -297,73 +304,3 @@ extension TabbyBar: UICollectionViewDataSource {
 //    layer.shadowOpacity = 0
 //  }
 //
-//  func constraint(subview: UIView, attributes: [NSLayoutAttribute]) {
-//    for attribute in attributes {
-//      addConstraint(NSLayoutConstraint(
-//        item: subview, attribute: attribute,
-//        relatedBy: .Equal, toItem: self,
-//        attribute: attribute, multiplier: 1, constant: 0)
-//      )
-//    }
-//  }
-//
-//  // MARK: - Constraints
-//
-//  func setupConstraints() {
-//    constraint(indicator, attributes: [.Left, .Bottom])
-//    constraint(separator, attributes: [.Width, .Top, .Right])
-//
-//    addConstraints([
-//      NSLayoutConstraint(
-//        item: indicator, attribute: .Width,
-//        relatedBy: .Equal, toItem: nil,
-//        attribute: .NotAnAttribute, multiplier: 1, constant: Constant.Dimension.Indicator.width),
-//
-//      NSLayoutConstraint(
-//        item: indicator, attribute: .Height,
-//        relatedBy: .Equal, toItem: nil,
-//        attribute: .NotAnAttribute, multiplier: 1, constant: Constant.Dimension.Indicator.height),
-//
-//      NSLayoutConstraint(
-//        item: separator, attribute: .Height,
-//        relatedBy: .Equal, toItem: nil,
-//        attribute: .NotAnAttribute, multiplier: 1, constant: Constant.Dimension.Separator.height)
-//      ])
-//
-//    for (index, button) in buttons.enumerate() {
-//      let label = titles[index]
-//      let leftOffset = Constant.Dimension.width * CGFloat(index) / CGFloat(buttons.count)
-//
-//      addConstraints([
-//        NSLayoutConstraint(
-//          item: button, attribute: .Width,
-//          relatedBy: .Equal, toItem: self,
-//          attribute: .Width, multiplier: 1 / CGFloat(buttons.count), constant: 0),
-//
-//        NSLayoutConstraint(
-//          item: button, attribute: .Height,
-//          relatedBy: .Equal, toItem: self,
-//          attribute: .Height, multiplier: 1, constant: 0),
-//
-//        NSLayoutConstraint(
-//          item: button, attribute: .Top,
-//          relatedBy: .Equal, toItem: self,
-//          attribute: .Top, multiplier: 1, constant: label.text == nil ? 0 : -6.5),
-//
-//        NSLayoutConstraint(
-//          item: button, attribute: .Left,
-//          relatedBy: .Equal, toItem: self,
-//          attribute: .Left, multiplier: 1, constant: leftOffset),
-//
-//        NSLayoutConstraint(
-//          item: label, attribute: .CenterX,
-//          relatedBy: .Equal, toItem: button,
-//          attribute: .CenterX, multiplier: 1, constant: 0),
-//
-//        NSLayoutConstraint(
-//          item: label, attribute: .Bottom,
-//          relatedBy: .Equal, toItem: self,
-//          attribute: .Bottom, multiplier: 1, constant: -5)
-//        ])
-//    }
-//  }
