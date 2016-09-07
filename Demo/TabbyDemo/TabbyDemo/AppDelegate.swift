@@ -12,6 +12,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       (self.thirdNavigation, UIImage(named: "fish"))
     ]
 
+    controller.delegate = self
     controller.translucent = true
     controller.showSeparator = false
     controller.animations = [
@@ -42,5 +43,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     window?.makeKeyAndVisible()
 
     return true
+  }
+}
+
+extension AppDelegate: TabbyDelegate {
+
+  func tabbyDidPress(button: UIButton, _ label: UILabel) {
+    for label in mainController.tabbyBar.titles {
+      label.alpha = 0
+    }
+
+    label.alpha = 1
   }
 }

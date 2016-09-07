@@ -109,17 +109,20 @@ public class TabbyController: UIViewController {
     setupConstraints()
   }
 
-  public convenience init(controllers controllers: [(controller: UIViewController, image: UIImage?)]) {
-    self.init(nibName: nil, bundle: nil)
-
-    self.controllers = controllers
-  }
-
   /**
    Initializer.
    */
   public required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
+  }
+
+  /**
+   Initializer with a touple of controllers and images for it.
+   */
+  public convenience init(controllers controllers: [(controller: UIViewController, image: UIImage?)]) {
+    self.init(nibName: nil, bundle: nil)
+
+    self.controllers = controllers
   }
 
   // MARK: - View lifecycle
