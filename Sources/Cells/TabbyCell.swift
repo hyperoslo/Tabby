@@ -19,18 +19,6 @@ class TabbyCell: UICollectionViewCell {
     return label
   }()
 
-  // MARK: - Initializers
-
-  override init(frame: CGRect) {
-    super.init(frame: frame)
-
-    [imageView, label].forEach { addSubview($0) }
-  }
-  
-  required init?(coder aDecoder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
-  }
-
   // MARK: - Configuration
 
   func configureCell(item: TabbyBarItem, selected: Bool = false) {
@@ -48,17 +36,22 @@ class TabbyCell: UICollectionViewCell {
   // MARK: - Constraints
 
   func setupConstraints() {
+    let offset: CGFloat = label.alpha == 1 ? 10 : 0
+
     imageView.translatesAutoresizingMaskIntoConstraints = false
+    imageView.removeFromSuperview()
+
+    addSubview(imageView)
     addConstraints([
       NSLayoutConstraint(item: imageView,
         attribute: .Width, relatedBy: .Equal,
         toItem: nil, attribute: .NotAnAttribute,
-        multiplier: 1, constant: 20),
+        multiplier: 1, constant: 22.5),
 
       NSLayoutConstraint(item: imageView,
         attribute: .Height, relatedBy: .Equal,
         toItem: nil, attribute: .NotAnAttribute,
-        multiplier: 1, constant: 20),
+        multiplier: 1, constant: 22.5),
 
       NSLayoutConstraint(item: imageView,
         attribute: .CenterX, relatedBy: .Equal,
@@ -68,9 +61,23 @@ class TabbyCell: UICollectionViewCell {
       NSLayoutConstraint(item: imageView,
         attribute: .CenterY, relatedBy: .Equal,
         toItem: self, attribute: .CenterY,
-        multiplier: 1, constant: 0)
+        multiplier: 1, constant: -offset)
       ])
 
     label.translatesAutoresizingMaskIntoConstraints = false
+    label.removeFromSuperview()
+
+    addSubview(label)
+    addConstraints([
+      NSLayoutConstraint(item: label,
+        attribute: .CenterX, relatedBy: .Equal,
+        toItem: self, attribute: .CenterX,
+        multiplier: 1, constant: 0),
+
+      NSLayoutConstraint(item: label,
+        attribute: .CenterY, relatedBy: .Equal,
+        toItem: self, attribute: .CenterY,
+        multiplier: 1, constant: offset + 1)
+      ])
   }
 }

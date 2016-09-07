@@ -9,7 +9,7 @@ public struct Constant {
     /**
      The title of the font.
      */
-    public static var title = UIFont.systemFontOfSize(11)
+    public static var title = UIFont.systemFontOfSize(9)
   }
 
   /**
