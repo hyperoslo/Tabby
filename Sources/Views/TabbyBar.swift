@@ -20,7 +20,15 @@ public class TabbyBar: UIView {
     return layout
   }()
 
-  public lazy var collectionView: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: self.layout)
+  public lazy var collectionView: UICollectionView =
+    UICollectionView(frame: .zero, collectionViewLayout: self.layout)
+
+  public lazy var indicator: UIView = {
+    let view = UIView()
+    view.backgroundColor = Constant.Color.indicator
+
+    return view
+  }()
 
   var items: [TabbyBarItem] {
     didSet {
@@ -31,6 +39,7 @@ public class TabbyBar: UIView {
 
   var selectedItem: Int = 0 {
     didSet {
+      positionIndicator(selectedItem)
       collectionView.reloadData()
     }
   }
@@ -71,6 +80,19 @@ public class TabbyBar: UIView {
       TabbyCell.self, forCellWithReuseIdentifier: TabbyCell.reusableIdentifier)
   }
 
+  // Animations
+
+  func positionIndicator(index: Int, animate: Bool = true) {
+    guard let source = collectionView.dataSource where index < items.count else { return }
+
+    UIView.animateWithDuration(
+      animate ? 0.7 : 0, delay: 0, usingSpringWithDamping: 0.6,
+      initialSpringVelocity: 0, options: [.CurveEaseIn], animations: {
+        self.indicator.center.x = source.collectionView(
+          self.collectionView, cellForItemAtIndexPath: NSIndexPath(forRow: index, inSection: 0)).center.x
+      }, completion: nil)
+  }
+
   // MARK: - Constraints
 
   func setupConstraints() {
@@ -98,13 +120,48 @@ public class TabbyBar: UIView {
         toItem: self, attribute: .Trailing,
         multiplier: 1, constant: 0)
       ])
+
+    indicator.translatesAutoresizingMaskIntoConstraints = false
+    addSubview(indicator)
+    addConstraints([
+      NSLayoutConstraint(item: indicator,
+        attribute: .Width, relatedBy: .Equal,
+        toItem: nil, attribute: .NotAnAttribute,
+        multiplier: 1, constant: Constant.Dimension.Indicator.width),
+
+      NSLayoutConstraint(item: indicator,
+        attribute: .Height, relatedBy: .Equal,
+        toItem: nil, attribute: .NotAnAttribute,
+        multiplier: 1, constant: Constant.Dimension.Indicator.height),
+
+      NSLayoutConstraint(item: indicator,
+        attribute: .Left, relatedBy: .Equal,
+        toItem: self, attribute: .Left,
+        multiplier: 1, constant: 0),
+
+      NSLayoutConstraint(item: indicator,
+        attribute: .Bottom, relatedBy: .Equal,
+        toItem: self, attribute: .Bottom,
+        multiplier: 1, constant: 0)
+      ])
   }
 }
 
 extension TabbyBar: UICollectionViewDelegate {
 
   public func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-    delegate?.tabbyButtonDidPress(indexPath.row)
+    let position = indexPath.row
+
+    selectedItem = position
+
+    // TODO: Perform the animation
+    //    let button = tabbyBar.buttons[index]
+    //
+    //    delegate?.tabbyDidPress(button, tabbyBar.titles[index])
+    //    TabbyAnimation.animate(button, kind: tabbyBar.animations.count != controllers.count
+    //      ? Constant.Animation.initial : tabbyBar.animations[index])
+
+    delegate?.tabbyButtonDidPress(position)
   }
 }
 
@@ -137,13 +194,6 @@ extension TabbyBar: UICollectionViewDataSource {
 //  /**
 //   The indicator that lives in the tab bar telling the user in which tab bar she is currently in.
 //   */
-//  public lazy var indicator: UIView = {
-//    let view = UIView()
-//    view.backgroundColor = Constant.Color.indicator
-//    view.translatesAutoresizingMaskIntoConstraints = false
-//
-//    return view
-//  }()
 //
 //  /**
 //   The separator between the controller and the tab bar.

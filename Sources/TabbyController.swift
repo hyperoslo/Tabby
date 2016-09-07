@@ -125,9 +125,8 @@ public class TabbyController: UIViewController {
    */
   public override func viewDidAppear(animated: Bool) {
     super.viewDidAppear(animated)
-
-//    guard tabbyBar.selectedIndex < controllers.count else { return }
-//    tabbyBar.indicator.center.x = tabbyBar.buttons[tabbyBar.selectedIndex].center.x
+    
+    tabbyBar.positionIndicator(setIndex, animate: false)
   }
 
   // MARK: - Constraints
@@ -177,37 +176,33 @@ extension TabbyController: TabbyBarDelegate {
    - Parameter index: The index that was just tapped.
    */
   public func tabbyButtonDidPress(index: Int) {
-//    guard index < controllers.count else { return }
-//
-//    let button = tabbyBar.buttons[index]
-//
-//    delegate?.tabbyDidPress(button, tabbyBar.titles[index])
-//    TabbyAnimation.animate(button, kind: tabbyBar.animations.count != controllers.count
-//      ? Constant.Animation.initial : tabbyBar.animations[index])
-//
-//    guard !view.subviews.contains(controllers[index].controller.view) else {
-//      if let navigationController = controllers[index].controller as? UINavigationController {
-//        navigationController.popViewControllerAnimated(true)
-//      } else {
-//        for case let subview as UIScrollView in controllers[index].controller.view.subviews {
-//          subview.setContentOffset(CGPointZero, animated: true)
-//        }
-//      }
-//
-//      return
-//    }
-//
-//    controllers.forEach {
-//      $0.controller.removeFromParentViewController()
-//      $0.controller.view.removeFromSuperview()
-//    }
-//
-//    let controller = controllers[index].controller
-//    controller.view.translatesAutoresizingMaskIntoConstraints = false
-//
-//    addChildViewController(controller)
-//    view.insertSubview(controller.view, belowSubview: tabbyBar)
-//
-//    applyNewConstraints(controller.view)
+    guard index < items.count else { return }
+
+    let controller = items[index].controller
+
+    /// Check if it should do another action rather than removing the view.
+    guard !view.subviews.contains(controller.view) else {
+      if let navigationController = controller as? UINavigationController {
+        navigationController.popViewControllerAnimated(true)
+      } else {
+        for case let subview as UIScrollView in controller.view.subviews {
+          subview.setContentOffset(CGPointZero, animated: true)
+        }
+      }
+
+      return
+    }
+
+    items.forEach {
+      $0.controller.removeFromParentViewController()
+      $0.controller.view.removeFromSuperview()
+    }
+
+    controller.view.translatesAutoresizingMaskIntoConstraints = false
+
+    addChildViewController(controller)
+    view.insertSubview(controller.view, belowSubview: tabbyBar)
+
+    applyNewConstraints(controller.view)
   }
 }
