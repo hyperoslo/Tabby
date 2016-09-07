@@ -4,13 +4,14 @@ import Tabby
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
+  lazy var items: [TabbyBarItem] = [
+    TabbyBarItem(controller: self.firstNavigation, image: UIImage(named: "cow")),
+    TabbyBarItem(controller: self.secondController, image: UIImage(named: "donut")),
+    TabbyBarItem(controller: self.thirdNavigation, image: UIImage(named: "fish"))
+  ]
+
   lazy var mainController: TabbyController = { [unowned self] in
-    let controller = TabbyController()
-    controller.controllers = [
-      (self.firstNavigation, UIImage(named: "cow")),
-      (self.secondController, UIImage(named: "donut")),
-      (self.thirdNavigation, UIImage(named: "fish"))
-    ]
+    let controller = TabbyController(items: self.items)
 
     controller.delegate = self
     controller.translucent = true
@@ -49,10 +50,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 extension AppDelegate: TabbyDelegate {
 
   func tabbyDidPress(button: UIButton, _ label: UILabel) {
-    for label in mainController.tabbyBar.titles {
-      label.alpha = 0
-    }
-
-    label.alpha = 1
+//    for label in mainController.tabbyBar.titles {
+//      label.alpha = 0
+//    }
+//
+//    label.alpha = 1
   }
 }

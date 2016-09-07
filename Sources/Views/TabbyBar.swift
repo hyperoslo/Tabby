@@ -13,13 +13,14 @@ public protocol TabbyBarDelegate {
  */
 public class TabbyBar: UIView {
 
-  lazy var layout: TabbyLayout = TabbyLayout()
+  lazy var layout: TabbyLayout = {
+    let layout = TabbyLayout()
+    layout.minimumInteritemSpacing = 0
 
-  public lazy var collectionView: UICollectionView = { [unowned self] in
-    let collectionView = UICollectionView(frame: .zero, collectionViewLayout: self.layout)
-
-    return collectionView
+    return layout
   }()
+
+  public lazy var collectionView: UICollectionView = UICollectionView(frame: .zero, collectionViewLayout: self.layout)
 
   var items: [TabbyBarItem] {
     didSet {
@@ -35,8 +36,10 @@ public class TabbyBar: UIView {
   /**
    Initializer
    */
-  public override init(frame: CGRect) {
-    super.init(frame: frame)
+  public init(items: [TabbyBarItem]) {
+    self.items = items
+    
+    super.init(frame: .zero)
 
     backgroundColor = Constant.Color.background
 
@@ -64,7 +67,9 @@ public class TabbyBar: UIView {
   // MARK: - Constraints
 
   func setupConstraints() {
+    collectionView.translatesAutoresizingMaskIntoConstraints = false
 
+    addSubview(collectionView)
     addConstraints([
       NSLayoutConstraint(item: collectionView,
         attribute: .Top, relatedBy: .Equal,

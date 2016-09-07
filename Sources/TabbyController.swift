@@ -17,7 +17,7 @@ public class TabbyController: UIViewController {
    The actual tab bar that will contain the buttons, indicator, separator, etc.
    */
   public lazy var tabbyBar: TabbyBar = { [unowned self] in
-    let tabby = TabbyBar()
+    let tabby = TabbyBar(items: self.items)
     tabby.translatesAutoresizingMaskIntoConstraints = false
     tabby.delegate = self
 
@@ -32,9 +32,9 @@ public class TabbyController: UIViewController {
    - Parameter controller: The actual controller, can be any.
    - Parameter kind: The image that will appear in the tab bar.
    */
-  public var items: [TabbyBarItems] = [] {
+  public var items: [TabbyBarItem] {
     didSet {
-      tabbyBar.prepare(controllers)
+      tabbyBar.items = items
     }
   }
 
@@ -43,7 +43,7 @@ public class TabbyController: UIViewController {
    */
   public var setIndex = 0 {
     didSet {
-      tabbyBar.selectedController = setIndex
+//      tabbyBar.selectedController = setIndex
     }
   }
 
@@ -52,14 +52,14 @@ public class TabbyController: UIViewController {
    */
   public var translucent: Bool = false {
     didSet {
-      let controller = controllers[tabbyBar.selectedIndex].controller
-      controller.removeFromParentViewController()
-      controller.view.removeFromSuperview()
-
-      addChildViewController(controller)
-      view.insertSubview(controller.view, belowSubview: tabbyBar)
-      tabbyBar.prepareTranslucency(translucent)
-      applyNewConstraints(controller.view)
+//      let controller = controllers[tabbyBar.selectedIndex].controller
+//      controller.removeFromParentViewController()
+//      controller.view.removeFromSuperview()
+//
+//      addChildViewController(controller)
+//      view.insertSubview(controller.view, belowSubview: tabbyBar)
+//      tabbyBar.prepareTranslucency(translucent)
+//      applyNewConstraints(controller.view)
     }
   }
 
@@ -68,7 +68,7 @@ public class TabbyController: UIViewController {
    */
   public var showIndicator: Bool = true {
     didSet {
-      tabbyBar.indicator.alpha = showIndicator ? 1 : 0
+//      tabbyBar.indicator.alpha = showIndicator ? 1 : 0
     }
   }
 
@@ -77,7 +77,7 @@ public class TabbyController: UIViewController {
    */
   public var showSeparator: Bool = true {
     didSet {
-      tabbyBar.separator.alpha = showSeparator ? 1 : 0
+//      tabbyBar.separator.alpha = showSeparator ? 1 : 0
       tabbyBar.layer.shadowOpacity = showSeparator ? 0 : 1
     }
   }
@@ -87,7 +87,7 @@ public class TabbyController: UIViewController {
    */
   public var animations: [TabbyAnimation.Kind] = [] {
     didSet {
-      tabbyBar.animations = animations
+//      tabbyBar.animations = animations
     }
   }
 
@@ -99,10 +99,12 @@ public class TabbyController: UIViewController {
   // MARK: - Initializers
 
   /**
-   Initialier.
+   Initializer with a touple of controllers and images for it.
    */
-  public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
-    super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+  public init(items items: [TabbyBarItem]) {
+    self.items = items
+
+    super.init(nibName: nil, bundle: nil)
 
     view.addSubview(tabbyBar)
 
@@ -116,15 +118,6 @@ public class TabbyController: UIViewController {
     fatalError("init(coder:) has not been implemented")
   }
 
-  /**
-   Initializer with a touple of controllers and images for it.
-   */
-  public convenience init(controllers controllers: [(controller: UIViewController, image: UIImage?)]) {
-    self.init(nibName: nil, bundle: nil)
-
-    self.controllers = controllers
-  }
-
   // MARK: - View lifecycle
 
   /**
@@ -133,8 +126,8 @@ public class TabbyController: UIViewController {
   public override func viewDidAppear(animated: Bool) {
     super.viewDidAppear(animated)
 
-    guard tabbyBar.selectedIndex < controllers.count else { return }
-    tabbyBar.indicator.center.x = tabbyBar.buttons[tabbyBar.selectedIndex].center.x
+//    guard tabbyBar.selectedIndex < controllers.count else { return }
+//    tabbyBar.indicator.center.x = tabbyBar.buttons[tabbyBar.selectedIndex].center.x
   }
 
   // MARK: - Constraints
@@ -181,37 +174,37 @@ extension TabbyController: TabbyBarDelegate {
    - Parameter index: The index that was just tapped.
    */
   public func tabbyButtonDidPress(index: Int) {
-    guard index < controllers.count else { return }
-
-    let button = tabbyBar.buttons[index]
-
-    delegate?.tabbyDidPress(button, tabbyBar.titles[index])
-    TabbyAnimation.animate(button, kind: tabbyBar.animations.count != controllers.count
-      ? Constant.Animation.initial : tabbyBar.animations[index])
-
-    guard !view.subviews.contains(controllers[index].controller.view) else {
-      if let navigationController = controllers[index].controller as? UINavigationController {
-        navigationController.popViewControllerAnimated(true)
-      } else {
-        for case let subview as UIScrollView in controllers[index].controller.view.subviews {
-          subview.setContentOffset(CGPointZero, animated: true)
-        }
-      }
-
-      return
-    }
-
-    controllers.forEach {
-      $0.controller.removeFromParentViewController()
-      $0.controller.view.removeFromSuperview()
-    }
-
-    let controller = controllers[index].controller
-    controller.view.translatesAutoresizingMaskIntoConstraints = false
-
-    addChildViewController(controller)
-    view.insertSubview(controller.view, belowSubview: tabbyBar)
-
-    applyNewConstraints(controller.view)
+//    guard index < controllers.count else { return }
+//
+//    let button = tabbyBar.buttons[index]
+//
+//    delegate?.tabbyDidPress(button, tabbyBar.titles[index])
+//    TabbyAnimation.animate(button, kind: tabbyBar.animations.count != controllers.count
+//      ? Constant.Animation.initial : tabbyBar.animations[index])
+//
+//    guard !view.subviews.contains(controllers[index].controller.view) else {
+//      if let navigationController = controllers[index].controller as? UINavigationController {
+//        navigationController.popViewControllerAnimated(true)
+//      } else {
+//        for case let subview as UIScrollView in controllers[index].controller.view.subviews {
+//          subview.setContentOffset(CGPointZero, animated: true)
+//        }
+//      }
+//
+//      return
+//    }
+//
+//    controllers.forEach {
+//      $0.controller.removeFromParentViewController()
+//      $0.controller.view.removeFromSuperview()
+//    }
+//
+//    let controller = controllers[index].controller
+//    controller.view.translatesAutoresizingMaskIntoConstraints = false
+//
+//    addChildViewController(controller)
+//    view.insertSubview(controller.view, belowSubview: tabbyBar)
+//
+//    applyNewConstraints(controller.view)
   }
 }

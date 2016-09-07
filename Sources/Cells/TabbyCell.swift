@@ -7,6 +7,6 @@ class TabbyCell: UICollectionViewCell {
   // MARK: - Configuration
 
   func configureCell(item: TabbyBarItem) {
-    print(item)
+    backgroundColor = UIColor.redColor()
   }
 }
