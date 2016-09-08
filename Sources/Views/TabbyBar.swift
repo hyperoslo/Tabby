@@ -13,12 +13,7 @@ public protocol TabbyBarDelegate {
  */
 public class TabbyBar: UIView {
 
-  lazy var translucentView: UIVisualEffectView = {
-    let view = UIVisualEffectView(effect: UIBlurEffect(style: UIBlurEffectStyle.Light))
-    view.translatesAutoresizingMaskIntoConstraints = false
-
-    return view
-  }()
+  lazy var translucentView: UIVisualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .Light))
 
   lazy var layout: TabbyLayout = {
     let layout = TabbyLayout()
@@ -113,6 +108,7 @@ public class TabbyBar: UIView {
     translucentView.removeFromSuperview()
 
     if translucent {
+      translucentView.translatesAutoresizingMaskIntoConstraints = false
       insertSubview(translucentView, atIndex: 0)
       constraint(translucentView, attributes: [.Width, .Height, .Top, .Left])
       backgroundColor = Constant.Color.background.colorWithAlphaComponent(0.85)
@@ -171,13 +167,15 @@ extension TabbyBar: UICollectionViewDataSource {
     return items.count
   }
 
-  public func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-    guard let cell = collectionView.dequeueReusableCellWithReuseIdentifier(
-      TabbyCell.reusableIdentifier, forIndexPath: indexPath) as? TabbyCell else { return UICollectionViewCell() }
+  public func collectionView(collectionView: UICollectionView,
+    cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+    
+      guard let cell = collectionView.dequeueReusableCellWithReuseIdentifier(
+        TabbyCell.reusableIdentifier, forIndexPath: indexPath) as? TabbyCell else { return UICollectionViewCell() }
 
-    cell.configureCell(items[indexPath.row], selected: selectedItem == indexPath.row)
+      cell.configureCell(items[indexPath.row], selected: selectedItem == indexPath.row)
 
-    return cell
+      return cell
   }
 }
 

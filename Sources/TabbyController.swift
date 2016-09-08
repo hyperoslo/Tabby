@@ -53,11 +53,17 @@ public class TabbyController: UIViewController {
       let controller = items[setIndex].controller
       controller.removeFromParentViewController()
       controller.view.removeFromSuperview()
+      controller.view.translatesAutoresizingMaskIntoConstraints = false
 
       addChildViewController(controller)
       view.insertSubview(controller.view, belowSubview: tabbyBar)
       tabbyBar.prepareTranslucency(translucent)
       applyNewConstraints(controller.view)
+
+      if !showSeparator {
+        tabbyBar.layer.shadowOpacity = translucent ? 0 : 1
+        tabbyBar.translucentView.layer.shadowOpacity = translucent ? 1 : 0
+      }
     }
   }
 
@@ -76,7 +82,17 @@ public class TabbyController: UIViewController {
   public var showSeparator: Bool = true {
     didSet {
       tabbyBar.separator.alpha = showSeparator ? 1 : 0
-      tabbyBar.layer.shadowOpacity = showSeparator ? 0 : 1
+
+      if showSeparator {
+        tabbyBar.layer.shadowOpacity = 0
+        tabbyBar.translucentView.layer.shadowOpacity = 0
+      } else {
+        if translucent {
+          tabbyBar.translucentView.layer.shadowOpacity = 1
+        } else {
+          tabbyBar.layer.shadowOpacity = 1
+        }
+      }
     }
   }
 
@@ -123,7 +139,6 @@ public class TabbyController: UIViewController {
 
   func setupConstraints() {
     view.constraint(tabbyBar, attributes: [.Leading, .Trailing, .Bottom])
-
     view.addConstraints([
       NSLayoutConstraint(
         item: tabbyBar, attribute: .Height,
@@ -137,7 +152,6 @@ public class TabbyController: UIViewController {
 
   func applyNewConstraints(subview: UIView) {
     view.constraint(subview, attributes: [.Leading, .Trailing, .Top])
-
     view.addConstraints([
       NSLayoutConstraint(
         item: subview, attribute: .Height,
