@@ -50,14 +50,14 @@ public class TabbyController: UIViewController {
    */
   public var translucent: Bool = false {
     didSet {
-//      let controller = controllers[tabbyBar.selectedIndex].controller
-//      controller.removeFromParentViewController()
-//      controller.view.removeFromSuperview()
-//
-//      addChildViewController(controller)
-//      view.insertSubview(controller.view, belowSubview: tabbyBar)
-//      tabbyBar.prepareTranslucency(translucent)
-//      applyNewConstraints(controller.view)
+      let controller = items[setIndex].controller
+      controller.removeFromParentViewController()
+      controller.view.removeFromSuperview()
+
+      addChildViewController(controller)
+      view.insertSubview(controller.view, belowSubview: tabbyBar)
+      tabbyBar.prepareTranslucency(translucent)
+      applyNewConstraints(controller.view)
     }
   }
 
@@ -114,14 +114,15 @@ public class TabbyController: UIViewController {
    */
   public override func viewDidAppear(animated: Bool) {
     super.viewDidAppear(animated)
-    
+
+    tabbyButtonDidPress(setIndex)
     tabbyBar.positionIndicator(setIndex, animate: false)
   }
 
   // MARK: - Constraints
 
   func setupConstraints() {
-    constraint(tabbyBar, attributes: [.Leading, .Trailing, .Bottom])
+    view.constraint(tabbyBar, attributes: [.Leading, .Trailing, .Bottom])
 
     view.addConstraints([
       NSLayoutConstraint(
@@ -134,18 +135,8 @@ public class TabbyController: UIViewController {
 
   // MARK: - Helper methods
 
-  func constraint(subview: UIView, attributes: [NSLayoutAttribute]) {
-    for attribute in attributes {
-      view.addConstraint(NSLayoutConstraint(
-        item: subview, attribute: attribute,
-        relatedBy: .Equal, toItem: view,
-        attribute: attribute, multiplier: 1, constant: 0)
-      )
-    }
-  }
-
   func applyNewConstraints(subview: UIView) {
-    constraint(subview, attributes: [.Leading, .Trailing, .Top])
+    view.constraint(subview, attributes: [.Leading, .Trailing, .Top])
 
     view.addConstraints([
       NSLayoutConstraint(

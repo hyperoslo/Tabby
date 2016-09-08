@@ -13,6 +13,13 @@ public protocol TabbyBarDelegate {
  */
 public class TabbyBar: UIView {
 
+  lazy var translucentView: UIVisualEffectView = {
+    let view = UIVisualEffectView(effect: UIBlurEffect(style: UIBlurEffectStyle.Light))
+    view.translatesAutoresizingMaskIntoConstraints = false
+
+    return view
+  }()
+
   lazy var layout: TabbyLayout = {
     let layout = TabbyLayout()
     layout.minimumInteritemSpacing = 0
@@ -100,36 +107,30 @@ public class TabbyBar: UIView {
       }, completion: nil)
   }
 
+  // MARK: - Translucency
+
+  func prepareTranslucency(translucent: Bool) {
+    translucentView.removeFromSuperview()
+
+    if translucent {
+      insertSubview(translucentView, atIndex: 0)
+      constraint(translucentView, attributes: [.Width, .Height, .Top, .Left])
+      backgroundColor = Constant.Color.background.colorWithAlphaComponent(0.85)
+    } else {
+      backgroundColor = Constant.Color.background
+    }
+  }
+
   // MARK: - Constraints
 
   func setupConstraints() {
     collectionView.translatesAutoresizingMaskIntoConstraints = false
-
     addSubview(collectionView)
-    addConstraints([
-      NSLayoutConstraint(item: collectionView,
-        attribute: .Top, relatedBy: .Equal,
-        toItem: self, attribute: .Top,
-        multiplier: 1, constant: 0),
-
-      NSLayoutConstraint(item: collectionView,
-        attribute: .Bottom, relatedBy: .Equal,
-        toItem: self, attribute: .Bottom,
-        multiplier: 1, constant: 0),
-
-      NSLayoutConstraint(item: collectionView,
-        attribute: .Leading, relatedBy: .Equal,
-        toItem: self, attribute: .Leading,
-        multiplier: 1, constant: 0),
-
-      NSLayoutConstraint(item: collectionView,
-        attribute: .Trailing, relatedBy: .Equal,
-        toItem: self, attribute: .Trailing,
-        multiplier: 1, constant: 0)
-      ])
+    constraint(collectionView, attributes: [.Top, .Bottom, .Leading, .Trailing])
 
     indicator.translatesAutoresizingMaskIntoConstraints = false
     addSubview(indicator)
+    constraint(indicator, attributes: [.Left, .Bottom])
     addConstraints([
       NSLayoutConstraint(item: indicator,
         attribute: .Width, relatedBy: .Equal,
@@ -139,42 +140,18 @@ public class TabbyBar: UIView {
       NSLayoutConstraint(item: indicator,
         attribute: .Height, relatedBy: .Equal,
         toItem: nil, attribute: .NotAnAttribute,
-        multiplier: 1, constant: Constant.Dimension.Indicator.height),
-
-      NSLayoutConstraint(item: indicator,
-        attribute: .Left, relatedBy: .Equal,
-        toItem: self, attribute: .Left,
-        multiplier: 1, constant: 0),
-
-      NSLayoutConstraint(item: indicator,
-        attribute: .Bottom, relatedBy: .Equal,
-        toItem: self, attribute: .Bottom,
-        multiplier: 1, constant: 0)
+        multiplier: 1, constant: Constant.Dimension.Indicator.height)
       ])
 
     separator.translatesAutoresizingMaskIntoConstraints = false
     addSubview(separator)
-    addConstraints([
-      NSLayoutConstraint(item: separator,
-        attribute: .Width, relatedBy: .Equal,
-        toItem: self, attribute: .Width,
-        multiplier: 1, constant: 0),
-
-      NSLayoutConstraint(item: separator,
-        attribute: .Top, relatedBy: .Equal,
-        toItem: self, attribute: .Top,
-        multiplier: 1, constant: 0),
-
-      NSLayoutConstraint(item: separator,
-        attribute: .Right, relatedBy: .Equal,
-        toItem: self, attribute: .Right,
-        multiplier: 1, constant: 0),
-
+    constraint(separator, attributes: [.Width, .Top, .Right])
+    addConstraint(
       NSLayoutConstraint(item: separator,
         attribute: .Height, relatedBy: .Equal,
         toItem: nil, attribute: .NotAnAttribute,
         multiplier: 1, constant: Constant.Dimension.Separator.height)
-      ])
+    )
   }
 }
 
