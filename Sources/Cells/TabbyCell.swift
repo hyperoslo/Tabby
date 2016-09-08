@@ -36,6 +36,8 @@ class TabbyCell: UICollectionViewCell {
 
     handleBehaviors(selected)
     setupConstraints()
+
+    label.font = Constant.Font.title
   }
 
   // MARK: - Helper methods

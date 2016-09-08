@@ -25,6 +25,13 @@ public class TabbyController: UIViewController {
   }()
 
   /**
+   The current selected controller in the tab bar.
+  */
+  public var selectedController: UIViewController {
+    return items[index].controller
+  }
+
+  /**
    An array of TabbyBarItems. The initializer contains the following parameters:
 
    - Parameter controller: The controller that you set as the one that will appear when tapping the view.
@@ -32,9 +39,9 @@ public class TabbyController: UIViewController {
    */
   public var items: [TabbyBarItem] {
     didSet {
-      guard index < tabbyBar.items.count else { return }
-      
-      var currentItem = tabbyBar.items[index]
+      var currentItem = index < tabbyBar.items.count
+        ? tabbyBar.items[index]
+        : items[index]
 
       if let index = items.indexOf(currentItem) {
         self.index = index
@@ -62,7 +69,7 @@ public class TabbyController: UIViewController {
   public var translucent: Bool = false {
     didSet {
       guard index < items.count else { return }
-      
+
       prepareCurrentController()
 
       if !showSeparator {
@@ -125,7 +132,7 @@ public class TabbyController: UIViewController {
   /**
    Initializer with a touple of controllers and images for it.
    */
-  public init(items items: [TabbyBarItem]) {
+  public init(items: [TabbyBarItem]) {
     self.items = items
 
     super.init(nibName: nil, bundle: nil)
@@ -149,7 +156,7 @@ public class TabbyController: UIViewController {
    */
   public override func viewDidAppear(animated: Bool) {
     super.viewDidAppear(animated)
-    
+
     tabbyButtonDidPress(index)
   }
 
