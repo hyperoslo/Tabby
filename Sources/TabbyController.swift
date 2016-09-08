@@ -62,7 +62,7 @@ public class TabbyController: UIViewController {
   public var translucent: Bool = false {
     didSet {
       guard index < items.count else { return }
-      
+
       prepareCurrentController()
 
       if !showSeparator {
@@ -149,7 +149,7 @@ public class TabbyController: UIViewController {
    */
   public override func viewDidAppear(animated: Bool) {
     super.viewDidAppear(animated)
-    
+
     tabbyButtonDidPress(index)
   }
 
