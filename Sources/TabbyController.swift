@@ -3,9 +3,9 @@ import UIKit
 /**
  The protocol that will inform you when an item of the tab bar is tapped.
  */
-public protocol TabbyDelegate {
+public protocol TabbyDelegate: class {
 
-  func tabbyDidPress(button: UIButton, _ label: UILabel)
+  func tabbyDidPress(item: TabbyBarItem)
 }
 
 /**
@@ -17,7 +17,7 @@ public class TabbyController: UIViewController {
    The actual tab bar that will contain the buttons, indicator, separator, etc.
    */
   public lazy var tabbyBar: TabbyBar = { [unowned self] in
-    let tabby = TabbyBar()
+    let tabby = TabbyBar(items: self.items)
     tabby.translatesAutoresizingMaskIntoConstraints = false
     tabby.delegate = self
 
@@ -25,16 +25,22 @@ public class TabbyController: UIViewController {
   }()
 
   /**
-   An array of tuples with multiple parameters that will create and build the tab bar.
+   An array of TabbyBarItems. The initializer contains the following parameters:
 
-   For the tuple:
-
-   - Parameter controller: The actual controller, can be any.
-   - Parameter kind: The image that will appear in the tab bar.
+   - Parameter controller: The controller that you set as the one that will appear when tapping the view.
+   - Parameter image: The image that will appear in the TabbyBarItem.
    */
-  public var controllers: [(controller: UIViewController, image: UIImage?)] = [] {
+  public var items: [TabbyBarItem] {
     didSet {
-      tabbyBar.prepare(controllers)
+      guard index < tabbyBar.items.count else { return }
+      
+      var currentItem = tabbyBar.items[index]
+
+      if let index = items.indexOf(currentItem) {
+        self.index = index
+      }
+
+      tabbyBar.items = items
     }
   }
 
@@ -43,7 +49,10 @@ public class TabbyController: UIViewController {
    */
   public var setIndex = 0 {
     didSet {
-      tabbyBar.selectedController = setIndex
+      guard setIndex < items.count else { return }
+
+      index = setIndex
+      tabbyBar.selectedItem = index
     }
   }
 
@@ -52,14 +61,24 @@ public class TabbyController: UIViewController {
    */
   public var translucent: Bool = false {
     didSet {
-      let controller = controllers[tabbyBar.selectedIndex].controller
-      controller.removeFromParentViewController()
-      controller.view.removeFromSuperview()
+      guard index < items.count else { return }
+      
+      prepareCurrentController()
 
-      addChildViewController(controller)
-      view.insertSubview(controller.view, belowSubview: tabbyBar)
-      tabbyBar.prepareTranslucency(translucent)
-      applyNewConstraints(controller.view)
+      if !showSeparator {
+        tabbyBar.layer.shadowOpacity = translucent ? 0 : 1
+        tabbyBar.translucentView.layer.shadowOpacity = translucent ? 1 : 0
+      }
+    }
+  }
+
+  /**
+   A property indicating weather the tab bar should be visible or not. True by default.
+   */
+  public var barVisible: Bool = true {
+    didSet {
+      tabbyBar.alpha = barVisible ? 1 : 0
+      prepareCurrentController()
     }
   }
 
@@ -78,41 +97,42 @@ public class TabbyController: UIViewController {
   public var showSeparator: Bool = true {
     didSet {
       tabbyBar.separator.alpha = showSeparator ? 1 : 0
-      tabbyBar.layer.shadowOpacity = showSeparator ? 0 : 1
-    }
-  }
 
-  /**
-   The animations that the tab bar will use when tapping the items.
-   */
-  public var animations: [TabbyAnimation.Kind] = [] {
-    didSet {
-      tabbyBar.animations = animations
+      if showSeparator {
+        tabbyBar.layer.shadowOpacity = 0
+        tabbyBar.translucentView.layer.shadowOpacity = 0
+      } else {
+        if translucent {
+          tabbyBar.translucentView.layer.shadowOpacity = 1
+        } else {
+          tabbyBar.layer.shadowOpacity = 1
+        }
+      }
     }
   }
 
   /**
    The delegate that will tell you when a tab bar is tapped.
    */
-  public var delegate: TabbyDelegate?
+  public weak var delegate: TabbyDelegate?
+
+  // MARK: - Private variables
+
+  private var index = 0
 
   // MARK: - Initializers
 
   /**
-   Initialier.
+   Initializer with a touple of controllers and images for it.
    */
-  public override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
-    super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+  public init(items items: [TabbyBarItem]) {
+    self.items = items
+
+    super.init(nibName: nil, bundle: nil)
 
     view.addSubview(tabbyBar)
 
     setupConstraints()
-  }
-
-  public convenience init(controllers controllers: [(controller: UIViewController, image: UIImage?)]) {
-    self.init(nibName: nil, bundle: nil)
-
-    self.controllers = controllers
   }
 
   /**
@@ -129,44 +149,45 @@ public class TabbyController: UIViewController {
    */
   public override func viewDidAppear(animated: Bool) {
     super.viewDidAppear(animated)
+    
+    tabbyButtonDidPress(index)
+  }
 
-    guard tabbyBar.selectedIndex < controllers.count else { return }
-    tabbyBar.indicator.center.x = tabbyBar.buttons[tabbyBar.selectedIndex].center.x
+  // MARK: - Helper methods
+
+  func prepareCurrentController() {
+    let controller = items[index].controller
+    controller.removeFromParentViewController()
+    controller.view.removeFromSuperview()
+    controller.view.translatesAutoresizingMaskIntoConstraints = false
+
+    addChildViewController(controller)
+    view.insertSubview(controller.view, belowSubview: tabbyBar)
+    tabbyBar.prepareTranslucency(translucent)
+    applyNewConstraints(controller.view)
+  }
+
+  func applyNewConstraints(subview: UIView) {
+    view.constraint(subview, attributes: .Leading, .Trailing, .Top)
+    view.addConstraints([
+      NSLayoutConstraint(
+        item: subview, attribute: .Height,
+        relatedBy: .Equal, toItem: view,
+        attribute: .Height, multiplier: 1,
+        constant: barVisible ? translucent ? 0 : -Constant.Dimension.height : 0)
+      ])
   }
 
   // MARK: - Constraints
 
   func setupConstraints() {
-    constraint(tabbyBar, attributes: [.Width, .Right, .Bottom])
-
+    view.constraint(tabbyBar, attributes: .Leading, .Trailing, .Bottom)
     view.addConstraints([
       NSLayoutConstraint(
         item: tabbyBar, attribute: .Height,
         relatedBy: .Equal, toItem: nil,
-        attribute: .NotAnAttribute, multiplier: 1, constant: Constant.Dimension.height)
-      ])
-  }
-
-  // MARK: - Helper methods
-
-  func constraint(subview: UIView, attributes: [NSLayoutAttribute]) {
-    for attribute in attributes {
-      view.addConstraint(NSLayoutConstraint(
-        item: subview, attribute: attribute,
-        relatedBy: .Equal, toItem: view,
-        attribute: attribute, multiplier: 1, constant: 0)
-      )
-    }
-  }
-
-  func applyNewConstraints(subview: UIView) {
-    constraint(subview, attributes: [.Width, .Top, .Right])
-
-    view.addConstraints([
-      NSLayoutConstraint(
-        item: subview, attribute: .Height,
-        relatedBy: .Equal, toItem: view,
-        attribute: .Height, multiplier: 1, constant: translucent ? 0 : -Constant.Dimension.height)
+        attribute: .NotAnAttribute,
+        multiplier: 1, constant: Constant.Dimension.height)
       ])
   }
 }
@@ -175,22 +196,24 @@ extension TabbyController: TabbyBarDelegate {
 
   /**
    The delegate method comming from the tab bar.
+
    - Parameter index: The index that was just tapped.
    */
   public func tabbyButtonDidPress(index: Int) {
-    guard index < controllers.count else { return }
+    self.index = index
 
-    let button = tabbyBar.buttons[index]
+    guard index < items.count else { return }
 
-    delegate?.tabbyDidPress(button, tabbyBar.titles[index])
-    TabbyAnimation.animate(button, kind: tabbyBar.animations.count != controllers.count
-      ? Constant.Animation.initial : tabbyBar.animations[index])
+    let controller = items[index].controller
 
-    guard !view.subviews.contains(controllers[index].controller.view) else {
-      if let navigationController = controllers[index].controller as? UINavigationController {
+    delegate?.tabbyDidPress(items[index])
+
+    /// Check if it should do another action rather than removing the view.
+    guard !view.subviews.contains(controller.view) else {
+      if let navigationController = controller as? UINavigationController {
         navigationController.popViewControllerAnimated(true)
       } else {
-        for case let subview as UIScrollView in controllers[index].controller.view.subviews {
+        for case let subview as UIScrollView in controller.view.subviews {
           subview.setContentOffset(CGPointZero, animated: true)
         }
       }
@@ -198,12 +221,11 @@ extension TabbyController: TabbyBarDelegate {
       return
     }
 
-    controllers.forEach {
+    items.forEach {
       $0.controller.removeFromParentViewController()
       $0.controller.view.removeFromSuperview()
     }
 
-    let controller = controllers[index].controller
     controller.view.translatesAutoresizingMaskIntoConstraints = false
 
     addChildViewController(controller)

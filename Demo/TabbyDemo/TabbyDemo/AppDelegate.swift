@@ -4,21 +4,17 @@ import Tabby
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-  lazy var mainController: TabbyController = { [unowned self] in
-    let controller = TabbyController()
-    controller.controllers = [
-      (self.firstNavigation, UIImage(named: "cow")),
-      (self.secondController, UIImage(named: "donut")),
-      (self.thirdNavigation, UIImage(named: "fish"))
-    ]
+  lazy var items: [TabbyBarItem] = [
+    TabbyBarItem(controller: self.firstNavigation, image: UIImage(named: "cow")),
+    TabbyBarItem(controller: self.secondController, image: UIImage(named: "donut")),
+    TabbyBarItem(controller: self.thirdNavigation, image: UIImage(named: "fish"))
+  ]
 
+  lazy var mainController: TabbyController = { [unowned self] in
+    let controller = TabbyController(items: self.items)
+
+    controller.delegate = self
     controller.translucent = true
-    controller.showSeparator = false
-    controller.animations = [
-      TabbyAnimation.Kind.Flip,
-      TabbyAnimation.Kind.Morph,
-      TabbyAnimation.Kind.Swing
-    ]
 
     return controller
   }()
@@ -37,10 +33,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     Tabby.Constant.Color.background = UIColor.whiteColor()
     Tabby.Constant.Color.selected = UIColor(red:0.22, green:0.81, blue:0.99, alpha:1.00)
 
+    Tabby.Constant.Behavior.labelVisibility = .ActiveVisible
+
     window = UIWindow(frame: UIScreen.mainScreen().bounds)
     window?.rootViewController = mainController
     window?.makeKeyAndVisible()
 
     return true
+  }
+}
+
+extension AppDelegate: TabbyDelegate {
+
+  func tabbyDidPress(item: TabbyBarItem) {
+    // Do your awesome transformations!
   }
 }
