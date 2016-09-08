@@ -24,6 +24,10 @@ public class TabbyController: UIViewController {
     return tabby
   }()
 
+  public func selectedController() -> UIViewController {
+    return items[index].controller
+  }
+
   /**
    An array of TabbyBarItems. The initializer contains the following parameters:
 
