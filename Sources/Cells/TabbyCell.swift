@@ -19,9 +19,6 @@ class TabbyCell: UICollectionViewCell {
     return label
   }()
 
-  var imageCenterY = NSLayoutConstraint()
-  var labelCenterY = NSLayoutConstraint()
-
   // MARK: - Configuration
 
   func configureCell(item: TabbyBarItem, selected: Bool = false) {
@@ -66,11 +63,6 @@ class TabbyCell: UICollectionViewCell {
 
     addSubview(imageView)
 
-    imageCenterY = NSLayoutConstraint(item: imageView,
-                                      attribute: .CenterY, relatedBy: .Equal,
-                                      toItem: self, attribute: .CenterY,
-                                      multiplier: 1, constant: -offset)
-
     constraint(imageView, attributes: .CenterX)
     addConstraints([
       NSLayoutConstraint(item: imageView,
@@ -83,7 +75,10 @@ class TabbyCell: UICollectionViewCell {
         toItem: nil, attribute: .NotAnAttribute,
         multiplier: 1, constant: Constant.Dimension.Icon.height),
 
-      imageCenterY
+      NSLayoutConstraint(item: imageView,
+        attribute: .CenterY, relatedBy: .Equal,
+        toItem: self, attribute: .CenterY,
+        multiplier: 1, constant: -offset)
       ])
 
     label.translatesAutoresizingMaskIntoConstraints = false
@@ -91,12 +86,11 @@ class TabbyCell: UICollectionViewCell {
 
     addSubview(label)
 
-    labelCenterY = NSLayoutConstraint(item: label,
-                                      attribute: .CenterY, relatedBy: .Equal,
-                                      toItem: self, attribute: .CenterY,
-                                      multiplier: 1, constant: offset + 5)
-
     constraint(label, attributes: .CenterX)
-    addConstraint(labelCenterY)
+    addConstraint(NSLayoutConstraint(item: label,
+      attribute: .CenterY, relatedBy: .Equal,
+      toItem: self, attribute: .CenterY,
+      multiplier: 1, constant: offset + 5)
+    )
   }
 }
