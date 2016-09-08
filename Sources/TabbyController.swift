@@ -32,6 +32,8 @@ public class TabbyController: UIViewController {
    */
   public var items: [TabbyBarItem] {
     didSet {
+      guard index < tabbyBar.items.count else { return }
+      
       var currentItem = tabbyBar.items[index]
 
       if let index = items.indexOf(currentItem) {
@@ -47,6 +49,8 @@ public class TabbyController: UIViewController {
    */
   public var setIndex = 0 {
     didSet {
+      guard setIndex < items.count else { return }
+
       index = setIndex
       tabbyBar.selectedItem = index
     }
