@@ -164,7 +164,7 @@ public class TabbyController: UIViewController {
   }
 
   func applyNewConstraints(subview: UIView) {
-    view.constraint(subview, attributes: [.Leading, .Trailing, .Top])
+    view.constraint(subview, attributes: .Leading, .Trailing, .Top)
     view.addConstraints([
       NSLayoutConstraint(
         item: subview, attribute: .Height,
@@ -177,7 +177,7 @@ public class TabbyController: UIViewController {
   // MARK: - Constraints
 
   func setupConstraints() {
-    view.constraint(tabbyBar, attributes: [.Leading, .Trailing, .Bottom])
+    view.constraint(tabbyBar, attributes: .Leading, .Trailing, .Bottom)
     view.addConstraints([
       NSLayoutConstraint(
         item: tabbyBar, attribute: .Height,

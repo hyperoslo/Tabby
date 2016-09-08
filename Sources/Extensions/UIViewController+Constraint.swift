@@ -2,7 +2,7 @@ import UIKit
 
 extension UIView {
 
-  func constraint(subview: UIView, attributes: [NSLayoutAttribute]) {
+  func constraint(subview: UIView, attributes: NSLayoutAttribute...) {
     for attribute in attributes {
       addConstraint(NSLayoutConstraint(
         item: subview, attribute: attribute,

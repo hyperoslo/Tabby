@@ -67,6 +67,22 @@ public struct Constant {
     public static var height: CGFloat = 50
 
     /**
+     The dimensions of the icons inside the tab bar.
+     */
+    public struct Icon {
+
+      /**
+       The width of the icon of the tab bar.
+       */
+      public static var width: CGFloat = 22.5
+
+      /**
+       The height of the icon of the tab bar.
+       */
+      public static var height: CGFloat = Dimension.Icon.width
+    }
+
+    /**
      This represents the dimensions of the indicator.
      */
     public struct Indicator {

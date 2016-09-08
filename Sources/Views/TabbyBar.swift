@@ -130,7 +130,7 @@ public class TabbyBar: UIView {
     if translucent {
       translucentView.translatesAutoresizingMaskIntoConstraints = false
       insertSubview(translucentView, atIndex: 0)
-      constraint(translucentView, attributes: [.Width, .Height, .Top, .Left])
+      constraint(translucentView, attributes: .Width, .Height, .Top, .Left)
       backgroundColor = Constant.Color.background.colorWithAlphaComponent(0.85)
     } else {
       backgroundColor = Constant.Color.background
@@ -142,11 +142,11 @@ public class TabbyBar: UIView {
   func setupConstraints() {
     collectionView.translatesAutoresizingMaskIntoConstraints = false
     addSubview(collectionView)
-    constraint(collectionView, attributes: [.Top, .Bottom, .Leading, .Trailing])
+    constraint(collectionView, attributes: .Top, .Bottom, .Leading, .Trailing)
 
     indicator.translatesAutoresizingMaskIntoConstraints = false
     addSubview(indicator)
-    constraint(indicator, attributes: [.Left, .Bottom])
+    constraint(indicator, attributes: .Left, .Bottom)
     addConstraints([
       NSLayoutConstraint(item: indicator,
         attribute: .Width, relatedBy: .Equal,
@@ -161,7 +161,7 @@ public class TabbyBar: UIView {
 
     separator.translatesAutoresizingMaskIntoConstraints = false
     addSubview(separator)
-    constraint(separator, attributes: [.Width, .Top, .Right])
+    constraint(separator, attributes: .Width, .Top, .Right)
     addConstraint(
       NSLayoutConstraint(item: separator,
         attribute: .Height, relatedBy: .Equal,

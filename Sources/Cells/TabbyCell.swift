@@ -46,21 +46,17 @@ class TabbyCell: UICollectionViewCell {
     imageView.removeFromSuperview()
 
     addSubview(imageView)
+    constraint(imageView, attributes: .CenterX)
     addConstraints([
       NSLayoutConstraint(item: imageView,
         attribute: .Width, relatedBy: .Equal,
         toItem: nil, attribute: .NotAnAttribute,
-        multiplier: 1, constant: 22.5),
+        multiplier: 1, constant: Constant.Dimension.Icon.width),
 
       NSLayoutConstraint(item: imageView,
         attribute: .Height, relatedBy: .Equal,
         toItem: nil, attribute: .NotAnAttribute,
-        multiplier: 1, constant: 22.5),
-
-      NSLayoutConstraint(item: imageView,
-        attribute: .CenterX, relatedBy: .Equal,
-        toItem: self, attribute: .CenterX,
-        multiplier: 1, constant: 0),
+        multiplier: 1, constant: Constant.Dimension.Icon.height),
 
       NSLayoutConstraint(item: imageView,
         attribute: .CenterY, relatedBy: .Equal,
@@ -72,12 +68,8 @@ class TabbyCell: UICollectionViewCell {
     label.removeFromSuperview()
 
     addSubview(label)
+    constraint(label, attributes: .CenterX)
     addConstraints([
-      NSLayoutConstraint(item: label,
-        attribute: .CenterX, relatedBy: .Equal,
-        toItem: self, attribute: .CenterX,
-        multiplier: 1, constant: 0),
-
       NSLayoutConstraint(item: label,
         attribute: .CenterY, relatedBy: .Equal,
         toItem: self, attribute: .CenterY,
