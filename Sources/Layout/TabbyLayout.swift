@@ -3,7 +3,7 @@ import UIKit
 class TabbyLayout: UICollectionViewFlowLayout {
 
   override func collectionViewContentSize() -> CGSize {
-    return CGSize(width: Constant.Dimension.width,
+    return CGSize(width: UIScreen.mainScreen().bounds.width,
                   height: Constant.Dimension.height)
   }
 
@@ -20,7 +20,7 @@ class TabbyLayout: UICollectionViewFlowLayout {
     for attribute in defaults {
       guard let attribute = attribute.copy() as? UICollectionViewLayoutAttributes else { continue }
 
-      attribute.frame.size.width = Constant.Dimension.width / CGFloat(items)
+      attribute.frame.size.width = UIScreen.mainScreen().bounds.width / CGFloat(items)
       attribute.frame.origin.x = offset
       offset += attribute.size.width + minimumInteritemSpacing
 

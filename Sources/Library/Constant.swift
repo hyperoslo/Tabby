@@ -62,11 +62,6 @@ public struct Constant {
    */
   public struct Dimension {
     /**
-     The with of the tab bar.
-     */
-    public static var width = UIScreen.mainScreen().bounds.width
-
-    /**
      The height of the tab bar.
      */
     public static var height: CGFloat = 50
