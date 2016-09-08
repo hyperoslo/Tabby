@@ -24,7 +24,7 @@ public class TabbyController: UIViewController {
     return tabby
   }()
 
-  /*
+  /**
    The current selected controller in the tab bar.
   */
   public var selectedController: UIViewController {
