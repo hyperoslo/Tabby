@@ -14,6 +14,7 @@ public protocol TabbyBarDelegate {
 public class TabbyBar: UIView {
 
   static let collectionObserver = "contentSize"
+  static let KVOContext = UnsafeMutablePointer<()>(nil)
 
   lazy var translucentView: UIVisualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .Light))
 
@@ -69,9 +70,10 @@ public class TabbyBar: UIView {
 
     backgroundColor = Constant.Color.background
 
+
     collectionView.addObserver(
       self, forKeyPath: TabbyBar.collectionObserver,
-      options: .Old, context: nil)
+      options: .Old, context: TabbyBar.KVOContext)
 
     setupCollectionView()
     setupConstraints()
@@ -81,7 +83,8 @@ public class TabbyBar: UIView {
     keyPath: String?, ofObject object: AnyObject?,
     change: [String : AnyObject]?,
     context: UnsafeMutablePointer<Void>) {
-      positionIndicator(selectedItem)
+      guard context == TabbyBar.KVOContext else { return }
+      positionIndicator(selectedItem, animate: false)
   }
 
   /**
@@ -92,7 +95,7 @@ public class TabbyBar: UIView {
   }
 
   deinit {
-    collectionView.removeObserver(self, forKeyPath: NSKeyValueChangeOldKey)
+    collectionView.removeObserver(self, forKeyPath: TabbyBar.collectionObserver)
   }
 
   // MARK: - Collection View setup

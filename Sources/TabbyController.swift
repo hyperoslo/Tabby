@@ -5,7 +5,7 @@ import UIKit
  */
 public protocol TabbyDelegate {
 
-  func tabbyDidPress(button: UIButton, _ label: UILabel)
+  func tabbyDidPress(item: TabbyBarItem)
 }
 
 /**
@@ -32,6 +32,12 @@ public class TabbyController: UIViewController {
    */
   public var items: [TabbyBarItem] {
     didSet {
+      var currentItem = tabbyBar.items[index]
+
+      if let index = items.indexOf(currentItem) {
+        self.index = index
+      }
+
       tabbyBar.items = items
     }
   }
@@ -41,7 +47,8 @@ public class TabbyController: UIViewController {
    */
   public var setIndex = 0 {
     didSet {
-      tabbyBar.selectedItem = setIndex
+      index = setIndex
+      tabbyBar.selectedItem = index
     }
   }
 
@@ -50,20 +57,24 @@ public class TabbyController: UIViewController {
    */
   public var translucent: Bool = false {
     didSet {
-      let controller = items[setIndex].controller
-      controller.removeFromParentViewController()
-      controller.view.removeFromSuperview()
-      controller.view.translatesAutoresizingMaskIntoConstraints = false
-
-      addChildViewController(controller)
-      view.insertSubview(controller.view, belowSubview: tabbyBar)
-      tabbyBar.prepareTranslucency(translucent)
-      applyNewConstraints(controller.view)
+      guard index < items.count else { return }
+      
+      prepareCurrentController()
 
       if !showSeparator {
         tabbyBar.layer.shadowOpacity = translucent ? 0 : 1
         tabbyBar.translucentView.layer.shadowOpacity = translucent ? 1 : 0
       }
+    }
+  }
+
+  /**
+   A property indicating weather the tab bar should be visible or not. True by default.
+   */
+  public var barVisible: Bool = true {
+    didSet {
+      tabbyBar.alpha = barVisible ? 1 : 0
+      prepareCurrentController()
     }
   }
 
@@ -101,6 +112,10 @@ public class TabbyController: UIViewController {
    */
   public var delegate: TabbyDelegate?
 
+  // MARK: - Private variables
+
+  private var index = 0
+
   // MARK: - Initializers
 
   /**
@@ -130,9 +145,33 @@ public class TabbyController: UIViewController {
    */
   public override func viewDidAppear(animated: Bool) {
     super.viewDidAppear(animated)
+    
+    tabbyButtonDidPress(index)
+  }
 
-    tabbyButtonDidPress(setIndex)
-    tabbyBar.positionIndicator(setIndex, animate: false)
+  // MARK: - Helper methods
+
+  func prepareCurrentController() {
+    let controller = items[index].controller
+    controller.removeFromParentViewController()
+    controller.view.removeFromSuperview()
+    controller.view.translatesAutoresizingMaskIntoConstraints = false
+
+    addChildViewController(controller)
+    view.insertSubview(controller.view, belowSubview: tabbyBar)
+    tabbyBar.prepareTranslucency(translucent)
+    applyNewConstraints(controller.view)
+  }
+
+  func applyNewConstraints(subview: UIView) {
+    view.constraint(subview, attributes: [.Leading, .Trailing, .Top])
+    view.addConstraints([
+      NSLayoutConstraint(
+        item: subview, attribute: .Height,
+        relatedBy: .Equal, toItem: view,
+        attribute: .Height, multiplier: 1,
+        constant: barVisible ? translucent ? 0 : -Constant.Dimension.height : 0)
+      ])
   }
 
   // MARK: - Constraints
@@ -147,19 +186,6 @@ public class TabbyController: UIViewController {
         multiplier: 1, constant: Constant.Dimension.height)
       ])
   }
-
-  // MARK: - Helper methods
-
-  func applyNewConstraints(subview: UIView) {
-    view.constraint(subview, attributes: [.Leading, .Trailing, .Top])
-    view.addConstraints([
-      NSLayoutConstraint(
-        item: subview, attribute: .Height,
-        relatedBy: .Equal, toItem: view,
-        attribute: .Height, multiplier: 1,
-        constant: translucent ? 0 : -Constant.Dimension.height)
-      ])
-  }
 }
 
 extension TabbyController: TabbyBarDelegate {
@@ -170,9 +196,13 @@ extension TabbyController: TabbyBarDelegate {
    - Parameter index: The index that was just tapped.
    */
   public func tabbyButtonDidPress(index: Int) {
+    self.index = index
+
     guard index < items.count else { return }
 
     let controller = items[index].controller
+
+    delegate?.tabbyDidPress(items[index])
 
     /// Check if it should do another action rather than removing the view.
     guard !view.subviews.contains(controller.view) else {
