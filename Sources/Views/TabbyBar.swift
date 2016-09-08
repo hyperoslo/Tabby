@@ -13,9 +13,11 @@ public protocol TabbyBarDelegate {
  */
 public class TabbyBar: UIView {
 
+  static let collectionObserver = "contentSize"
+
   lazy var translucentView: UIVisualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .Light))
 
-  lazy var layout: TabbyLayout = {
+  lazy var layout: TabbyLayout = { [unowned self] in
     let layout = TabbyLayout()
     layout.minimumInteritemSpacing = 0
 
@@ -67,8 +69,19 @@ public class TabbyBar: UIView {
 
     backgroundColor = Constant.Color.background
 
+    collectionView.addObserver(
+      self, forKeyPath: TabbyBar.collectionObserver,
+      options: .Old, context: nil)
+
     setupCollectionView()
     setupConstraints()
+  }
+
+  public override func observeValueForKeyPath(
+    keyPath: String?, ofObject object: AnyObject?,
+    change: [String : AnyObject]?,
+    context: UnsafeMutablePointer<Void>) {
+      positionIndicator(selectedItem)
   }
 
   /**
@@ -76,6 +89,10 @@ public class TabbyBar: UIView {
    */
   public required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
+  }
+
+  deinit {
+    collectionView.removeObserver(self, forKeyPath: NSKeyValueChangeOldKey)
   }
 
   // MARK: - Collection View setup
@@ -178,169 +195,3 @@ extension TabbyBar: UICollectionViewDataSource {
       return cell
   }
 }
-
-//  /**
-//   A translucent view that will simulate a blur effect for your tab bar.
-//   */
-//  public lazy var translucentView: UIVisualEffectView = {
-//    let view = UIVisualEffectView(effect: UIBlurEffect(style: UIBlurEffectStyle.Light))
-//    view.translatesAutoresizingMaskIntoConstraints = false
-//
-//    return view
-//  }()
-//
-//  /**
-//   The indicator that lives in the tab bar telling the user in which tab bar she is currently in.
-//   */
-//
-//  /**
-//   The separator between the controller and the tab bar.
-//   */
-//
-//  /**
-//   The selected controller that needs to be displayed.
-//   */
-//  public var selectedController = 0 {
-//    didSet {
-//      configureController(selectedController)
-//      selectedIndex = selectedController
-//    }
-//  }
-//
-//  /**
-//   The general icons.
-//   */
-//  public var icons: [UIImage] = []
-//
-//  /**
-//   The selected icons, if you don't want tint but want to change completely the icon.
-//   */
-//  public var selectedIcons: [UIImage] = []
-//
-//  /**
-//   The list of buttons of the tab bar.
-//   */
-//  public var buttons: [UIButton] = []
-//
-//  /**
-//   The labels that contain the titles.
-//   */
-//  public var titles: [UILabel] = []
-//
-//  /**
-//   The animations that the icons will have when the button is tapped.
-//   */
-//
-//  /**
-//   The delegate that will inform when an item was tapped.
-//   */
-//  public var delegate: TabbyBarDelegate?
-//
-//  var selectedIndex = 0 {
-//    didSet {
-//      animateIndicator(selectedIndex)
-//    }
-//  }
-//
-//
-//  func buttonDidCancel(button: UIButton) {
-//    UIView.animateWithDuration(0.2, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0, options: [.CurveEaseInOut], animations: {
-//      button.transform = CGAffineTransformIdentity
-//      }, completion: nil)
-//  }
-//
-//  func buttonDidPress(button: UIButton) {
-//    buttonDidCancel(button)
-//
-//    if selectedIcons.isEmpty {
-//      for button in buttons { button.tintColor = Constant.Color.disabled }
-//
-//      button.tintColor = Constant.Color.selected
-//    } else {
-//      for (index, button) in buttons.enumerate() {
-//        button.setImage(icons[index], forState: .Normal)
-//      }
-//
-//      button.setImage(selectedIcons[button.tag], forState: .Normal)
-//    }
-//
-//    for label in titles { label.textColor = Constant.Color.disabled }
-//
-//    if let index = buttons.indexOf(button) where index < titles.count {
-//      titles[index].textColor = Constant.Color.selected
-//    }
-//
-//    delegate?.tabbyButtonDidPress(button.tag)
-//    selectedIndex = button.tag
-//  }
-//
-//  // MARK: - Animations
-//
-//  func animateIndicator(index: Int) {
-//    UIView.animateWithDuration(0.7, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 0, options: [.CurveEaseIn], animations: {
-//      self.indicator.center.x = self.buttons[index].center.x
-//      }, completion: nil)
-//  }
-//
-//  // MARK: - Helper methods
-//
-//  func configureController(index: Int) {
-//    guard index < buttons.count else { return }
-//    buttonDidPress(buttons[index])
-//  }
-//
-//  func prepareTranslucency(translucent: Bool) {
-//    translucentView.removeFromSuperview()
-//
-//    if translucent {
-//      insertSubview(translucentView, atIndex: 0)
-//      constraint(translucentView, attributes: [.Width, .Height, .Top, .Left])
-//      backgroundColor = Constant.Color.background.colorWithAlphaComponent(0.85)
-//    } else {
-//      backgroundColor = Constant.Color.background
-//    }
-//  }
-//
-//  func prepare(tuples: [(controller: UIViewController, image: UIImage?)]) {
-//    buttons = []
-//    titles = []
-//    icons = []
-//    animations = []
-//
-//    for (index, tuple) in tuples.enumerate() {
-//      let button = UIButton()
-//      button.tag = index
-//      button.adjustsImageWhenHighlighted = false
-//      button.translatesAutoresizingMaskIntoConstraints = false
-//      button.addTarget(self, action: #selector(buttonDidTouchDown(_:)), forControlEvents: [.TouchDown, .TouchDragEnter])
-//      button.addTarget(self, action: #selector(buttonDidCancel(_:)), forControlEvents: [.TouchCancel, .TouchDragExit])
-//      button.addTarget(self, action: #selector(buttonDidPress(_:)), forControlEvents: .TouchUpInside)
-//
-//      let label = UILabel()
-//      label.text = tuple.controller.title
-//      label.font = Constant.Font.title
-//      label.textColor = Constant.Color.disabled
-//      label.translatesAutoresizingMaskIntoConstraints = false
-//
-//      if let image = tuple.image {
-//        let icon = image.imageWithRenderingMode(.AlwaysTemplate)
-//        icons.append(icon)
-//
-//        button.setImage(icon, forState: .Normal)
-//        button.tintColor = Constant.Color.disabled
-//      }
-//
-//      [button, label].forEach { addSubview($0) }
-//
-//      buttons.append(button)
-//      titles.append(label)
-//      animations.append(Constant.Animation.initial)
-//    }
-//
-//    prepareShadow(Constant.Color.shadow, height: CGFloat(-1))
-//    setupConstraints()
-//    configureController(selectedController)
-//
-//    layer.shadowOpacity = 0
-//  }
-//
