@@ -34,7 +34,23 @@ class TabbyCell: UICollectionViewCell {
       TabbyAnimation.animate(imageView, kind: item.animation)
     }
 
+    handleBehaviors(selected)
     setupConstraints()
+  }
+
+  // MARK: - Helper methods
+
+  func handleBehaviors(selected: Bool) {
+    switch Constant.Behavior.labelVisibility {
+    case .Invisible:
+      label.alpha = 0
+      break
+    case .ActiveVisible:
+      label.alpha = selected ? 1 : 0
+      break
+    default:
+      label.alpha = 1
+    }
   }
 
   // MARK: - Constraints
@@ -73,7 +89,7 @@ class TabbyCell: UICollectionViewCell {
       NSLayoutConstraint(item: label,
         attribute: .CenterY, relatedBy: .Equal,
         toItem: self, attribute: .CenterY,
-        multiplier: 1, constant: offset + 4)
+        multiplier: 1, constant: offset + 5)
       ])
   }
 }
