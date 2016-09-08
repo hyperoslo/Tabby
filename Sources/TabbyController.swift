@@ -24,7 +24,7 @@ public class TabbyController: UIViewController {
     return tabby
   }()
 
-  public func selectedController() -> UIViewController {
+  public var selectedController: UIViewController {
     return items[index].controller
   }
 
@@ -129,7 +129,7 @@ public class TabbyController: UIViewController {
   /**
    Initializer with a touple of controllers and images for it.
    */
-  public init(items items: [TabbyBarItem]) {
+  public init(items: [TabbyBarItem]) {
     self.items = items
 
     super.init(nibName: nil, bundle: nil)
