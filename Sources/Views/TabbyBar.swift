@@ -18,7 +18,7 @@ public class TabbyBar: UIView {
 
   lazy var translucentView: UIVisualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .Light))
 
-  lazy var layout: TabbyLayout = { [unowned self] in
+  lazy var layout: TabbyLayout = {
     let layout = TabbyLayout()
     layout.minimumInteritemSpacing = 0
 
@@ -65,11 +65,9 @@ public class TabbyBar: UIView {
    */
   public init(items: [TabbyBarItem]) {
     self.items = items
-    
     super.init(frame: .zero)
 
     backgroundColor = Constant.Color.background
-
 
     collectionView.addObserver(
       self, forKeyPath: TabbyBar.collectionObserver,
