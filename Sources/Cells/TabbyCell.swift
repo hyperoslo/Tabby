@@ -44,10 +44,8 @@ class TabbyCell: UICollectionViewCell {
     switch Constant.Behavior.labelVisibility {
     case .Invisible:
       label.alpha = 0
-      break
     case .ActiveVisible:
       label.alpha = selected ? 1 : 0
-      break
     default:
       label.alpha = 1
     }
