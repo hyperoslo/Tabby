@@ -15,7 +15,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     controller.delegate = self
     controller.translucent = true
-    controller.barVisible = false
 
     return controller
   }()

@@ -78,7 +78,7 @@ public struct Constant {
       /**
        The height of the indicator.
        */
-      public static var height: CGFloat = 4
+      public static var height: CGFloat = 3
     }
 
     /**

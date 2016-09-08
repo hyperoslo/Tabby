@@ -40,7 +40,7 @@ class TabbyCell: UICollectionViewCell {
   // MARK: - Constraints
 
   func setupConstraints() {
-    let offset: CGFloat = label.alpha == 1 ? 10 : 0
+    let offset: CGFloat = label.alpha == 1 ? 8 : 0
 
     imageView.translatesAutoresizingMaskIntoConstraints = false
     imageView.removeFromSuperview()
@@ -81,7 +81,7 @@ class TabbyCell: UICollectionViewCell {
       NSLayoutConstraint(item: label,
         attribute: .CenterY, relatedBy: .Equal,
         toItem: self, attribute: .CenterY,
-        multiplier: 1, constant: offset + 1)
+        multiplier: 1, constant: offset + 4)
       ])
   }
 }
