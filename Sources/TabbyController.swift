@@ -3,7 +3,7 @@ import UIKit
 /**
  The protocol that will inform you when an item of the tab bar is tapped.
  */
-public protocol TabbyDelegate {
+public protocol TabbyDelegate: class {
 
   func tabbyDidPress(item: TabbyBarItem)
 }
@@ -114,7 +114,7 @@ public class TabbyController: UIViewController {
   /**
    The delegate that will tell you when a tab bar is tapped.
    */
-  public var delegate: TabbyDelegate?
+  public weak var delegate: TabbyDelegate?
 
   // MARK: - Private variables
 

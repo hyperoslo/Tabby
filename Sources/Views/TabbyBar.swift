@@ -3,7 +3,7 @@ import UIKit
 /**
  The tab bar delegate that will tell you when a button in the tab bar was pressed.
  */
-public protocol TabbyBarDelegate {
+public protocol TabbyBarDelegate: class {
 
   func tabbyButtonDidPress(index: Int)
 }
@@ -56,7 +56,7 @@ public class TabbyBar: UIView {
     }
   }
 
-  var delegate: TabbyBarDelegate?
+  weak var delegate: TabbyBarDelegate?
 
   // MARK: - Initializers
 
