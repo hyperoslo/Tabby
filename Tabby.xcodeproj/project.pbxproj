@@ -17,6 +17,8 @@
 		292B02791D8189F700DCA1C1 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292B026E1D8189F700DCA1C1 /* Constant.swift */; };
 		292B027A1D8189F700DCA1C1 /* TabbyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292B026F1D8189F700DCA1C1 /* TabbyController.swift */; };
 		292B027B1D8189F700DCA1C1 /* TabbyBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292B02711D8189F700DCA1C1 /* TabbyBar.swift */; };
+		29BB21BD1D82C19E00FA2D92 /* Morgan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29BB21BB1D82C19E00FA2D92 /* Morgan.framework */; };
+		29BB21BE1D82C19E00FA2D92 /* Walker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29BB21BC1D82C19E00FA2D92 /* Walker.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +32,8 @@
 		292B026E1D8189F700DCA1C1 /* Constant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		292B026F1D8189F700DCA1C1 /* TabbyController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabbyController.swift; sourceTree = "<group>"; };
 		292B02711D8189F700DCA1C1 /* TabbyBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabbyBar.swift; sourceTree = "<group>"; };
+		29BB21BB1D82C19E00FA2D92 /* Morgan.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Morgan.framework; path = Carthage/Build/iOS/Morgan.framework; sourceTree = "<group>"; };
+		29BB21BC1D82C19E00FA2D92 /* Walker.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Walker.framework; path = Carthage/Build/iOS/Walker.framework; sourceTree = "<group>"; };
 		29E9FD211CE318F1003F9384 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D5B2E89F1C3A780C00C0327D /* Tabby.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Tabby.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -39,6 +43,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				29BB21BE1D82C19E00FA2D92 /* Walker.framework in Frameworks */,
+				29BB21BD1D82C19E00FA2D92 /* Morgan.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -129,6 +135,8 @@
 		D5B2E8951C3A780C00C0327D = {
 			isa = PBXGroup;
 			children = (
+				29BB21BB1D82C19E00FA2D92 /* Morgan.framework */,
+				29BB21BC1D82C19E00FA2D92 /* Walker.framework */,
 				292B02601D8189F700DCA1C1 /* Sources */,
 				29E9FD201CE318F1003F9384 /* Resources */,
 				D5B2E8A01C3A780C00C0327D /* Products */,
@@ -164,6 +172,7 @@
 				D5B2E89B1C3A780C00C0327D /* Frameworks */,
 				D5B2E89C1C3A780C00C0327D /* Headers */,
 				D5B2E89D1C3A780C00C0327D /* Resources */,
+				29BB21BF1D82C1BC00FA2D92 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -215,6 +224,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		29BB21BF1D82C1BC00FA2D92 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/Walker.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Morgan.framework",
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		D5B2E89A1C3A780C00C0327D /* Sources */ = {
@@ -334,6 +361,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = "$(SRCROOT)/Resources/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
@@ -353,6 +384,10 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = "$(SRCROOT)/Resources/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;

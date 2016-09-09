@@ -39,7 +39,7 @@ public class TabbyController: UIViewController {
    */
   public var items: [TabbyBarItem] {
     didSet {
-      var currentItem = index < tabbyBar.items.count
+      let currentItem = index < tabbyBar.items.count
         ? tabbyBar.items[index]
         : items[index]
 
