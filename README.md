@@ -1,6 +1,6 @@
 # Tabby
 
-// TODO: Add the image here.
+`// TODO: Add the image here.`
 
 <div align = "center">
 <br>
@@ -15,54 +15,63 @@
 
 ## Description
 
-**Tabby** is the new solution for your tab bar. It's a full substitution for those UITabBarControllers, UITabBars and UITabBarItems that are not customizable at all. **Tabby** on the other hand is fully customizable and it has the easiness you would expect from any of our libraries.
+**Tabby** is the ultimate tab bar, a full substitution for those UITabBarControllers, UITabBars and UITabBarItems that are not customizable at all. **Tabby** has animations, behaviors and it has the easiness you would expect from any of our libraries.
 
-// TODO: Add a gif here.
+`// TODO: Add a gif here.`
 
 ## Usage
 
-There are multiple ways to use Tabby, either you subclass it and make a controller out of it, or you create a variable of it and make it your main controller as you would for your UITabBarController.
+**Tabby** begins with a controller, the called `TabbyController`. That one has an initializer taking `TabbyBarItems`. Each item has a `controller`, an `image` and an `animation` that defaults to a constant.
+
+Once you have created the array of items, you can initialize the `TabbyController` like so:
 
 ```swift
-let controller = TabbyController()
-controller.controllers = [
-  (self.firstNavigation, UIImage(named: "cow")),
-  (self.secondController, UIImage(named: "donut")),
-  (self.thirdNavigation, UIImage(named: "fish"))
+let items = [
+TabbyBarItem(controller: firstController, image: UIImage(named: "first")),
+TabbyBarItem(controller: secondController, image: UIImage(named: "second"))
 ]
 ```
 
-And there you have it, your controller with different images set for you.
+```swift
+let controller = TabbyController(items: items)
+```
 
 #### Customization
 
-As stated before, there are lots of customization points in **Tabby**, you can find the [constants](https://github.com/hyperoslo/Tabby/blob/master/Sources/Library/Constant.swift#L3) file here, with fonts, colors and animations.
+As stated before, there are lots of customization points in **Tabby**, you can find the [constants](https://github.com/hyperoslo/Tabby/blob/master/Sources/Library/Constant.swift#L3) file with fonts, colors and animations.
 
-A part from the typical constants, you'll be able to change the translucency, the indicator and the separator between the tab and the controller, with the possibility to add a shadow if you want.
+A part from the typical constants, you'll be able to change the translucency, the indicator or the separator between the tab and the controller, with the possibility to add a shadow if you want.
 
 ```swift
 controller.translucent = true
 controller.showSeparator = false
 controller.showIndicator = false
-controller.animations = [
-  TabbyAnimation.Kind.Flip,
-  TabbyAnimation.Kind.Morph,
-  TabbyAnimation.Kind.Swing
-]
 ```
+
+##### Behaviors
+
+**Tabby** is built upon behaviors. As soon as we add more customization points within the source code, constants will emerge that will let you control more parts of the insights of **Tabby**. As for now, the first behavior dictates weather the title should be displayed, displayed only in the selected one, or not displayed at all.
+
+To change that, you just set:
+
+`Tabby.Constant.Behavior.labelVisibility = .ActiveVisible`
 
 #### Animations
 
-There are lots of default [animations](https://github.com/hyperoslo/Tabby/blob/master/Sources/Animations/TabbyAnimation.swift#L5) that you can use, but if you are not satisfied with it, you have a delegate method that will inform you when the button was just tapped.
-
-```swift
-func tabbyButtonDidPress(index: Int)
-```
+There are lots of default [animations](https://github.com/hyperoslo/Tabby/blob/master/Sources/Animations/TabbyAnimation.swift#L5) that you can use. We'll be adding more and more of those.
 
 The default animations are:
 
 ```swift
 Pop, Flip, Morph, Shake, Swing, PushUp, PushDown, None
+```
+
+#### Delegates
+
+As for now, there is one delegate method that informs you which button was just pressed. This will let you rebuild the tab bar, reload it, add different items, etc.
+
+```swift
+func tabbyButtonDidPress(index: Int)
 ```
 
 Be sure to check our [demo](https://github.com/hyperoslo/Tabby/tree/master/Demo/TabbyDemo) if you have any further questions! :)
@@ -85,7 +94,7 @@ github "hyperoslo/Tabby"
 
 ## Author
 
-Made by Hyper Interaktiv AS. Contact us at ios@hyper.no.
+Made by Hyper Oslo. Contact us at ios@hyper.no.
 
 ## Contributing
 
