@@ -27,8 +27,8 @@ Once you have created the array of items, you can initialize the `TabbyControlle
 
 ```swift
 let items = [
-TabbyBarItem(controller: firstController, image: UIImage(named: "first")),
-TabbyBarItem(controller: secondController, image: UIImage(named: "second"))
+  TabbyBarItem(controller: firstController, image: UIImage(named: "first")),
+  TabbyBarItem(controller: secondController, image: UIImage(named: "second"))
 ]
 ```
 
