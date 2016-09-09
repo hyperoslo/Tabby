@@ -46,6 +46,7 @@ A part from the typical constants, you'll be able to change the translucency, th
 controller.translucent = true
 controller.showSeparator = false
 controller.showIndicator = false
+controller.barVisible = false
 ```
 
 ##### Behaviors
