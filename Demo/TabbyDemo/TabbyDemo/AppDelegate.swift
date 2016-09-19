@@ -28,14 +28,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
   var window: UIWindow?
 
-  func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+  func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
 
-    Tabby.Constant.Color.background = UIColor.whiteColor()
+    Tabby.Constant.Color.background = UIColor.white
     Tabby.Constant.Color.selected = UIColor(red:0.22, green:0.81, blue:0.99, alpha:1.00)
 
-    Tabby.Constant.Behavior.labelVisibility = .ActiveVisible
+    Tabby.Constant.Behavior.labelVisibility = .activeVisible
 
-    window = UIWindow(frame: UIScreen.mainScreen().bounds)
+    window = UIWindow(frame: UIScreen.main.bounds)
     window?.rootViewController = mainController
     window?.makeKeyAndVisible()
 
@@ -45,7 +45,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 extension AppDelegate: TabbyDelegate {
 
-  func tabbyDidPress(item: TabbyBarItem) {
+  func tabbyDidPress(_ item: TabbyBarItem) {
     // Do your awesome transformations!
   }
 }

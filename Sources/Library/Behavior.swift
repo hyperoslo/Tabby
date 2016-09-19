@@ -5,6 +5,6 @@ public struct Behavior {
 
   /// Label visibility behavior.
   public enum Label {
-    case Visible, Invisible, ActiveVisible
+    case visible, invisible, activeVisible
   }
 }

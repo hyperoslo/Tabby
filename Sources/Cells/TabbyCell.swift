@@ -6,7 +6,7 @@ class TabbyCell: UICollectionViewCell {
 
   lazy var imageView: UIImageView = {
     let imageView = UIImageView()
-    imageView.contentMode = .ScaleAspectFit
+    imageView.contentMode = .scaleAspectFit
 
     return imageView
   }()
@@ -21,10 +21,10 @@ class TabbyCell: UICollectionViewCell {
 
   // MARK: - Configuration
 
-  func configureCell(item: TabbyBarItem, selected: Bool = false) {
+  func configureCell(_ item: TabbyBarItem, selected: Bool = false) {
     let color = selected ? Constant.Color.selected : Constant.Color.disabled
 
-    imageView.image = item.image?.imageWithRenderingMode(.AlwaysTemplate)
+    imageView.image = item.image?.withRenderingMode(.alwaysTemplate)
     imageView.tintColor = color
 
     label.text = item.controller.title
@@ -42,11 +42,11 @@ class TabbyCell: UICollectionViewCell {
 
   // MARK: - Helper methods
 
-  func handleBehaviors(selected: Bool) {
+  func handleBehaviors(_ selected: Bool) {
     switch Constant.Behavior.labelVisibility {
-    case .Invisible:
+    case .invisible:
       label.alpha = 0
-    case .ActiveVisible:
+    case .activeVisible:
       label.alpha = selected ? 1 : 0
     default:
       label.alpha = 1
@@ -63,21 +63,21 @@ class TabbyCell: UICollectionViewCell {
 
     addSubview(imageView)
 
-    constraint(imageView, attributes: .CenterX)
+    constraint(imageView, attributes: .centerX)
     addConstraints([
       NSLayoutConstraint(item: imageView,
-        attribute: .Width, relatedBy: .Equal,
-        toItem: nil, attribute: .NotAnAttribute,
+        attribute: .width, relatedBy: .equal,
+        toItem: nil, attribute: .notAnAttribute,
         multiplier: 1, constant: Constant.Dimension.Icon.width),
 
       NSLayoutConstraint(item: imageView,
-        attribute: .Height, relatedBy: .Equal,
-        toItem: nil, attribute: .NotAnAttribute,
+        attribute: .height, relatedBy: .equal,
+        toItem: nil, attribute: .notAnAttribute,
         multiplier: 1, constant: Constant.Dimension.Icon.height),
 
       NSLayoutConstraint(item: imageView,
-        attribute: .CenterY, relatedBy: .Equal,
-        toItem: self, attribute: .CenterY,
+        attribute: .centerY, relatedBy: .equal,
+        toItem: self, attribute: .centerY,
         multiplier: 1, constant: -offset)
       ])
 
@@ -86,10 +86,10 @@ class TabbyCell: UICollectionViewCell {
 
     addSubview(label)
 
-    constraint(label, attributes: .CenterX)
+    constraint(label, attributes: .centerX)
     addConstraint(NSLayoutConstraint(item: label,
-      attribute: .CenterY, relatedBy: .Equal,
-      toItem: self, attribute: .CenterY,
+      attribute: .centerY, relatedBy: .equal,
+      toItem: self, attribute: .centerY,
       multiplier: 1, constant: offset + 5)
     )
   }

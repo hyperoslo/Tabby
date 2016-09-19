@@ -3,10 +3,10 @@ import Tabby
 
 class FirstController: GeneralController {
 
-  override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+  override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
 
-    title = "Cows".uppercaseString
+    title = "Cows".uppercased()
   }
 
   required init?(coder aDecoder: NSCoder) {

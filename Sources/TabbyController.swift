@@ -5,18 +5,18 @@ import UIKit
  */
 public protocol TabbyDelegate: class {
 
-  func tabbyDidPress(item: TabbyBarItem)
+  func tabbyDidPress(_ item: TabbyBarItem)
 }
 
 /**
  TabbyController is the controller that will contain all the other controllers.
  */
-public class TabbyController: UIViewController {
+open class TabbyController: UIViewController {
 
   /**
    The actual tab bar that will contain the buttons, indicator, separator, etc.
    */
-  public lazy var tabbyBar: TabbyBar = { [unowned self] in
+  open lazy var tabbyBar: TabbyBar = { [unowned self] in
     let tabby = TabbyBar(items: self.items)
     tabby.translatesAutoresizingMaskIntoConstraints = false
     tabby.delegate = self
@@ -27,7 +27,7 @@ public class TabbyController: UIViewController {
   /**
    The current selected controller in the tab bar.
   */
-  public var selectedController: UIViewController {
+  open var selectedController: UIViewController {
     return items[index].controller
   }
 
@@ -37,13 +37,13 @@ public class TabbyController: UIViewController {
    - Parameter controller: The controller that you set as the one that will appear when tapping the view.
    - Parameter image: The image that will appear in the TabbyBarItem.
    */
-  public var items: [TabbyBarItem] {
+  open var items: [TabbyBarItem] {
     didSet {
       let currentItem = index < tabbyBar.items.count
         ? tabbyBar.items[index]
         : items[index]
 
-      if let index = items.indexOf(currentItem) {
+      if let index = items.index(of: currentItem) {
         self.index = index
       }
 
@@ -54,7 +54,7 @@ public class TabbyController: UIViewController {
   /**
    The property to set the current tab bar index.
    */
-  public var setIndex = 0 {
+  open var setIndex = 0 {
     didSet {
       guard setIndex < items.count else { return }
 
@@ -66,7 +66,7 @@ public class TabbyController: UIViewController {
   /**
    Weather the tab bar is translucent or not, this will make you to have to care about the offsets in your controller.
    */
-  public var translucent: Bool = false {
+  open var translucent: Bool = false {
     didSet {
       guard index < items.count else { return }
 
@@ -82,7 +82,7 @@ public class TabbyController: UIViewController {
   /**
    A property indicating weather the tab bar should be visible or not. True by default.
    */
-  public var barVisible: Bool = true {
+  open var barVisible: Bool = true {
     didSet {
       tabbyBar.alpha = barVisible ? 1 : 0
       prepareCurrentController()
@@ -92,7 +92,7 @@ public class TabbyController: UIViewController {
   /**
    Weather or not it should show the indicator or not to show in which tab the user is in.
    */
-  public var showIndicator: Bool = true {
+  open var showIndicator: Bool = true {
     didSet {
       tabbyBar.indicator.alpha = showIndicator ? 1 : 0
     }
@@ -101,7 +101,7 @@ public class TabbyController: UIViewController {
   /**
    Weather or not it should display a separator or a shadow.
    */
-  public var showSeparator: Bool = true {
+  open var showSeparator: Bool = true {
     didSet {
       tabbyBar.separator.alpha = showSeparator ? 1 : 0
 
@@ -121,11 +121,11 @@ public class TabbyController: UIViewController {
   /**
    The delegate that will tell you when a tab bar is tapped.
    */
-  public weak var delegate: TabbyDelegate?
+  open weak var delegate: TabbyDelegate?
 
   // MARK: - Private variables
 
-  private var index = 0
+  fileprivate var index = 0
 
   // MARK: - Initializers
 
@@ -154,7 +154,7 @@ public class TabbyController: UIViewController {
   /**
    Did appear.
    */
-  public override func viewDidAppear(animated: Bool) {
+  open override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
 
     tabbyButtonDidPress(index)
@@ -174,13 +174,13 @@ public class TabbyController: UIViewController {
     applyNewConstraints(controller.view)
   }
 
-  func applyNewConstraints(subview: UIView) {
-    view.constraint(subview, attributes: .Leading, .Trailing, .Top)
+  func applyNewConstraints(_ subview: UIView) {
+    view.constraint(subview, attributes: .leading, .trailing, .top)
     view.addConstraints([
       NSLayoutConstraint(
-        item: subview, attribute: .Height,
-        relatedBy: .Equal, toItem: view,
-        attribute: .Height, multiplier: 1,
+        item: subview, attribute: .height,
+        relatedBy: .equal, toItem: view,
+        attribute: .height, multiplier: 1,
         constant: barVisible ? translucent ? 0 : -Constant.Dimension.height : 0)
       ])
   }
@@ -188,12 +188,12 @@ public class TabbyController: UIViewController {
   // MARK: - Constraints
 
   func setupConstraints() {
-    view.constraint(tabbyBar, attributes: .Leading, .Trailing, .Bottom)
+    view.constraint(tabbyBar, attributes: .leading, .trailing, .bottom)
     view.addConstraints([
       NSLayoutConstraint(
-        item: tabbyBar, attribute: .Height,
-        relatedBy: .Equal, toItem: nil,
-        attribute: .NotAnAttribute,
+        item: tabbyBar, attribute: .height,
+        relatedBy: .equal, toItem: nil,
+        attribute: .notAnAttribute,
         multiplier: 1, constant: Constant.Dimension.height)
       ])
   }
@@ -206,7 +206,7 @@ extension TabbyController: TabbyBarDelegate {
 
    - Parameter index: The index that was just tapped.
    */
-  public func tabbyButtonDidPress(index: Int) {
+  public func tabbyButtonDidPress(_ index: Int) {
     self.index = index
 
     guard index < items.count else { return }
@@ -218,10 +218,10 @@ extension TabbyController: TabbyBarDelegate {
     /// Check if it should do another action rather than removing the view.
     guard !view.subviews.contains(controller.view) else {
       if let navigationController = controller as? UINavigationController {
-        navigationController.popViewControllerAnimated(true)
+        navigationController.popViewController(animated: true)
       } else {
         for case let subview as UIScrollView in controller.view.subviews {
-          subview.setContentOffset(CGPointZero, animated: true)
+          subview.setContentOffset(CGPoint.zero, animated: true)
         }
       }
 
