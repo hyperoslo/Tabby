@@ -27,13 +27,16 @@ class TabbyBadge: UIView {
     label.font = Constant.Font.badge
     label.textColor = Constant.Color.Badge.text
     label.textAlignment = .center
-    label.text = "0"
 
     return label
   }()
 
   override init(frame: CGRect) {
     super.init(frame: frame)
+
+    defer {
+      setNumber = 0
+    }
 
     backgroundColor = Constant.Color.Badge.background
     
