@@ -216,8 +216,7 @@ extension TabbyController: TabbyBarDelegate {
 
     delegate?.tabbyDidPress(item)
 
-    if item.selection == .custom { return }
-
+    guard item.selection == .systematic else { return }
     /// Check if it should do another action rather than removing the view.
     guard !view.subviews.contains(controller.view) else {
       if let navigationController = controller as? UINavigationController {
