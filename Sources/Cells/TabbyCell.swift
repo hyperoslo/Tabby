@@ -26,7 +26,7 @@ class TabbyCell: UICollectionViewCell {
   func configureCell(_ item: TabbyBarItem, selected: Bool = false) {
     let color = selected ? Constant.Color.selected : Constant.Color.disabled
 
-    imageView.image = item.image?.withRenderingMode(.alwaysTemplate)
+    imageView.image = UIImage(named: item.image)?.withRenderingMode(.alwaysTemplate)
     imageView.tintColor = color
 
     label.text = item.controller.title

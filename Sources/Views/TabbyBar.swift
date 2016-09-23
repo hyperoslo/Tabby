@@ -101,6 +101,7 @@ open class TabbyBar: UIView {
   func setupCollectionView() {
     collectionView.delegate = self
     collectionView.dataSource = self
+    collectionView.clipsToBounds = false
     collectionView.backgroundColor = Constant.Color.collection
 
     collectionView.register(
@@ -138,10 +139,6 @@ open class TabbyBar: UIView {
   // MARK: - Constraints
 
   func setupConstraints() {
-    collectionView.translatesAutoresizingMaskIntoConstraints = false
-    addSubview(collectionView)
-    constraint(collectionView, attributes: .top, .bottom, .leading, .trailing)
-
     indicator.translatesAutoresizingMaskIntoConstraints = false
     addSubview(indicator)
     constraint(indicator, attributes: .left, .bottom)
@@ -166,6 +163,10 @@ open class TabbyBar: UIView {
         toItem: nil, attribute: .notAnAttribute,
         multiplier: 1, constant: Constant.Dimension.Separator.height)
     )
+
+    collectionView.translatesAutoresizingMaskIntoConstraints = false
+    addSubview(collectionView)
+    constraint(collectionView, attributes: .top, .bottom, .leading, .trailing)
   }
 }
 
@@ -196,13 +197,13 @@ extension TabbyBar: UICollectionViewDataSource {
   public func collectionView(_ collectionView: UICollectionView,
     cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     
-      guard let cell = collectionView.dequeueReusableCell(
-        withReuseIdentifier: TabbyCell.reusableIdentifier, for: indexPath)
-        as? TabbyCell else { return UICollectionViewCell() }
+    guard let cell = collectionView.dequeueReusableCell(
+      withReuseIdentifier: TabbyCell.reusableIdentifier, for: indexPath)
+      as? TabbyCell else { return UICollectionViewCell() }
 
-      cell.configureCell(items[(indexPath as NSIndexPath).row],
-                         selected: selectedItem == (indexPath as NSIndexPath).row)
+    cell.configureCell(items[(indexPath as NSIndexPath).row],
+                       selected: selectedItem == (indexPath as NSIndexPath).row)
 
-      return cell
+    return cell
   }
 }

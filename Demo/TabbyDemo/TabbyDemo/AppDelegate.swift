@@ -5,9 +5,9 @@ import Tabby
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
   lazy var items: [TabbyBarItem] = [
-    TabbyBarItem(controller: self.firstNavigation, image: UIImage(named: "cow")),
-    TabbyBarItem(controller: self.secondController, image: UIImage(named: "donut")),
-    TabbyBarItem(controller: self.thirdNavigation, image: UIImage(named: "fish"))
+    TabbyBarItem(controller: self.firstNavigation, image: "cow"),
+    TabbyBarItem(controller: self.secondController, image: "donut"),
+    TabbyBarItem(controller: self.thirdNavigation, image: "fish")
   ]
 
   lazy var mainController: TabbyController = { [unowned self] in

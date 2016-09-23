@@ -2,19 +2,21 @@ import UIKit
 
 class TabbyBadge: UIView {
 
-  var setNumber: Int = 1 {
+  var setNumber: Int = 0 {
     didSet {
       var text = "\(setNumber)"
       if setNumber >= 99 {
-        text = "Dude, what the?"
+        text = "+99"
       }
 
       visible = setNumber > 0
       numberLabel.text = text
+
+      setupConstraints()
     }
   }
 
-  var visible: Bool = true {
+  var visible: Bool = false {
     didSet {
       alpha = visible ? 1 : 0
     }
@@ -22,6 +24,10 @@ class TabbyBadge: UIView {
 
   lazy var numberLabel: UILabel = {
     let label = UILabel()
+    label.font = Constant.Font.badge
+    label.textColor = Constant.Color.Badge.text
+    label.textAlignment = .center
+    label.text = "0"
 
     return label
   }()
@@ -29,10 +35,13 @@ class TabbyBadge: UIView {
   override init(frame: CGRect) {
     super.init(frame: frame)
 
-    backgroundColor = UIColor.orange
+    backgroundColor = Constant.Color.Badge.background
+    
     layer.cornerRadius = Constant.Dimension.Badge.size / 2
     layer.borderColor = UIColor.white.cgColor
     layer.borderWidth = 2
+
+    setupConstraints()
   }
   
   required init?(coder aDecoder: NSCoder) {
@@ -42,6 +51,12 @@ class TabbyBadge: UIView {
   // MARK: - Constraints
 
   func setupConstraints() {
-    
+    numberLabel.translatesAutoresizingMaskIntoConstraints = false
+    numberLabel.removeFromSuperview()
+
+    addSubview(numberLabel)
+    constraint(numberLabel, attributes: .centerX, .centerY)
+
+    numberLabel.sizeToFit()
   }
 }
