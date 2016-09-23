@@ -172,7 +172,14 @@ open class TabbyBar: UIView {
 extension TabbyBar: UICollectionViewDelegate {
 
   public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    let position = (indexPath as NSIndexPath).row
+    let position = indexPath.row
+
+    if let cell = collectionView.dequeueReusableCell(
+      withReuseIdentifier: TabbyCell.reusableIdentifier,
+      for: indexPath) as? TabbyCell {
+        cell.label.textColor = Constant.Color.selected
+        cell.imageView.tintColor = Constant.Color.selected
+    }
 
     selectedItem = position
     delegate?.tabbyButtonDidPress(position)
