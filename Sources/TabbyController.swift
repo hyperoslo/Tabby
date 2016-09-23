@@ -211,9 +211,12 @@ extension TabbyController: TabbyBarDelegate {
 
     guard index < items.count else { return }
 
-    let controller = items[index].controller
+    let item = items[index]
+    let controller = item.controller
 
-    delegate?.tabbyDidPress(items[index])
+    delegate?.tabbyDidPress(item)
+
+    if item.selection == .custom { return }
 
     /// Check if it should do another action rather than removing the view.
     guard !view.subviews.contains(controller.view) else {

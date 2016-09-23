@@ -193,9 +193,11 @@ extension TabbyBar: UICollectionViewDataSource {
     cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     
       guard let cell = collectionView.dequeueReusableCell(
-        withReuseIdentifier: TabbyCell.reusableIdentifier, for: indexPath) as? TabbyCell else { return UICollectionViewCell() }
+        withReuseIdentifier: TabbyCell.reusableIdentifier, for: indexPath)
+        as? TabbyCell else { return UICollectionViewCell() }
 
-      cell.configureCell(items[(indexPath as NSIndexPath).row], selected: selectedItem == (indexPath as NSIndexPath).row)
+      cell.configureCell(items[(indexPath as NSIndexPath).row],
+                         selected: selectedItem == (indexPath as NSIndexPath).row)
 
       return cell
   }

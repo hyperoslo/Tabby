@@ -7,4 +7,9 @@ public struct Behavior {
   public enum Label {
     case visible, invisible, activeVisible
   }
+
+  /// Selected behavior.
+  public enum Selection {
+    case systematic, custom
+  }
 }

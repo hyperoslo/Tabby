@@ -5,11 +5,16 @@ public struct TabbyBarItem: Equatable {
   public var controller: UIViewController
   public var image: UIImage?
   public var animation: TabbyAnimation.Kind
+  public var selection: Behavior.Selection
 
-  public init(controller: UIViewController, image: UIImage?, animation: TabbyAnimation.Kind = Constant.Animation.initial) {
+  public init(controller: UIViewController, image: UIImage?,
+              animation: TabbyAnimation.Kind = Constant.Animation.initial,
+              selection: Behavior.Selection = .systematic) {
+
     self.controller = controller
     self.image = image
     self.animation = animation
+    self.selection = selection
   }
 }
 
