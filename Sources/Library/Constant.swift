@@ -64,6 +64,12 @@ public struct Constant {
       /// The height of the separator.
       public static var height: CGFloat = 0.25
     }
+
+    /// This represents the badge size constants.
+    public struct Badge {
+      /// The size of the badge.
+      public static var size: CGFloat = 20
+    }
   }
 
   /// The default animation the tab bar will have.

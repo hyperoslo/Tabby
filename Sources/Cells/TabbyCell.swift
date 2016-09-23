@@ -19,6 +19,8 @@ class TabbyCell: UICollectionViewCell {
     return label
   }()
 
+  lazy var badge: TabbyBadge = TabbyBadge()
+
   // MARK: - Configuration
 
   func configureCell(_ item: TabbyBarItem, selected: Bool = false) {
@@ -79,7 +81,7 @@ class TabbyCell: UICollectionViewCell {
         attribute: .centerY, relatedBy: .equal,
         toItem: self, attribute: .centerY,
         multiplier: 1, constant: -offset)
-      ])
+    ])
 
     label.translatesAutoresizingMaskIntoConstraints = false
     label.removeFromSuperview()
@@ -92,5 +94,31 @@ class TabbyCell: UICollectionViewCell {
       toItem: self, attribute: .centerY,
       multiplier: 1, constant: offset + 5)
     )
+
+    badge.translatesAutoresizingMaskIntoConstraints = false
+    badge.removeFromSuperview()
+
+    addSubview(badge)
+    addConstraints([
+      NSLayoutConstraint(item: badge,
+        attribute: .width, relatedBy: .equal,
+        toItem: nil, attribute: .notAnAttribute,
+        multiplier: 1, constant: Constant.Dimension.Badge.size),
+
+      NSLayoutConstraint(item: badge,
+        attribute: .height, relatedBy: .equal,
+        toItem: nil, attribute: .notAnAttribute,
+        multiplier: 1, constant: Constant.Dimension.Badge.size),
+
+      NSLayoutConstraint(item: badge,
+        attribute: .top, relatedBy: .equal,
+        toItem: imageView, attribute: .top,
+        multiplier: 1, constant: -Constant.Dimension.Badge.size / 2),
+
+      NSLayoutConstraint(item: badge,
+        attribute: .right, relatedBy: .equal,
+        toItem: imageView, attribute: .right,
+        multiplier: 1, constant: Constant.Dimension.Badge.size / 2)
+    ])
   }
 }

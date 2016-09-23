@@ -2,7 +2,7 @@ import UIKit
 
 class TabbyBadge: UIView {
 
-  var setNumber: Int = 0 {
+  var setNumber: Int = 1 {
     didSet {
       var text = "\(setNumber)"
       if setNumber >= 99 {
@@ -20,12 +20,6 @@ class TabbyBadge: UIView {
     }
   }
 
-  lazy var container: UIView = {
-    let view = UIView()
-
-    return view
-  }()
-
   lazy var numberLabel: UILabel = {
     let label = UILabel()
 
@@ -34,6 +28,11 @@ class TabbyBadge: UIView {
 
   override init(frame: CGRect) {
     super.init(frame: frame)
+
+    backgroundColor = UIColor.orange
+    layer.cornerRadius = Constant.Dimension.Badge.size / 2
+    layer.borderColor = UIColor.white.cgColor
+    layer.borderWidth = 2
   }
   
   required init?(coder aDecoder: NSCoder) {
