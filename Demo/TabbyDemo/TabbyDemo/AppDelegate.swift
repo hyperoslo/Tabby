@@ -46,7 +46,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 extension AppDelegate: TabbyDelegate {
 
   func tabbyDidPress(_ item: TabbyBarItem) {
-    Tabby.Constant.Color.selected = UIColor.orange
     // Do your awesome transformations!
   }
 }

@@ -173,12 +173,16 @@ extension TabbyBar: UICollectionViewDelegate {
 
   public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     let position = indexPath.row
+    let item = items[position]
 
-    UIView.animate(withDuration: 0.3, animations: {
-      self.indicator.backgroundColor = Constant.Color.selected
-    })
+    if item.selection == .systematic {
+      UIView.animate(withDuration: 0.3, animations: {
+        self.indicator.backgroundColor = Constant.Color.selected
+      })
 
-    selectedItem = position
+      selectedItem = position
+    }
+
     delegate?.tabbyButtonDidPress(position)
   }
 }
