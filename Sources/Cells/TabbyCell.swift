@@ -23,7 +23,7 @@ class TabbyCell: UICollectionViewCell {
 
   // MARK: - Configuration
 
-  func configureCell(_ item: TabbyBarItem, selected: Bool = false) {
+  func configureCell(_ item: TabbyBarItem, selected: Bool = false, count: Int?) {
     let color = selected ? Constant.Color.selected : Constant.Color.disabled
 
     imageView.image = UIImage(named: item.image)?.withRenderingMode(.alwaysTemplate)
@@ -31,6 +31,8 @@ class TabbyCell: UICollectionViewCell {
 
     label.text = item.controller.title
     label.textColor = color
+
+    badge.number = count ?? 0
 
     if selected {
       TabbyAnimation.animate(imageView, kind: item.animation)

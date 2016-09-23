@@ -2,14 +2,23 @@ import UIKit
 
 class TabbyBadge: UIView {
 
-  var setNumber: Int = 0 {
+  lazy var numberLabel: UILabel = {
+    let label = UILabel()
+    label.font = Constant.Font.badge
+    label.textColor = Constant.Color.Badge.text
+    label.textAlignment = .center
+
+    return label
+  }()
+
+  var number: Int = 0 {
     didSet {
-      var text = "\(setNumber)"
-      if setNumber >= 99 {
+      var text = "\(number)"
+      if number >= 99 {
         text = "+99"
       }
 
-      visible = setNumber > 0
+      visible = number > 0
       numberLabel.text = text
 
       setupConstraints()
@@ -22,20 +31,11 @@ class TabbyBadge: UIView {
     }
   }
 
-  lazy var numberLabel: UILabel = {
-    let label = UILabel()
-    label.font = Constant.Font.badge
-    label.textColor = Constant.Color.Badge.text
-    label.textAlignment = .center
-
-    return label
-  }()
-
   override init(frame: CGRect) {
     super.init(frame: frame)
 
     defer {
-      setNumber = 0
+      number = 0
     }
 
     backgroundColor = Constant.Color.Badge.background

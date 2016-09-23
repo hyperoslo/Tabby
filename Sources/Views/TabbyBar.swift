@@ -56,6 +56,12 @@ open class TabbyBar: UIView {
     }
   }
 
+  var badges: [String : Int] = [:] {
+    didSet {
+      collectionView.reloadData()
+    }
+  }
+
   weak var delegate: TabbyBarDelegate?
 
   // MARK: - Initializers
@@ -201,8 +207,10 @@ extension TabbyBar: UICollectionViewDataSource {
       withReuseIdentifier: TabbyCell.reusableIdentifier, for: indexPath)
       as? TabbyCell else { return UICollectionViewCell() }
 
-    cell.configureCell(items[(indexPath as NSIndexPath).row],
-                       selected: selectedItem == (indexPath as NSIndexPath).row)
+    let item = items[indexPath.row]
+
+    cell.configureCell(item, selected: selectedItem == indexPath.row,
+                       count: badges[item.image])
 
     return cell
   }

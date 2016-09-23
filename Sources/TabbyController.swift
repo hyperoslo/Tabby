@@ -160,6 +160,14 @@ open class TabbyController: UIViewController {
     tabbyButtonDidPress(index)
   }
 
+  // MARK: - Configurations
+
+  open func setBadge(_ value: Int, _ itemImage: String) {
+    guard !items.filter({ $0.image == itemImage }).isEmpty else { return }
+    
+    tabbyBar.badges[itemImage] = value
+  }
+
   // MARK: - Helper methods
 
   func prepareCurrentController() {

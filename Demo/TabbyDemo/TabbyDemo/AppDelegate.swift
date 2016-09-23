@@ -47,5 +47,6 @@ extension AppDelegate: TabbyDelegate {
 
   func tabbyDidPress(_ item: TabbyBarItem) {
     // Do your awesome transformations!
+    mainController.setBadge(2, "cow")
   }
 }
