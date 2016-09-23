@@ -15,6 +15,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     controller.delegate = self
     controller.translucent = true
+    
+    controller.setBadge(2, "cow")
 
     return controller
   }()
@@ -47,6 +49,5 @@ extension AppDelegate: TabbyDelegate {
 
   func tabbyDidPress(_ item: TabbyBarItem) {
     // Do your awesome transformations!
-    mainController.setBadge(2, "cow")
   }
 }

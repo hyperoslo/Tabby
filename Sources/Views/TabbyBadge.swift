@@ -4,9 +4,9 @@ class TabbyBadge: UIView {
 
   lazy var numberLabel: UILabel = {
     let label = UILabel()
+    label.textAlignment = .center
     label.font = Constant.Font.badge
     label.textColor = Constant.Color.Badge.text
-    label.textAlignment = .center
 
     return label
   }()
@@ -39,8 +39,7 @@ class TabbyBadge: UIView {
     }
 
     backgroundColor = Constant.Color.Badge.background
-    
-    layer.cornerRadius = Constant.Dimension.Badge.size / 2
+
     layer.borderColor = UIColor.white.cgColor
     layer.borderWidth = 2
 
@@ -61,5 +60,19 @@ class TabbyBadge: UIView {
     constraint(numberLabel, attributes: .centerX, .centerY)
 
     numberLabel.sizeToFit()
+
+    addConstraints([
+      NSLayoutConstraint(item: self,
+       attribute: .width, relatedBy: .equal,
+       toItem: numberLabel, attribute: .width,
+       multiplier: 1, constant: 10),
+
+      NSLayoutConstraint(item: self,
+       attribute: .height, relatedBy: .equal,
+       toItem: numberLabel, attribute: .height,
+       multiplier: 1, constant: 6)
+      ])
+
+    layer.cornerRadius = (numberLabel.frame.height + 6) / 2
   }
 }

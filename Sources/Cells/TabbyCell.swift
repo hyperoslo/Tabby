@@ -103,24 +103,14 @@ class TabbyCell: UICollectionViewCell {
     addSubview(badge)
     addConstraints([
       NSLayoutConstraint(item: badge,
-        attribute: .width, relatedBy: .equal,
-        toItem: nil, attribute: .notAnAttribute,
-        multiplier: 1, constant: Constant.Dimension.Badge.size),
-
-      NSLayoutConstraint(item: badge,
-        attribute: .height, relatedBy: .equal,
-        toItem: nil, attribute: .notAnAttribute,
-        multiplier: 1, constant: Constant.Dimension.Badge.size),
-
-      NSLayoutConstraint(item: badge,
-        attribute: .top, relatedBy: .equal,
+        attribute: .centerY, relatedBy: .equal,
         toItem: imageView, attribute: .top,
-        multiplier: 1, constant: -Constant.Dimension.Badge.size / 2),
+        multiplier: 1, constant: 0),
 
       NSLayoutConstraint(item: badge,
-        attribute: .right, relatedBy: .equal,
+        attribute: .centerX, relatedBy: .equal,
         toItem: imageView, attribute: .right,
-        multiplier: 1, constant: Constant.Dimension.Badge.size / 2)
+        multiplier: 1, constant: 0)
     ])
   }
 }
