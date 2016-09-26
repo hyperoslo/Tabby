@@ -15,8 +15,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     controller.delegate = self
     controller.translucent = true
-    
-    controller.setBadge(8, "cow")
 
     return controller
   }()

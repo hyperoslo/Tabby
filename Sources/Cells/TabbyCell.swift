@@ -32,12 +32,11 @@ class TabbyCell: UICollectionViewCell {
     label.text = item.controller.title
     label.textColor = color
 
-    badge.number = count ?? 0
-
     if selected {
       TabbyAnimation.animate(imageView, kind: item.animation)
     }
 
+    handleBadge(count)
     handleBehaviors(selected)
     setupConstraints()
 
@@ -45,6 +44,21 @@ class TabbyCell: UICollectionViewCell {
   }
 
   // MARK: - Helper methods
+
+  func handleBadge(_ count: Int?) {
+    guard badge.number != count else { badge.number = count ?? 0; return }
+
+    badge.number = count ?? 0
+    badge.transform = count == 0 ? .identity : CGAffineTransform.init(scaleX: 0, y: 0)
+
+    UIView.animate(
+      withDuration: 0.5, delay: 0,
+      usingSpringWithDamping: 0.6,
+      initialSpringVelocity: 0.6,
+      options: [], animations: {
+        self.badge.transform = count == 0 ? CGAffineTransform.init(scaleX: 0, y: 0) : .identity
+      }, completion: nil)
+  }
 
   func handleBehaviors(_ selected: Bool) {
     switch Constant.Behavior.labelVisibility {
