@@ -2,6 +2,8 @@ import UIKit
 
 class TabbyBadge: UIView {
 
+  lazy var containerView: UIView = UIView()
+
   lazy var numberLabel: UILabel = {
     let label = UILabel()
     label.textAlignment = .center
@@ -38,10 +40,8 @@ class TabbyBadge: UIView {
       number = 0
     }
 
-    backgroundColor = Constant.Color.Badge.background
-
-    layer.borderColor = UIColor.white.cgColor
-    layer.borderWidth = 2
+    backgroundColor = Constant.Color.Badge.border
+    containerView.backgroundColor = Constant.Color.Badge.background
 
     setupConstraints()
   }
@@ -53,26 +53,44 @@ class TabbyBadge: UIView {
   // MARK: - Constraints
 
   func setupConstraints() {
+    containerView.translatesAutoresizingMaskIntoConstraints = false
+    containerView.removeFromSuperview()
+
+    addSubview(containerView)
+    constraint(containerView, attributes: .centerX, .centerY)
+    addConstraints([
+      NSLayoutConstraint(item: self,
+        attribute: .width, relatedBy: .equal,
+        toItem: containerView, attribute: .width,
+        multiplier: 1, constant: Constant.Dimension.Badge.border * 2),
+
+      NSLayoutConstraint(item: self,
+        attribute: .height, relatedBy: .equal,
+        toItem: containerView, attribute: .height,
+        multiplier: 1, constant: Constant.Dimension.Badge.border * 2)
+      ])
+
     numberLabel.translatesAutoresizingMaskIntoConstraints = false
     numberLabel.removeFromSuperview()
 
-    addSubview(numberLabel)
-    constraint(numberLabel, attributes: .centerX, .centerY)
+    containerView.addSubview(numberLabel)
+    containerView.constraint(numberLabel, attributes: .centerX, .centerY)
 
     numberLabel.sizeToFit()
 
     addConstraints([
-      NSLayoutConstraint(item: self,
+      NSLayoutConstraint(item: containerView,
        attribute: .width, relatedBy: .equal,
        toItem: numberLabel, attribute: .width,
-       multiplier: 1, constant: 10),
+       multiplier: 1, constant: 6),
 
-      NSLayoutConstraint(item: self,
+      NSLayoutConstraint(item: containerView,
        attribute: .height, relatedBy: .equal,
        toItem: numberLabel, attribute: .height,
-       multiplier: 1, constant: 6)
+       multiplier: 1, constant: 1)
       ])
 
-    layer.cornerRadius = (numberLabel.frame.height + 6) / 2
+    containerView.layer.cornerRadius = (numberLabel.frame.height + 1) / 2
+    layer.cornerRadius = containerView.layer.cornerRadius + Constant.Dimension.Badge.border
   }
 }

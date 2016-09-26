@@ -105,7 +105,7 @@ class TabbyCell: UICollectionViewCell {
       NSLayoutConstraint(item: badge,
         attribute: .centerY, relatedBy: .equal,
         toItem: imageView, attribute: .top,
-        multiplier: 1, constant: 0),
+        multiplier: 1, constant: 1),
 
       NSLayoutConstraint(item: badge,
         attribute: .centerX, relatedBy: .equal,

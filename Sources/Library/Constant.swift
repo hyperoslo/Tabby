@@ -38,7 +38,10 @@ public struct Constant {
 
     public struct Badge {
       /// The color of the badge.
-      public static var background = UIColor.orange
+      public static var background = UIColor.red
+
+      /// The color of the border of the badge.
+      public static var border = UIColor.white
 
       /// The color of the text of the badge.
       public static var text = UIColor.white
@@ -79,6 +82,9 @@ public struct Constant {
     public struct Badge {
       /// The size of the badge.
       public static var size: CGFloat = 18
+
+      /// The size of the border radius.
+      public static var border: CGFloat = 1.5
     }
   }
 
