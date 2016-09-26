@@ -49,14 +49,14 @@ class TabbyCell: UICollectionViewCell {
     guard badge.number != count else { badge.number = count ?? 0; return }
 
     badge.number = count ?? 0
-    badge.transform = count == 0 ? .identity : CGAffineTransform.init(scaleX: 0, y: 0)
+    badge.transform = count == 0 ? .identity : .init(scaleX: 0, y: 0)
 
     UIView.animate(
       withDuration: 0.5, delay: 0,
       usingSpringWithDamping: 0.6,
       initialSpringVelocity: 0.6,
       options: [], animations: {
-        self.badge.transform = count == 0 ? CGAffineTransform.init(scaleX: 0, y: 0) : .identity
+        self.badge.transform = count == 0 ? .init(scaleX: 0, y: 0) : .identity
       }, completion: nil)
   }
 
