@@ -19,12 +19,14 @@ class TabbyCell: UICollectionViewCell {
     return label
   }()
 
+  lazy var badge: TabbyBadge = TabbyBadge()
+
   // MARK: - Configuration
 
-  func configureCell(_ item: TabbyBarItem, selected: Bool = false) {
+  func configureCell(_ item: TabbyBarItem, selected: Bool = false, count: Int?) {
     let color = selected ? Constant.Color.selected : Constant.Color.disabled
 
-    imageView.image = item.image?.withRenderingMode(.alwaysTemplate)
+    imageView.image = UIImage(named: item.image)?.withRenderingMode(.alwaysTemplate)
     imageView.tintColor = color
 
     label.text = item.controller.title
@@ -34,6 +36,7 @@ class TabbyCell: UICollectionViewCell {
       TabbyAnimation.animate(imageView, kind: item.animation)
     }
 
+    handleBadge(count)
     handleBehaviors(selected)
     setupConstraints()
 
@@ -41,6 +44,21 @@ class TabbyCell: UICollectionViewCell {
   }
 
   // MARK: - Helper methods
+
+  func handleBadge(_ count: Int?) {
+    guard badge.number != count else { badge.number = count ?? 0; return }
+
+    badge.number = count ?? 0
+    badge.transform = count == 0 ? .identity : .init(scaleX: 0, y: 0)
+
+    UIView.animate(
+      withDuration: 0.5, delay: 0,
+      usingSpringWithDamping: 0.6,
+      initialSpringVelocity: 0.6,
+      options: [], animations: {
+        self.badge.transform = count == 0 ? .init(scaleX: 0, y: 0) : .identity
+      }, completion: nil)
+  }
 
   func handleBehaviors(_ selected: Bool) {
     switch Constant.Behavior.labelVisibility {
@@ -79,7 +97,7 @@ class TabbyCell: UICollectionViewCell {
         attribute: .centerY, relatedBy: .equal,
         toItem: self, attribute: .centerY,
         multiplier: 1, constant: -offset)
-      ])
+    ])
 
     label.translatesAutoresizingMaskIntoConstraints = false
     label.removeFromSuperview()
@@ -92,5 +110,21 @@ class TabbyCell: UICollectionViewCell {
       toItem: self, attribute: .centerY,
       multiplier: 1, constant: offset + 5)
     )
+
+    badge.translatesAutoresizingMaskIntoConstraints = false
+    badge.removeFromSuperview()
+
+    addSubview(badge)
+    addConstraints([
+      NSLayoutConstraint(item: badge,
+        attribute: .centerY, relatedBy: .equal,
+        toItem: imageView, attribute: .top,
+        multiplier: 1, constant: 1),
+
+      NSLayoutConstraint(item: badge,
+        attribute: .centerX, relatedBy: .equal,
+        toItem: imageView, attribute: .right,
+        multiplier: 1, constant: 0)
+    ])
   }
 }

@@ -4,8 +4,10 @@ public struct Constant {
 
   /// This is the font that will be displayed in the tab bar. For your controller's title.
   public struct Font {
-    /// The title of the font.
+    /// The font of the title.
     public static var title = UIFont.systemFont(ofSize: 9)
+    /// The font of the badge.
+    public static var badge = UIFont.boldSystemFont(ofSize: 9)
   }
 
   /// This represents multiple colors of the tab bar.
@@ -33,6 +35,17 @@ public struct Constant {
 
     /// The color of the shadow that will substitute the indicator.
     public static var shadow = UIColor.black.withAlphaComponent(0.1)
+
+    public struct Badge {
+      /// The color of the badge.
+      public static var background = UIColor.red
+
+      /// The color of the border of the badge.
+      public static var border = UIColor.white
+
+      /// The color of the text of the badge.
+      public static var text = UIColor.white
+    }
   }
 
   /// The dimensions of the tab bar.
@@ -63,6 +76,15 @@ public struct Constant {
     public struct Separator {
       /// The height of the separator.
       public static var height: CGFloat = 0.25
+    }
+
+    /// This represents the badge size constants.
+    public struct Badge {
+      /// The size of the badge.
+      public static var size: CGFloat = 18
+
+      /// The size of the border radius.
+      public static var border: CGFloat = 1.5
     }
   }
 

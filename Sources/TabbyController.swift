@@ -160,6 +160,14 @@ open class TabbyController: UIViewController {
     tabbyButtonDidPress(index)
   }
 
+  // MARK: - Configurations
+
+  open func setBadge(_ value: Int, _ itemImage: String) {
+    guard !items.filter({ $0.image == itemImage }).isEmpty else { return }
+    
+    tabbyBar.badges[itemImage] = value
+  }
+
   // MARK: - Helper methods
 
   func prepareCurrentController() {
@@ -211,10 +219,12 @@ extension TabbyController: TabbyBarDelegate {
 
     guard index < items.count else { return }
 
-    let controller = items[index].controller
+    let item = items[index]
+    let controller = item.controller
 
-    delegate?.tabbyDidPress(items[index])
+    delegate?.tabbyDidPress(item)
 
+    guard item.selection == .systematic else { return }
     /// Check if it should do another action rather than removing the view.
     guard !view.subviews.contains(controller.view) else {
       if let navigationController = controller as? UINavigationController {

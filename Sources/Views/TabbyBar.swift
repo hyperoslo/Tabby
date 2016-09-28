@@ -56,6 +56,12 @@ open class TabbyBar: UIView {
     }
   }
 
+  var badges: [String : Int] = [:] {
+    didSet {
+      collectionView.reloadData()
+    }
+  }
+
   weak var delegate: TabbyBarDelegate?
 
   // MARK: - Initializers
@@ -101,6 +107,7 @@ open class TabbyBar: UIView {
   func setupCollectionView() {
     collectionView.delegate = self
     collectionView.dataSource = self
+    collectionView.clipsToBounds = false
     collectionView.backgroundColor = Constant.Color.collection
 
     collectionView.register(
@@ -138,10 +145,6 @@ open class TabbyBar: UIView {
   // MARK: - Constraints
 
   func setupConstraints() {
-    collectionView.translatesAutoresizingMaskIntoConstraints = false
-    addSubview(collectionView)
-    constraint(collectionView, attributes: .top, .bottom, .leading, .trailing)
-
     indicator.translatesAutoresizingMaskIntoConstraints = false
     addSubview(indicator)
     constraint(indicator, attributes: .left, .bottom)
@@ -166,15 +169,27 @@ open class TabbyBar: UIView {
         toItem: nil, attribute: .notAnAttribute,
         multiplier: 1, constant: Constant.Dimension.Separator.height)
     )
+
+    collectionView.translatesAutoresizingMaskIntoConstraints = false
+    addSubview(collectionView)
+    constraint(collectionView, attributes: .top, .bottom, .leading, .trailing)
   }
 }
 
 extension TabbyBar: UICollectionViewDelegate {
 
   public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    let position = (indexPath as NSIndexPath).row
+    let position = indexPath.row
+    let item = items[position]
 
-    selectedItem = position
+    if item.selection == .systematic {
+      UIView.animate(withDuration: 0.3, animations: {
+        self.indicator.backgroundColor = Constant.Color.selected
+      })
+
+      selectedItem = position
+    }
+
     delegate?.tabbyButtonDidPress(position)
   }
 }
@@ -188,11 +203,15 @@ extension TabbyBar: UICollectionViewDataSource {
   public func collectionView(_ collectionView: UICollectionView,
     cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     
-      guard let cell = collectionView.dequeueReusableCell(
-        withReuseIdentifier: TabbyCell.reusableIdentifier, for: indexPath) as? TabbyCell else { return UICollectionViewCell() }
+    guard let cell = collectionView.dequeueReusableCell(
+      withReuseIdentifier: TabbyCell.reusableIdentifier, for: indexPath)
+      as? TabbyCell else { return UICollectionViewCell() }
 
-      cell.configureCell(items[(indexPath as NSIndexPath).row], selected: selectedItem == (indexPath as NSIndexPath).row)
+    let item = items[indexPath.row]
 
-      return cell
+    cell.configureCell(item, selected: selectedItem == indexPath.row,
+                       count: badges[item.image])
+
+    return cell
   }
 }
