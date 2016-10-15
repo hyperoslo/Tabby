@@ -30,6 +30,7 @@ open class TabbyBar: UIView {
 
   lazy var indicator: UIView = {
     let view = UIView()
+    view.layer.zPosition = 2
     view.backgroundColor = Constant.Color.indicator
 
     return view
