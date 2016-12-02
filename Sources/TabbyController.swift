@@ -132,6 +132,8 @@ open class TabbyController: UIViewController {
     }
   }
 
+  var heightConstant: CGFloat = 0
+
   /**
    The delegate that will tell you when a tab bar is tapped.
    */
@@ -230,6 +232,8 @@ open class TabbyController: UIViewController {
     if barHidden {
       constant = 0
     }
+
+    heightConstant = constant
 
     view.constraint(subview, attributes: .leading, .trailing, .top)
     view.addConstraints([
