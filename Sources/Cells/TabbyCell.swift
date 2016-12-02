@@ -6,7 +6,7 @@ class TabbyCell: UICollectionViewCell {
 
   lazy var imageView: UIImageView = {
     let imageView = UIImageView()
-    imageView.contentMode = .ScaleAspectFit
+    imageView.contentMode = .scaleAspectFit
 
     return imageView
   }()
@@ -19,12 +19,14 @@ class TabbyCell: UICollectionViewCell {
     return label
   }()
 
+  lazy var badge: TabbyBadge = TabbyBadge()
+
   // MARK: - Configuration
 
-  func configureCell(item: TabbyBarItem, selected: Bool = false) {
+  func configureCell(_ item: TabbyBarItem, selected: Bool = false, count: Int?) {
     let color = selected ? Constant.Color.selected : Constant.Color.disabled
 
-    imageView.image = item.image?.imageWithRenderingMode(.AlwaysTemplate)
+    imageView.image = UIImage(named: item.image)?.withRenderingMode(.alwaysTemplate)
     imageView.tintColor = color
 
     label.text = item.controller.title
@@ -34,6 +36,7 @@ class TabbyCell: UICollectionViewCell {
       TabbyAnimation.animate(imageView, kind: item.animation)
     }
 
+    handleBadge(count)
     handleBehaviors(selected)
     setupConstraints()
 
@@ -42,11 +45,26 @@ class TabbyCell: UICollectionViewCell {
 
   // MARK: - Helper methods
 
-  func handleBehaviors(selected: Bool) {
+  func handleBadge(_ count: Int?) {
+    guard badge.number != count else { badge.number = count ?? 0; return }
+
+    badge.number = count ?? 0
+    badge.transform = count == 0 ? .identity : .init(scaleX: 0, y: 0)
+
+    UIView.animate(
+      withDuration: 0.5, delay: 0,
+      usingSpringWithDamping: 0.6,
+      initialSpringVelocity: 0.6,
+      options: [], animations: {
+        self.badge.transform = count == 0 ? .init(scaleX: 0, y: 0) : .identity
+      }, completion: nil)
+  }
+
+  func handleBehaviors(_ selected: Bool) {
     switch Constant.Behavior.labelVisibility {
-    case .Invisible:
+    case .invisible:
       label.alpha = 0
-    case .ActiveVisible:
+    case .activeVisible:
       label.alpha = selected ? 1 : 0
     default:
       label.alpha = 1
@@ -63,34 +81,50 @@ class TabbyCell: UICollectionViewCell {
 
     addSubview(imageView)
 
-    constraint(imageView, attributes: .CenterX)
+    constraint(imageView, attributes: .centerX)
     addConstraints([
       NSLayoutConstraint(item: imageView,
-        attribute: .Width, relatedBy: .Equal,
-        toItem: nil, attribute: .NotAnAttribute,
+        attribute: .width, relatedBy: .equal,
+        toItem: nil, attribute: .notAnAttribute,
         multiplier: 1, constant: Constant.Dimension.Icon.width),
 
       NSLayoutConstraint(item: imageView,
-        attribute: .Height, relatedBy: .Equal,
-        toItem: nil, attribute: .NotAnAttribute,
+        attribute: .height, relatedBy: .equal,
+        toItem: nil, attribute: .notAnAttribute,
         multiplier: 1, constant: Constant.Dimension.Icon.height),
 
       NSLayoutConstraint(item: imageView,
-        attribute: .CenterY, relatedBy: .Equal,
-        toItem: self, attribute: .CenterY,
+        attribute: .centerY, relatedBy: .equal,
+        toItem: self, attribute: .centerY,
         multiplier: 1, constant: -offset)
-      ])
+    ])
 
     label.translatesAutoresizingMaskIntoConstraints = false
     label.removeFromSuperview()
 
     addSubview(label)
 
-    constraint(label, attributes: .CenterX)
+    constraint(label, attributes: .centerX)
     addConstraint(NSLayoutConstraint(item: label,
-      attribute: .CenterY, relatedBy: .Equal,
-      toItem: self, attribute: .CenterY,
+      attribute: .centerY, relatedBy: .equal,
+      toItem: self, attribute: .centerY,
       multiplier: 1, constant: offset + 5)
     )
+
+    badge.translatesAutoresizingMaskIntoConstraints = false
+    badge.removeFromSuperview()
+
+    addSubview(badge)
+    addConstraints([
+      NSLayoutConstraint(item: badge,
+        attribute: .centerY, relatedBy: .equal,
+        toItem: imageView, attribute: .top,
+        multiplier: 1, constant: 1),
+
+      NSLayoutConstraint(item: badge,
+        attribute: .centerX, relatedBy: .equal,
+        toItem: imageView, attribute: .right,
+        multiplier: 1, constant: 0)
+    ])
   }
 }

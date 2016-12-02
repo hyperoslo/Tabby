@@ -4,7 +4,7 @@ platform :ios, '8.0'
 
 target 'TabbyDemo' do
   pod 'Tabby', path: '../../'
-  pod 'Morgan', :git => 'https://github.com/RamonGilabert/Morgan.git'
-
+  pod 'Morgan', :git => 'https://github.com/RamonGilabert/Morgan.git', :branch => 'swift-3'
+  pod 'Walker', :git => 'https://github.com/RamonGilabert/Walker.git', :branch => 'swift-3'
 end
 

@@ -5,18 +5,18 @@ import UIKit
  */
 public protocol TabbyBarDelegate: class {
 
-  func tabbyButtonDidPress(index: Int)
+  func tabbyButtonDidPress(_ index: Int)
 }
 
 /**
  The actual tab bar.
  */
-public class TabbyBar: UIView {
+open class TabbyBar: UIView {
 
   static let collectionObserver = "contentSize"
-  static let KVOContext = UnsafeMutablePointer<()>(nil)
+  static let KVOContext = UnsafeMutableRawPointer(mutating: nil)
 
-  lazy var translucentView: UIVisualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .Light))
+  lazy var translucentView: UIVisualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .light))
 
   lazy var layout: TabbyLayout = {
     let layout = TabbyLayout()
@@ -30,6 +30,7 @@ public class TabbyBar: UIView {
 
   lazy var indicator: UIView = {
     let view = UIView()
+    view.layer.zPosition = 2
     view.backgroundColor = Constant.Color.indicator
 
     return view
@@ -38,6 +39,7 @@ public class TabbyBar: UIView {
   lazy var separator: UIView = {
     let view = UIView()
     view.backgroundColor = Constant.Color.separator
+    view.layer.zPosition = 1
 
     return view
   }()
@@ -52,6 +54,12 @@ public class TabbyBar: UIView {
   var selectedItem: Int = 0 {
     didSet {
       positionIndicator(selectedItem)
+      collectionView.reloadData()
+    }
+  }
+
+  var badges: [String : Int] = [:] {
+    didSet {
       collectionView.reloadData()
     }
   }
@@ -71,16 +79,16 @@ public class TabbyBar: UIView {
 
     collectionView.addObserver(
       self, forKeyPath: TabbyBar.collectionObserver,
-      options: .Old, context: TabbyBar.KVOContext)
+      options: .old, context: TabbyBar.KVOContext)
 
     setupCollectionView()
     setupConstraints()
   }
 
-  public override func observeValueForKeyPath(
-    keyPath: String?, ofObject object: AnyObject?,
-    change: [String : AnyObject]?,
-    context: UnsafeMutablePointer<Void>) {
+  open override func observeValue(
+    forKeyPath keyPath: String?, of object: Any?,
+    change: [NSKeyValueChangeKey : Any]?,
+    context: UnsafeMutableRawPointer?) {
       guard context == TabbyBar.KVOContext else { return }
       positionIndicator(selectedItem, animate: false)
   }
@@ -101,35 +109,36 @@ public class TabbyBar: UIView {
   func setupCollectionView() {
     collectionView.delegate = self
     collectionView.dataSource = self
+    collectionView.clipsToBounds = false
     collectionView.backgroundColor = Constant.Color.collection
 
-    collectionView.registerClass(
+    collectionView.register(
       TabbyCell.self, forCellWithReuseIdentifier: TabbyCell.reusableIdentifier)
   }
 
   // Animations
 
-  func positionIndicator(index: Int, animate: Bool = true) {
-    guard let source = collectionView.dataSource where index < items.count else { return }
+  func positionIndicator(_ index: Int, animate: Bool = true) {
+    guard let source = collectionView.dataSource , index < items.count else { return }
 
-    UIView.animateWithDuration(
-      animate ? 0.7 : 0, delay: 0, usingSpringWithDamping: 0.6,
-      initialSpringVelocity: 0, options: [.CurveEaseIn], animations: {
+    UIView.animate(
+      withDuration: animate ? 0.7 : 0, delay: 0, usingSpringWithDamping: 0.6,
+      initialSpringVelocity: 0, options: [.curveEaseIn], animations: {
         self.indicator.center.x = source.collectionView(
-          self.collectionView, cellForItemAtIndexPath: NSIndexPath(forRow: index, inSection: 0)).center.x
+          self.collectionView, cellForItemAt: IndexPath(row: index, section: 0)).center.x
       }, completion: nil)
   }
 
   // MARK: - Translucency
 
-  func prepareTranslucency(translucent: Bool) {
+  func prepareTranslucency(_ translucent: Bool) {
     translucentView.removeFromSuperview()
 
     if translucent {
       translucentView.translatesAutoresizingMaskIntoConstraints = false
-      insertSubview(translucentView, atIndex: 0)
-      constraint(translucentView, attributes: .Width, .Height, .Top, .Left)
-      backgroundColor = Constant.Color.background.colorWithAlphaComponent(0.85)
+      insertSubview(translucentView, at: 0)
+      constraint(translucentView, attributes: .width, .height, .top, .left)
+      backgroundColor = Constant.Color.background.withAlphaComponent(0.85)
     } else {
       backgroundColor = Constant.Color.background
     }
@@ -138,61 +147,73 @@ public class TabbyBar: UIView {
   // MARK: - Constraints
 
   func setupConstraints() {
-    collectionView.translatesAutoresizingMaskIntoConstraints = false
-    addSubview(collectionView)
-    constraint(collectionView, attributes: .Top, .Bottom, .Leading, .Trailing)
-
     indicator.translatesAutoresizingMaskIntoConstraints = false
     addSubview(indicator)
-    constraint(indicator, attributes: .Left, .Bottom)
+    constraint(indicator, attributes: .left, .bottom)
     addConstraints([
       NSLayoutConstraint(item: indicator,
-        attribute: .Width, relatedBy: .Equal,
-        toItem: nil, attribute: .NotAnAttribute,
+        attribute: .width, relatedBy: .equal,
+        toItem: nil, attribute: .notAnAttribute,
         multiplier: 1, constant: Constant.Dimension.Indicator.width),
 
       NSLayoutConstraint(item: indicator,
-        attribute: .Height, relatedBy: .Equal,
-        toItem: nil, attribute: .NotAnAttribute,
+        attribute: .height, relatedBy: .equal,
+        toItem: nil, attribute: .notAnAttribute,
         multiplier: 1, constant: Constant.Dimension.Indicator.height)
       ])
 
     separator.translatesAutoresizingMaskIntoConstraints = false
     addSubview(separator)
-    constraint(separator, attributes: .Width, .Top, .Right)
+    constraint(separator, attributes: .width, .top, .right)
     addConstraint(
       NSLayoutConstraint(item: separator,
-        attribute: .Height, relatedBy: .Equal,
-        toItem: nil, attribute: .NotAnAttribute,
+        attribute: .height, relatedBy: .equal,
+        toItem: nil, attribute: .notAnAttribute,
         multiplier: 1, constant: Constant.Dimension.Separator.height)
     )
+
+    collectionView.translatesAutoresizingMaskIntoConstraints = false
+    addSubview(collectionView)
+    constraint(collectionView, attributes: .top, .bottom, .leading, .trailing)
   }
 }
 
 extension TabbyBar: UICollectionViewDelegate {
 
-  public func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+  public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     let position = indexPath.row
+    let item = items[position]
 
-    selectedItem = position
+    if item.selection == .systematic {
+      UIView.animate(withDuration: 0.3, animations: {
+        self.indicator.backgroundColor = Constant.Color.selected
+      })
+
+      selectedItem = position
+    }
+
     delegate?.tabbyButtonDidPress(position)
   }
 }
 
 extension TabbyBar: UICollectionViewDataSource {
 
-  public func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+  public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
     return items.count
   }
 
-  public func collectionView(collectionView: UICollectionView,
-    cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+  public func collectionView(_ collectionView: UICollectionView,
+    cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     
-      guard let cell = collectionView.dequeueReusableCellWithReuseIdentifier(
-        TabbyCell.reusableIdentifier, forIndexPath: indexPath) as? TabbyCell else { return UICollectionViewCell() }
+    guard let cell = collectionView.dequeueReusableCell(
+      withReuseIdentifier: TabbyCell.reusableIdentifier, for: indexPath)
+      as? TabbyCell else { return UICollectionViewCell() }
 
-      cell.configureCell(items[indexPath.row], selected: selectedItem == indexPath.row)
+    let item = items[indexPath.row]
 
-      return cell
+    cell.configureCell(item, selected: selectedItem == indexPath.row,
+                       count: badges[item.image])
+
+    return cell
   }
 }

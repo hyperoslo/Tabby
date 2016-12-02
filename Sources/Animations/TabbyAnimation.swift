@@ -11,7 +11,7 @@ public struct TabbyAnimation {
    The animation that will perform in the tap for the tab bar.
    */
   public enum Kind {
-    case Pop, Flip, Morph, Shake, Swing, PushUp, PushDown, None
+    case pop, flip, morph, shake, swing, pushUp, pushDown, none
   }
 
   /**
@@ -19,42 +19,42 @@ public struct TabbyAnimation {
    - Parameter view: The view that will be animated.
    - Parameter kind: The kind of the animation from the TabbyAnimation struct.
    */
-  public static func animate(view: UIView, kind: Kind) {
+  public static func animate(_ view: UIView, kind: Kind) {
     switch kind {
-    case .Pop:
-      UIView.animateWithDuration(0.1, animations: {
-        view.transform = CGAffineTransformMakeScale(0.8, 0.8)
+    case .pop:
+      UIView.animate(withDuration: 0.1, animations: {
+        view.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
         }, completion: { _ in
-          UIView.animateWithDuration(0.4, delay: 0, usingSpringWithDamping: 0.4,
-            initialSpringVelocity: 0, options: [.CurveEaseInOut], animations: {
-            view.transform = CGAffineTransformIdentity
+          UIView.animate(withDuration: 0.4, delay: 0, usingSpringWithDamping: 0.4,
+            initialSpringVelocity: 0, options: UIViewAnimationOptions(), animations: {
+            view.transform = CGAffineTransform.identity
             }, completion: nil)
       })
-    case .Flip:
+    case .flip:
       view.flip(0.2)
-    case .Morph:
+    case .morph:
       view.morph(0.075)
-    case .Swing:
+    case .swing:
       view.swing(0.075)
-    case .PushUp:
+    case .pushUp:
       view.pushUp()
-    case .PushDown:
+    case .pushDown:
       view.pushDown()
-    case .Shake:
+    case .shake:
       let duration = 0.075
       let x: CGFloat = 10
       let y: CGFloat = 0
 
       Walker.animate(view, duration: duration) {
-        $0.transform = CGAffineTransformMakeTranslation(-x, -y)
+        $0.transform = CGAffineTransform(translationX: -x, y: -y)
       }.chain(duration: duration) {
-        $0.transform = CGAffineTransformMakeTranslation(x, y)
+        $0.transform = CGAffineTransform(translationX: x, y: y)
       }.chain(duration: duration) {
-        $0.transform = CGAffineTransformMakeTranslation(-x / 2, -y / 2)
+        $0.transform = CGAffineTransform(translationX: -x / 2, y: -y / 2)
       }.chain(duration: duration) {
-        $0.transform = CGAffineTransformIdentity
+        $0.transform = CGAffineTransform.identity
       }
-    case .None:
+    case .none:
       break
     }
   }

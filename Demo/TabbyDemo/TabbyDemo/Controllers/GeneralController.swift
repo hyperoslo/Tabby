@@ -4,7 +4,7 @@ class GeneralController: UIViewController {
 
   lazy var imageView: UIImageView = {
     let imageView = UIImageView()
-    imageView.contentMode = .ScaleAspectFit
+    imageView.contentMode = .scaleAspectFit
     imageView.image = UIImage(named: "chef")
 
     return imageView
@@ -13,9 +13,9 @@ class GeneralController: UIViewController {
   lazy var titleLabel: UILabel = {
     let label = UILabel()
     label.numberOfLines = 0
-    label.font = UIFont.boldSystemFontOfSize(18)
-    label.textColor = UIColor.lightGrayColor()
-    label.textAlignment = .Center
+    label.font = UIFont.boldSystemFont(ofSize: 18)
+    label.textColor = UIColor.lightGray
+    label.textAlignment = .center
 
     return label
   }()
@@ -23,12 +23,7 @@ class GeneralController: UIViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    view.backgroundColor = UIColor.whiteColor()
-
-    [imageView, titleLabel].forEach {
-      $0.translatesAutoresizingMaskIntoConstraints = false
-      view.addSubview($0)
-    }
+    view.backgroundColor = UIColor.white
 
     setupConstraints()
   }
@@ -36,40 +31,48 @@ class GeneralController: UIViewController {
   // MARK: - Constraint methods
 
   func setupConstraints() {
-    constraint(titleLabel, attributes: [.CenterX, .CenterY])
-    constraint(imageView, attributes: [.CenterX])
+    view.addSubview(titleLabel)
+    titleLabel.translatesAutoresizingMaskIntoConstraints = false
 
+    view.addSubview(imageView)
+    imageView.translatesAutoresizingMaskIntoConstraints = false
+
+    constraint(titleLabel, attributes: [.centerX, .centerY])
     view.addConstraints([
       NSLayoutConstraint(
-        item: imageView, attribute: .Bottom,
-        relatedBy: .Equal, toItem: titleLabel,
-        attribute: .Top, multiplier: 1, constant: -20),
+        item: imageView, attribute: .bottom,
+        relatedBy: .equal, toItem: titleLabel,
+        attribute: .top, multiplier: 1, constant: -20),
 
       NSLayoutConstraint(
-        item: imageView, attribute: .Width,
-        relatedBy: .Equal, toItem: nil,
-        attribute: .NotAnAttribute, multiplier: 1, constant: 100),
+        item: titleLabel, attribute: .width,
+        relatedBy: .equal, toItem: view,
+        attribute: .width, multiplier: 1, constant: -200)
+      ])
+
+    constraint(imageView, attributes: [.centerX])
+    view.addConstraints([
+      NSLayoutConstraint(
+        item: imageView, attribute: .width,
+        relatedBy: .equal, toItem: nil,
+        attribute: .notAnAttribute, multiplier: 1, constant: 100),
 
       NSLayoutConstraint(
-        item: imageView, attribute: .Height,
-        relatedBy: .Equal, toItem: nil,
-        attribute: .Height, multiplier: 1, constant: 100),
-
-      NSLayoutConstraint(
-        item: titleLabel, attribute: .Width,
-        relatedBy: .Equal, toItem: view,
-        attribute: .Width, multiplier: 1, constant: -200)
+        item: imageView, attribute: .height,
+        relatedBy: .equal, toItem: nil,
+        attribute: .height, multiplier: 1, constant: 100),
     ])
   }
 
   // MARK: - Helper methods
 
-  func constraint(subview: UIView, attributes: [NSLayoutAttribute]) {
+  func constraint(_ subview: UIView, attributes: [NSLayoutAttribute]) {
     for attribute in attributes {
-      view.addConstraint(NSLayoutConstraint(
-        item: subview, attribute: attribute,
-        relatedBy: .Equal, toItem: view,
-        attribute: attribute, multiplier: 1, constant: 0)
+      view.addConstraint(
+        NSLayoutConstraint(
+          item: subview, attribute: attribute,
+          relatedBy: .equal, toItem: view,
+          attribute: attribute, multiplier: 1, constant: 0)
       )
     }
   }

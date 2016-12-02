@@ -2,10 +2,10 @@ import UIKit
 
 class SecondController: GeneralController {
 
-  override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+  override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
 
-    title = "Donut".uppercaseString
+    title = "Donut".uppercased()
   }
 
   required init?(coder aDecoder: NSCoder) {
@@ -18,14 +18,14 @@ class SecondController: GeneralController {
     titleLabel.text = "Who doesn't like some donuts?"
   }
 
-  override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-    super.touchesBegan(touches, withEvent: event)
+  override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    super.touchesBegan(touches, with: event)
 
-    let controller = UIAlertController(title: "Alert", message: "This is an alert", preferredStyle: .Alert)
-    let action = UIAlertAction(title: "Action", style: .Default, handler: nil)
+    let controller = UIAlertController(title: "Alert", message: "This is an alert", preferredStyle: .alert)
+    let action = UIAlertAction(title: "Action", style: .default, handler: nil)
 
     controller.addAction(action)
 
-    presentViewController(controller, animated: true, completion: nil)
+    present(controller, animated: true, completion: nil)
   }
 }

@@ -2,10 +2,10 @@ import UIKit
 
 class ThirdController: GeneralController {
 
-  override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+  override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
 
-    title = "Fish".uppercaseString
+    title = "Fish".uppercased()
   }
   
   required init?(coder aDecoder: NSCoder) {

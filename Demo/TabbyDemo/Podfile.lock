@@ -6,25 +6,33 @@ PODS:
   - Walker (0.9.1)
 
 DEPENDENCIES:
-  - Morgan (from `https://github.com/RamonGilabert/Morgan.git`)
+  - Morgan (from `https://github.com/RamonGilabert/Morgan.git`, branch `swift-3`)
   - Tabby (from `../../`)
+  - Walker (from `https://github.com/RamonGilabert/Walker.git`, branch `swift-3`)
 
 EXTERNAL SOURCES:
   Morgan:
+    :branch: swift-3
     :git: https://github.com/RamonGilabert/Morgan.git
   Tabby:
-    :path: ../../
+    :path: "../../"
+  Walker:
+    :branch: swift-3
+    :git: https://github.com/RamonGilabert/Walker.git
 
 CHECKOUT OPTIONS:
   Morgan:
-    :commit: 677a89a75b91c76bf8823450cddb2043cd409054
+    :commit: 16d764121fc75e176f76698078073e838786f7e0
     :git: https://github.com/RamonGilabert/Morgan.git
+  Walker:
+    :commit: 47b9490594e29fea29ba6ce0b53763da3ccecc77
+    :git: https://github.com/RamonGilabert/Walker.git
 
 SPEC CHECKSUMS:
   Morgan: 9cb6cdfd5eaafcdc98af5c05620cad575ace77de
   Tabby: 88961cdd310f87dabfa937e456853940a737cb9b
   Walker: 9a765e7f35adb19ce59079e26d425c1e8c463241
 
-PODFILE CHECKSUM: 73a313b102a252bdb5a1c8d818f505821df3d40f
+PODFILE CHECKSUM: a4e0b7ea364696319e1d520df6425d68ca8eea06
 
-COCOAPODS: 1.0.0
+COCOAPODS: 1.0.1
