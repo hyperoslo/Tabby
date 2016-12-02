@@ -207,7 +207,6 @@ open class TabbyController: UIViewController {
         : .identity
     }, completion: { _ in
       self.tabbyBar.positionIndicator(self.index)
-      self.tabbyBar.collectionView.reloadData()
     })
   }
 
