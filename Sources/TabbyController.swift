@@ -32,6 +32,15 @@ open class TabbyController: UIViewController {
   }
 
   /**
+   Represents if the bar is hidden or not.
+  */
+  open var barHidden: Bool = false {
+    didSet {
+      hideBar()
+    }
+  }
+
+  /**
    An array of TabbyBarItems. The initializer contains the following parameters:
 
    - Parameter controller: The controller that you set as the one that will appear when tapping the view.
@@ -182,14 +191,39 @@ open class TabbyController: UIViewController {
     applyNewConstraints(controller.view)
   }
 
+  func hideBar() {
+    if barHidden {
+      prepareCurrentController()
+    }
+
+    UIView.animate(withDuration: 0.5, animations: {
+      self.tabbyBar.transform = self.barHidden
+        ? .init(translationX: 0, y: self.tabbyBar.frame.origin.y)
+        : .identity
+    }, completion: { _ in
+      self.prepareCurrentController()
+      self.tabbyBar.positionIndicator(self.index)
+      self.tabbyBar.collectionView.reloadData()
+    })
+  }
+
   func applyNewConstraints(_ subview: UIView) {
+    var constant: CGFloat = 0
+    if barVisible || !translucent {
+      constant = -Constant.Dimension.height
+    }
+
+    if barHidden {
+      constant = 0
+    }
+
     view.constraint(subview, attributes: .leading, .trailing, .top)
     view.addConstraints([
       NSLayoutConstraint(
         item: subview, attribute: .height,
         relatedBy: .equal, toItem: view,
         attribute: .height, multiplier: 1,
-        constant: barVisible ? translucent ? 0 : -Constant.Dimension.height : 0)
+        constant: constant)
       ])
   }
 
