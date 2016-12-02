@@ -36,7 +36,12 @@ open class TabbyController: UIViewController {
   */
   open var barHidden: Bool = false {
     didSet {
-      hideBar()
+      // Delay necessary when changing the whole controller -> UIViewController
+      // to UINavigationController for instance. The inner constraints change (and break).
+      let when = DispatchTime.now() + 0.1
+      DispatchQueue.main.asyncAfter(deadline: when) {
+        self.hideBar()
+      }
     }
   }
 
@@ -192,25 +197,34 @@ open class TabbyController: UIViewController {
   }
 
   func hideBar() {
-    if barHidden {
-      prepareCurrentController()
-    }
+    animateNewConstraints()
 
-    UIView.animate(withDuration: 0.5, animations: {
+    UIView.animate(withDuration: 0.3, animations: {
       self.tabbyBar.transform = self.barHidden
-        ? .init(translationX: 0, y: self.tabbyBar.frame.origin.y)
+        ? .init(translationX: 0, y: self.tabbyBar.frame.height)
         : .identity
     }, completion: { _ in
-      self.prepareCurrentController()
       self.tabbyBar.positionIndicator(self.index)
       self.tabbyBar.collectionView.reloadData()
     })
   }
 
+  func animateNewConstraints() {
+    UIView.animate(withDuration: 0.3, animations: {
+      self.prepareCurrentController()
+      self.view.layoutIfNeeded()
+    })
+  }
+
   func applyNewConstraints(_ subview: UIView) {
     var constant: CGFloat = 0
-    if barVisible || !translucent {
+
+    if barVisible {
       constant = -Constant.Dimension.height
+    }
+
+    if translucent {
+      constant = 0
     }
 
     if barHidden {

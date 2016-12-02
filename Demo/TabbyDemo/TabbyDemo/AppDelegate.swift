@@ -14,7 +14,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let controller = TabbyController(items: self.items)
 
     controller.delegate = self
-    controller.translucent = true
+    controller.translucent = false
 
     return controller
   }()
