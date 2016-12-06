@@ -11,7 +11,17 @@ public protocol TabbyDelegate: class {
 /**
  TabbyController is the controller that will contain all the other controllers.
  */
-open class TabbyController: UIViewController {
+open class TabbyController: UIViewController, UINavigationControllerDelegate {
+
+  struct Key {
+    static var animationKey = "toggleTabbyAnimation"
+  }
+
+  lazy var toggleAnimation: CABasicAnimation = {
+    let animation = CABasicAnimation(keyPath: "position.y")
+    animation.fillMode = kCAFillModeForwards
+    return animation
+  }()
 
   /**
    The actual tab bar that will contain the buttons, indicator, separator, etc.
@@ -20,6 +30,7 @@ open class TabbyController: UIViewController {
     let tabby = TabbyBar(items: self.items)
     tabby.translatesAutoresizingMaskIntoConstraints = false
     tabby.delegate = self
+    tabby.layer.speed = 1.0
 
     return tabby
   }()
@@ -62,6 +73,7 @@ open class TabbyController: UIViewController {
       }
 
       tabbyBar.items = items
+      setupDelegate()
     }
   }
 
@@ -186,6 +198,12 @@ open class TabbyController: UIViewController {
 
   // MARK: - Helper methods
 
+  func setupDelegate() {
+    for case let controller as UINavigationController in items.map({ $0.controller }) {
+      controller.delegate = self
+    }
+  }
+
   func prepareCurrentController() {
     let controller = items[index].controller
     controller.removeFromParentViewController()
@@ -255,6 +273,19 @@ open class TabbyController: UIViewController {
         attribute: .notAnAttribute,
         multiplier: 1, constant: Constant.Dimension.height)
       ])
+  }
+}
+
+extension TabbyController {
+
+  public func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
+    if viewController.hidesBottomBarWhenPushed {
+      toggleAnimation.toValue = UIScreen.main.bounds.height + tabbyBar.frame.size.height
+      tabbyBar.layer.add(toggleAnimation, forKey: Key.animationKey)
+      tabbyBar.frame.origin.y = UIScreen.main.bounds.height + tabbyBar.frame.size.height
+    } else {
+
+    }
   }
 }
 
