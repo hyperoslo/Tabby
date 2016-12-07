@@ -33,7 +33,7 @@ open class TabbyController: UIViewController, UINavigationControllerDelegate {
       multiplier: 1, constant: Constant.Dimension.height)
 
     return constraint
-  }()
+    }()
 
   /**
    The actual tab bar that will contain the buttons, indicator, separator, etc.
@@ -44,18 +44,18 @@ open class TabbyController: UIViewController, UINavigationControllerDelegate {
     tabby.delegate = self
 
     return tabby
-  }()
+    }()
 
   /**
    The current selected controller in the tab bar.
-  */
+   */
   open var selectedController: UIViewController {
     return items[index].controller
   }
 
   /**
    Represents if the bar is hidden or not.
-  */
+   */
   open var barHidden: Bool = false {
     didSet {
       // Delay necessary when changing the whole controller -> UIViewController
@@ -203,7 +203,7 @@ open class TabbyController: UIViewController, UINavigationControllerDelegate {
 
   open func setBadge(_ value: Int, _ itemImage: String) {
     guard !items.filter({ $0.image == itemImage }).isEmpty else { return }
-    
+
     tabbyBar.badges[itemImage] = value
   }
 
@@ -352,10 +352,10 @@ extension TabbyController: TabbyBarDelegate {
     }
 
     controller.view.translatesAutoresizingMaskIntoConstraints = false
-
+    
     addChildViewController(controller)
     view.insertSubview(controller.view, belowSubview: tabbyBar)
-
+    
     applyNewConstraints(controller)
   }
 }
