@@ -13,10 +13,6 @@ public protocol TabbyDelegate: class {
  */
 open class TabbyController: UIViewController, UINavigationControllerDelegate {
 
-  struct Key {
-    static var animationKey = "toggleTabbyAnimation"
-  }
-
   var heightConstraint: NSLayoutConstraint?
 
   lazy var hiddenConstraint: NSLayoutConstraint = { [unowned self] in
@@ -37,12 +33,6 @@ open class TabbyController: UIViewController, UINavigationControllerDelegate {
       multiplier: 1, constant: Constant.Dimension.height)
 
     return constraint
-  }()
-
-  lazy var toggleAnimation: CABasicAnimation = {
-    let animation = CABasicAnimation(keyPath: "position.y")
-    animation.fillMode = kCAFillModeForwards
-    return animation
   }()
 
   /**
