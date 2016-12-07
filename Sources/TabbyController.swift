@@ -352,10 +352,10 @@ extension TabbyController: TabbyBarDelegate {
     }
 
     controller.view.translatesAutoresizingMaskIntoConstraints = false
-    
+
     addChildViewController(controller)
     view.insertSubview(controller.view, belowSubview: tabbyBar)
-    
+
     applyNewConstraints(controller)
   }
 }
