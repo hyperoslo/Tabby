@@ -42,7 +42,6 @@ open class TabbyController: UIViewController, UINavigationControllerDelegate {
     let tabby = TabbyBar(items: self.items)
     tabby.translatesAutoresizingMaskIntoConstraints = false
     tabby.delegate = self
-    tabby.layer.speed = 1.0
 
     return tabby
   }()
