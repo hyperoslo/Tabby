@@ -1,1 +1,2 @@
-github "RamonGilabert/Morgan" "swift-3"
+github "RamonGilabert/Morgan" "master"
+github "RamonGilabert/Walker"

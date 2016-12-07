@@ -14,7 +14,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     let controller = TabbyController(items: self.items)
 
     controller.delegate = self
-    controller.translucent = true
+    controller.translucent = false
 
     return controller
   }()
@@ -47,5 +47,14 @@ extension AppDelegate: TabbyDelegate {
 
   func tabbyDidPress(_ item: TabbyBarItem) {
     // Do your awesome transformations!
+
+    if items.index(of: item) == 1 {
+      mainController.barHidden = true
+    }
+
+    let when = DispatchTime.now() + 2
+    DispatchQueue.main.asyncAfter(deadline: when) {
+      self.mainController.barHidden = false
+    }
   }
 }

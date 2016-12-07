@@ -19,7 +19,20 @@
 		292B027B1D8189F700DCA1C1 /* TabbyBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292B02711D8189F700DCA1C1 /* TabbyBar.swift */; };
 		29BB21BD1D82C19E00FA2D92 /* Morgan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29BB21BB1D82C19E00FA2D92 /* Morgan.framework */; };
 		29BB21BE1D82C19E00FA2D92 /* Walker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29BB21BC1D82C19E00FA2D92 /* Walker.framework */; };
+		F631D20B1DF1A223002D0B8F /* TabbyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F631D20A1DF1A223002D0B8F /* TabbyTests.swift */; };
+		F631D20D1DF1A223002D0B8F /* Tabby.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5B2E89F1C3A780C00C0327D /* Tabby.framework */; };
+		F631D2141DF1A26D002D0B8F /* TabbyBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = F631D2131DF1A26D002D0B8F /* TabbyBadge.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		F631D20E1DF1A223002D0B8F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D5B2E8961C3A780C00C0327D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D5B2E89E1C3A780C00C0327D;
+			remoteInfo = Tabby;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		292B02621D8189F700DCA1C1 /* TabbyAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabbyAnimation.swift; sourceTree = "<group>"; };
@@ -36,6 +49,10 @@
 		29BB21BC1D82C19E00FA2D92 /* Walker.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Walker.framework; path = Carthage/Build/iOS/Walker.framework; sourceTree = "<group>"; };
 		29E9FD211CE318F1003F9384 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D5B2E89F1C3A780C00C0327D /* Tabby.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Tabby.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F631D2081DF1A223002D0B8F /* TabbyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TabbyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		F631D20A1DF1A223002D0B8F /* TabbyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbyTests.swift; sourceTree = "<group>"; };
+		F631D20C1DF1A223002D0B8F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F631D2131DF1A26D002D0B8F /* TabbyBadge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabbyBadge.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,6 +62,14 @@
 			files = (
 				29BB21BE1D82C19E00FA2D92 /* Walker.framework in Frameworks */,
 				29BB21BD1D82C19E00FA2D92 /* Morgan.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F631D2051DF1A223002D0B8F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F631D20D1DF1A223002D0B8F /* Tabby.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -119,6 +144,7 @@
 		292B02701D8189F700DCA1C1 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				F631D2131DF1A26D002D0B8F /* TabbyBadge.swift */,
 				292B02711D8189F700DCA1C1 /* TabbyBar.swift */,
 			);
 			path = Views;
@@ -139,6 +165,7 @@
 				29BB21BC1D82C19E00FA2D92 /* Walker.framework */,
 				292B02601D8189F700DCA1C1 /* Sources */,
 				29E9FD201CE318F1003F9384 /* Resources */,
+				F631D2091DF1A223002D0B8F /* TabbyTests */,
 				D5B2E8A01C3A780C00C0327D /* Products */,
 			);
 			sourceTree = "<group>";
@@ -147,8 +174,18 @@
 			isa = PBXGroup;
 			children = (
 				D5B2E89F1C3A780C00C0327D /* Tabby.framework */,
+				F631D2081DF1A223002D0B8F /* TabbyTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		F631D2091DF1A223002D0B8F /* TabbyTests */ = {
+			isa = PBXGroup;
+			children = (
+				F631D20A1DF1A223002D0B8F /* TabbyTests.swift */,
+				F631D20C1DF1A223002D0B8F /* Info.plist */,
+			);
+			path = TabbyTests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -183,19 +220,41 @@
 			productReference = D5B2E89F1C3A780C00C0327D /* Tabby.framework */;
 			productType = "com.apple.product-type.framework";
 		};
+		F631D2071DF1A223002D0B8F /* TabbyTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F631D2101DF1A223002D0B8F /* Build configuration list for PBXNativeTarget "TabbyTests" */;
+			buildPhases = (
+				F631D2041DF1A223002D0B8F /* Sources */,
+				F631D2051DF1A223002D0B8F /* Frameworks */,
+				F631D2061DF1A223002D0B8F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F631D20F1DF1A223002D0B8F /* PBXTargetDependency */,
+			);
+			name = TabbyTests;
+			productName = TabbyTests;
+			productReference = F631D2081DF1A223002D0B8F /* TabbyTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		D5B2E8961C3A780C00C0327D /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0720;
+				LastSwiftUpdateCheck = 0810;
 				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = "Hyper Interaktiv AS";
 				TargetAttributes = {
 					D5B2E89E1C3A780C00C0327D = {
 						CreatedOnToolsVersion = 7.2;
 						LastSwiftMigration = 0800;
+					};
+					F631D2071DF1A223002D0B8F = {
+						CreatedOnToolsVersion = 8.1;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -212,12 +271,20 @@
 			projectRoot = "";
 			targets = (
 				D5B2E89E1C3A780C00C0327D /* Tabby */,
+				F631D2071DF1A223002D0B8F /* TabbyTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		D5B2E89D1C3A780C00C0327D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F631D2061DF1A223002D0B8F /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -258,11 +325,28 @@
 				292B02751D8189F700DCA1C1 /* UIViewController+Constraint.swift in Sources */,
 				292B02761D8189F700DCA1C1 /* TabbyBarItem.swift in Sources */,
 				292B027B1D8189F700DCA1C1 /* TabbyBar.swift in Sources */,
+				F631D2141DF1A26D002D0B8F /* TabbyBadge.swift in Sources */,
 				292B02781D8189F700DCA1C1 /* Behavior.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		F631D2041DF1A223002D0B8F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F631D20B1DF1A223002D0B8F /* TabbyTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		F631D20F1DF1A223002D0B8F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D5B2E89E1C3A780C00C0327D /* Tabby */;
+			targetProxy = F631D20E1DF1A223002D0B8F /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		D5B2E8B11C3A780C00C0327D /* Debug */ = {
@@ -410,6 +494,37 @@
 			};
 			name = Release;
 		};
+		F631D2111DF1A223002D0B8F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				INFOPLIST_FILE = TabbyTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ramongilabert.TabbyTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		F631D2121DF1A223002D0B8F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_SUSPICIOUS_MOVES = YES;
+				INFOPLIST_FILE = TabbyTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.1;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ramongilabert.TabbyTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -430,6 +545,14 @@
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
+		};
+		F631D2101DF1A223002D0B8F /* Build configuration list for PBXNativeTarget "TabbyTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F631D2111DF1A223002D0B8F /* Debug */,
+				F631D2121DF1A223002D0B8F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
 		};
 /* End XCConfigurationList section */
 	};

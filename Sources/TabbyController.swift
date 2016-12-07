@@ -11,7 +11,29 @@ public protocol TabbyDelegate: class {
 /**
  TabbyController is the controller that will contain all the other controllers.
  */
-open class TabbyController: UIViewController {
+open class TabbyController: UIViewController, UINavigationControllerDelegate {
+
+  var heightConstraint: NSLayoutConstraint?
+
+  lazy var hiddenConstraint: NSLayoutConstraint = { [unowned self] in
+    let constraint = NSLayoutConstraint(
+      item: self.tabbyBar, attribute: .height,
+      relatedBy: .equal, toItem: nil,
+      attribute: .notAnAttribute,
+      multiplier: 1, constant: 0)
+
+    return constraint
+    }()
+
+  lazy var shownConstraint: NSLayoutConstraint = { [unowned self] in
+    let constraint = NSLayoutConstraint(
+      item: self.tabbyBar, attribute: .height,
+      relatedBy: .equal, toItem: nil,
+      attribute: .notAnAttribute,
+      multiplier: 1, constant: Constant.Dimension.height)
+
+    return constraint
+    }()
 
   /**
    The actual tab bar that will contain the buttons, indicator, separator, etc.
@@ -22,13 +44,27 @@ open class TabbyController: UIViewController {
     tabby.delegate = self
 
     return tabby
-  }()
+    }()
 
   /**
    The current selected controller in the tab bar.
-  */
+   */
   open var selectedController: UIViewController {
     return items[index].controller
+  }
+
+  /**
+   Represents if the bar is hidden or not.
+   */
+  open var barHidden: Bool = false {
+    didSet {
+      // Delay necessary when changing the whole controller -> UIViewController
+      // to UINavigationController for instance. The inner constraints change (and break).
+      let when = DispatchTime.now() + 0.1
+      DispatchQueue.main.asyncAfter(deadline: when) {
+        self.hideBar()
+      }
+    }
   }
 
   /**
@@ -48,6 +84,7 @@ open class TabbyController: UIViewController {
       }
 
       tabbyBar.items = items
+      setupDelegate()
     }
   }
 
@@ -118,6 +155,8 @@ open class TabbyController: UIViewController {
     }
   }
 
+  var heightConstant: CGFloat = 0
+
   /**
    The delegate that will tell you when a tab bar is tapped.
    */
@@ -164,11 +203,17 @@ open class TabbyController: UIViewController {
 
   open func setBadge(_ value: Int, _ itemImage: String) {
     guard !items.filter({ $0.image == itemImage }).isEmpty else { return }
-    
+
     tabbyBar.badges[itemImage] = value
   }
 
   // MARK: - Helper methods
+
+  func setupDelegate() {
+    for case let controller as UINavigationController in items.map({ $0.controller }) {
+      controller.delegate = self
+    }
+  }
 
   func prepareCurrentController() {
     let controller = items[index].controller
@@ -179,31 +224,94 @@ open class TabbyController: UIViewController {
     addChildViewController(controller)
     view.insertSubview(controller.view, belowSubview: tabbyBar)
     tabbyBar.prepareTranslucency(translucent)
-    applyNewConstraints(controller.view)
+    applyNewConstraints(controller)
   }
 
-  func applyNewConstraints(_ subview: UIView) {
-    view.constraint(subview, attributes: .leading, .trailing, .top)
-    view.addConstraints([
-      NSLayoutConstraint(
-        item: subview, attribute: .height,
-        relatedBy: .equal, toItem: view,
-        attribute: .height, multiplier: 1,
-        constant: barVisible ? translucent ? 0 : -Constant.Dimension.height : 0)
-      ])
+  func hideBar() {
+    animateNewConstraints()
+
+    UIView.animate(withDuration: 0.3, animations: {
+      self.tabbyBar.transform = self.barHidden
+        ? .init(translationX: 0, y: self.tabbyBar.frame.height)
+        : .identity
+    }, completion: { _ in
+      self.tabbyBar.positionIndicator(self.index)
+    })
+  }
+
+  func animateNewConstraints() {
+    UIView.animate(withDuration: 0.3, animations: {
+      self.prepareCurrentController()
+      self.view.layoutIfNeeded()
+    })
+  }
+
+  func applyNewConstraints(_ controller: UIViewController) {
+    var constant: CGFloat = 0
+
+    if barVisible {
+      constant = -Constant.Dimension.height
+    }
+
+    if translucent {
+      constant = 0
+    }
+
+    if barHidden {
+      constant = 0
+    }
+
+    heightConstant = constant
+
+    view.constraint(controller.view, attributes: .leading, .trailing, .top)
+
+    let constraint = NSLayoutConstraint(
+      item: controller.view, attribute: .height,
+      relatedBy: .equal, toItem: view,
+      attribute: .height, multiplier: 1,
+      constant: constant)
+
+    view.addConstraints([constraint])
+    heightConstraint = constraint
   }
 
   // MARK: - Constraints
 
   func setupConstraints() {
     view.constraint(tabbyBar, attributes: .leading, .trailing, .bottom)
-    view.addConstraints([
-      NSLayoutConstraint(
-        item: tabbyBar, attribute: .height,
-        relatedBy: .equal, toItem: nil,
-        attribute: .notAnAttribute,
-        multiplier: 1, constant: Constant.Dimension.height)
-      ])
+    view.addConstraint(shownConstraint)
+  }
+}
+
+extension TabbyController {
+
+  public func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
+    var needsLayout = false
+    let controller = items[index].controller
+
+    if viewController.hidesBottomBarWhenPushed {
+      if view.constraints.contains(shownConstraint) {
+        heightConstraint?.constant = 0
+        view.removeConstraint(shownConstraint)
+        view.addConstraint(hiddenConstraint)
+        tabbyBar.indicator.alpha = 0.0
+        needsLayout = true
+      }
+    } else {
+      if view.constraints.contains(hiddenConstraint) {
+        view.removeConstraint(hiddenConstraint)
+        view.addConstraint(shownConstraint)
+        heightConstraint?.constant = Constant.Dimension.height
+        tabbyBar.indicator.alpha = showIndicator ? 1 : 0
+        needsLayout = true
+      }
+    }
+
+    if needsLayout {
+      UIView.animate(withDuration: 0.3) {
+        self.view.layoutIfNeeded()
+      }
+    }
   }
 }
 
@@ -248,6 +356,6 @@ extension TabbyController: TabbyBarDelegate {
     addChildViewController(controller)
     view.insertSubview(controller.view, belowSubview: tabbyBar)
 
-    applyNewConstraints(controller.view)
+    applyNewConstraints(controller)
   }
 }
