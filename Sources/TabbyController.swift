@@ -17,6 +17,28 @@ open class TabbyController: UIViewController, UINavigationControllerDelegate {
     static var animationKey = "toggleTabbyAnimation"
   }
 
+  var heightConstraint: NSLayoutConstraint?
+
+  lazy var hiddenConstraint: NSLayoutConstraint = { [unowned self] in
+    let constraint = NSLayoutConstraint(
+      item: self.tabbyBar, attribute: .height,
+      relatedBy: .equal, toItem: nil,
+      attribute: .notAnAttribute,
+      multiplier: 1, constant: 0)
+
+    return constraint
+    }()
+
+  lazy var shownConstraint: NSLayoutConstraint = { [unowned self] in
+    let constraint = NSLayoutConstraint(
+      item: self.tabbyBar, attribute: .height,
+      relatedBy: .equal, toItem: nil,
+      attribute: .notAnAttribute,
+      multiplier: 1, constant: Constant.Dimension.height)
+
+    return constraint
+  }()
+
   lazy var toggleAnimation: CABasicAnimation = {
     let animation = CABasicAnimation(keyPath: "position.y")
     animation.fillMode = kCAFillModeForwards
@@ -213,7 +235,7 @@ open class TabbyController: UIViewController, UINavigationControllerDelegate {
     addChildViewController(controller)
     view.insertSubview(controller.view, belowSubview: tabbyBar)
     tabbyBar.prepareTranslucency(translucent)
-    applyNewConstraints(controller.view)
+    applyNewConstraints(controller)
   }
 
   func hideBar() {
@@ -235,7 +257,7 @@ open class TabbyController: UIViewController, UINavigationControllerDelegate {
     })
   }
 
-  func applyNewConstraints(_ subview: UIView) {
+  func applyNewConstraints(_ controller: UIViewController) {
     var constant: CGFloat = 0
 
     if barVisible {
@@ -252,39 +274,54 @@ open class TabbyController: UIViewController, UINavigationControllerDelegate {
 
     heightConstant = constant
 
-    view.constraint(subview, attributes: .leading, .trailing, .top)
-    view.addConstraints([
-      NSLayoutConstraint(
-        item: subview, attribute: .height,
-        relatedBy: .equal, toItem: view,
-        attribute: .height, multiplier: 1,
-        constant: constant)
-      ])
+    view.constraint(controller.view, attributes: .leading, .trailing, .top)
+
+    let constraint = NSLayoutConstraint(
+      item: controller.view, attribute: .height,
+      relatedBy: .equal, toItem: view,
+      attribute: .height, multiplier: 1,
+      constant: constant)
+
+    view.addConstraints([constraint])
+    heightConstraint = constraint
   }
 
   // MARK: - Constraints
 
   func setupConstraints() {
     view.constraint(tabbyBar, attributes: .leading, .trailing, .bottom)
-    view.addConstraints([
-      NSLayoutConstraint(
-        item: tabbyBar, attribute: .height,
-        relatedBy: .equal, toItem: nil,
-        attribute: .notAnAttribute,
-        multiplier: 1, constant: Constant.Dimension.height)
-      ])
+    view.addConstraint(shownConstraint)
   }
 }
 
 extension TabbyController {
 
-  public func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
-    if viewController.hidesBottomBarWhenPushed {
-      toggleAnimation.toValue = UIScreen.main.bounds.height + tabbyBar.frame.size.height
-      tabbyBar.layer.add(toggleAnimation, forKey: Key.animationKey)
-      tabbyBar.frame.origin.y = UIScreen.main.bounds.height + tabbyBar.frame.size.height
-    } else {
+  public func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
+    var needsLayout = false
+    let controller = items[index].controller
 
+    if viewController.hidesBottomBarWhenPushed {
+      if view.constraints.contains(shownConstraint) {
+        heightConstraint?.constant = 0
+        view.removeConstraint(shownConstraint)
+        view.addConstraint(hiddenConstraint)
+        tabbyBar.indicator.alpha = 0.0
+        needsLayout = true
+      }
+    } else {
+      if view.constraints.contains(hiddenConstraint) {
+        view.removeConstraint(hiddenConstraint)
+        view.addConstraint(shownConstraint)
+        heightConstraint?.constant = Constant.Dimension.height
+        tabbyBar.indicator.alpha = showIndicator ? 1 : 0
+        needsLayout = true
+      }
+    }
+
+    if needsLayout {
+      UIView.animate(withDuration: 0.3) {
+        self.view.layoutIfNeeded()
+      }
     }
   }
 }
@@ -330,6 +367,6 @@ extension TabbyController: TabbyBarDelegate {
     addChildViewController(controller)
     view.insertSubview(controller.view, belowSubview: tabbyBar)
 
-    applyNewConstraints(controller.view)
+    applyNewConstraints(controller)
   }
 }
