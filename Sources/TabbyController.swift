@@ -301,7 +301,7 @@ extension TabbyController {
       if view.constraints.contains(hiddenConstraint) {
         view.removeConstraint(hiddenConstraint)
         view.addConstraint(shownConstraint)
-        heightConstraint?.constant = Constant.Dimension.height
+        heightConstraint?.constant = -Constant.Dimension.height
         tabbyBar.indicator.alpha = showIndicator ? 1 : 0
         needsLayout = true
       }
