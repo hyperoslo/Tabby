@@ -90,7 +90,7 @@ open class TabbyBar: UIView {
     change: [NSKeyValueChangeKey : Any]?,
     context: UnsafeMutableRawPointer?) {
     guard context == TabbyBar.KVOContext else {
-        return
+      return
     }
     positionIndicator(selectedItem, animate: false)
   }
