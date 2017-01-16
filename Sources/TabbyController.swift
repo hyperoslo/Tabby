@@ -281,36 +281,44 @@ open class TabbyController: UIViewController, UINavigationControllerDelegate {
     view.constraint(tabbyBar, attributes: .leading, .trailing, .bottom)
     view.addConstraint(shownConstraint)
   }
+
+  // MARK: - Tabbar
+
+  public func showTabbar() {
+    if view.constraints.contains(hiddenConstraint) {
+      view.removeConstraint(hiddenConstraint)
+      view.addConstraint(shownConstraint)
+      heightConstraint?.constant = -Constant.Dimension.height
+      tabbyBar.indicator.alpha = showIndicator ? 1 : 0
+
+      UIView.animate(withDuration: 0.25) {
+        self.view.layoutIfNeeded()
+      }
+    }
+  }
+
+  public func hideTabbar() {
+    if view.constraints.contains(shownConstraint) {
+      heightConstraint?.constant = 0
+      view.removeConstraint(shownConstraint)
+      view.addConstraint(hiddenConstraint)
+      tabbyBar.indicator.alpha = 0.0
+
+      UIView.animate(withDuration: 0.25) {
+        self.view.layoutIfNeeded()
+      }
+    }
+  }
 }
 
 extension TabbyController {
 
   public func navigationController(_ navigationController: UINavigationController, willShow viewController: UIViewController, animated: Bool) {
-    var needsLayout = false
-    let controller = items[index].controller
 
     if viewController.hidesBottomBarWhenPushed {
-      if view.constraints.contains(shownConstraint) {
-        heightConstraint?.constant = 0
-        view.removeConstraint(shownConstraint)
-        view.addConstraint(hiddenConstraint)
-        tabbyBar.indicator.alpha = 0.0
-        needsLayout = true
-      }
+      hideTabbar()
     } else {
-      if view.constraints.contains(hiddenConstraint) {
-        view.removeConstraint(hiddenConstraint)
-        view.addConstraint(shownConstraint)
-        heightConstraint?.constant = -Constant.Dimension.height
-        tabbyBar.indicator.alpha = showIndicator ? 1 : 0
-        needsLayout = true
-      }
-    }
-
-    if needsLayout {
-      UIView.animate(withDuration: 0.3) {
-        self.view.layoutIfNeeded()
-      }
+      showTabbar()
     }
   }
 }
