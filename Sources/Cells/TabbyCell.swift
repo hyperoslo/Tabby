@@ -1,8 +1,20 @@
 import UIKit
 
-open class TabbyCell: UICollectionViewCell {
+public protocol TabbyCell: class {
+  func configureCell(_ item: TabbyBarItem, selected: Bool, count: Int?)
+}
 
-  public static let reusableIdentifier = "TabbyCellReusableIdentifier"
+public extension TabbyCell {
+  static var reusableIdentifier: String  {
+    return "TabbyCellReusableIdentifier"
+  }
+
+  var collectionViewCell: UICollectionViewCell {
+    return self as? UICollectionViewCell ?? UICollectionViewCell()
+  }
+}
+
+open class TabbyDefaultCell: UICollectionViewCell, TabbyCell {
 
   public lazy var imageView: UIImageView = {
     let imageView = UIImageView()
