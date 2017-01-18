@@ -1,7 +1,7 @@
 import UIKit
 
 public protocol TabbyCell: class {
-  func configureCell(_ item: TabbyBarItem, selected: Bool, count: Int?)
+  func configureCell(_ item: TabbyBarItem, at index: Int, selected: Bool, count: Int?)
 }
 
 public extension TabbyCell {
@@ -35,7 +35,7 @@ open class TabbyDefaultCell: UICollectionViewCell, TabbyCell {
 
   // MARK: - Configuration
 
-  open func configureCell(_ item: TabbyBarItem, selected: Bool = false, count: Int?) {
+  open func configureCell(_ item: TabbyBarItem, at index: Int, selected: Bool = false, count: Int?) {
     let color = selected ? Constant.Color.selected : Constant.Color.disabled
 
     imageView.image = UIImage(named: item.image)?.withRenderingMode(.alwaysTemplate)
@@ -50,7 +50,6 @@ open class TabbyDefaultCell: UICollectionViewCell, TabbyCell {
 
     handleBadge(count)
     handleBehaviors(selected)
-    setupConstraints()
 
     label.font = Constant.Font.title
   }
