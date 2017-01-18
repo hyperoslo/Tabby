@@ -213,7 +213,8 @@ extension TabbyBar: UICollectionViewDataSource {
 
     let item = items[indexPath.row]
 
-    cell.configureCell(item, selected: selectedItem == indexPath.row,
+    cell.configureCell(item, at: indexPath.row,
+                       selected: selectedItem == indexPath.row,
                        count: badges[item.image])
 
     return cell.collectionViewCell
