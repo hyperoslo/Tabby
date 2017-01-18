@@ -199,6 +199,12 @@ open class TabbyController: UIViewController, UINavigationControllerDelegate {
     tabbyButtonDidPress(index)
   }
 
+  open override func didRotate(from fromInterfaceOrientation: UIInterfaceOrientation) {
+    if barHidden == true {
+      tabbyBar.collectionView.reloadData()
+    }
+  }
+
   // MARK: - Configurations
 
   open func setBadge(_ value: Int, _ itemImage: String) {
