@@ -1,10 +1,10 @@
 import UIKit
 
-class TabbyBadge: UIView {
+open class TabbyBadge: UIView {
 
-  lazy var containerView: UIView = UIView()
+  public lazy var containerView: UIView = UIView()
 
-  lazy var numberLabel: UILabel = {
+  public lazy var numberLabel: UILabel = {
     let label = UILabel()
     label.textAlignment = .center
     label.font = Constant.Font.badge
@@ -13,7 +13,7 @@ class TabbyBadge: UIView {
     return label
   }()
 
-  var number: Int = 0 {
+  public var number: Int = 0 {
     didSet {
       var text = "\(number)"
       if number >= 99 {
@@ -27,13 +27,13 @@ class TabbyBadge: UIView {
     }
   }
 
-  var visible: Bool = false {
+  public var visible: Bool = false {
     didSet {
       alpha = visible ? 1 : 0
     }
   }
 
-  override init(frame: CGRect) {
+  public override init(frame: CGRect) {
     super.init(frame: frame)
 
     defer {
@@ -46,13 +46,13 @@ class TabbyBadge: UIView {
     setupConstraints()
   }
   
-  required init?(coder aDecoder: NSCoder) {
+  public required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
 
   // MARK: - Constraints
 
-  func setupConstraints() {
+  open func setupConstraints() {
     containerView.translatesAutoresizingMaskIntoConstraints = false
     containerView.removeFromSuperview()
 

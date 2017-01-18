@@ -115,7 +115,7 @@ open class TabbyBar: UIView {
     collectionView.backgroundColor = Constant.Color.collection
 
     collectionView.register(
-      TabbyCell.self, forCellWithReuseIdentifier: TabbyCell.reusableIdentifier)
+      Constant.cellType.self, forCellWithReuseIdentifier: Constant.cellType.reusableIdentifier)
   }
 
   // Animations
@@ -208,14 +208,15 @@ extension TabbyBar: UICollectionViewDataSource {
     cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
     
     guard let cell = collectionView.dequeueReusableCell(
-      withReuseIdentifier: TabbyCell.reusableIdentifier, for: indexPath)
+      withReuseIdentifier: Constant.cellType.reusableIdentifier, for: indexPath)
       as? TabbyCell else { return UICollectionViewCell() }
 
     let item = items[indexPath.row]
 
-    cell.configureCell(item, selected: selectedItem == indexPath.row,
+    cell.configureCell(item, at: indexPath.row,
+                       selected: selectedItem == indexPath.row,
                        count: badges[item.image])
 
-    return cell
+    return cell.collectionViewCell
   }
 }

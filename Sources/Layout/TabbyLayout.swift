@@ -21,6 +21,7 @@ class TabbyLayout: UICollectionViewFlowLayout {
       guard let attribute = attribute.copy() as? UICollectionViewLayoutAttributes else { continue }
 
       attribute.frame.size.width = UIScreen.main.bounds.width / CGFloat(items)
+      attribute.frame.size.height = Constant.Dimension.height
       attribute.frame.origin.x = offset
       offset += attribute.size.width + minimumInteritemSpacing
 
