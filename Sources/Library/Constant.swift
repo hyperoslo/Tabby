@@ -2,6 +2,8 @@ import UIKit
 
 public struct Constant {
 
+  public static var cellType: TabbyCell.Type = TabbyDefaultCell.self
+
   /// This is the font that will be displayed in the tab bar. For your controller's title.
   public struct Font {
     /// The font of the title.
