@@ -200,9 +200,7 @@ open class TabbyController: UIViewController, UINavigationControllerDelegate {
   }
 
   open override func didRotate(from fromInterfaceOrientation: UIInterfaceOrientation) {
-    if barHidden == true {
-      tabbyBar.collectionView.reloadData()
-    }
+    tabbyBar.collectionView.reloadData()
   }
 
   // MARK: - Configurations
