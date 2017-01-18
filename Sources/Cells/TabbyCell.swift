@@ -1,17 +1,17 @@
 import UIKit
 
-class TabbyCell: UICollectionViewCell {
+open class TabbyCell: UICollectionViewCell {
 
-  static let reusableIdentifier = "TabbyCellReusableIdentifier"
+  public static let reusableIdentifier = "TabbyCellReusableIdentifier"
 
-  lazy var imageView: UIImageView = {
+  public lazy var imageView: UIImageView = {
     let imageView = UIImageView()
     imageView.contentMode = .scaleAspectFit
 
     return imageView
   }()
 
-  lazy var label: UILabel = {
+  public lazy var label: UILabel = {
     let label = UILabel()
     label.font = Constant.Font.title
     label.textColor = Constant.Color.disabled
@@ -19,11 +19,11 @@ class TabbyCell: UICollectionViewCell {
     return label
   }()
 
-  lazy var badge: TabbyBadge = TabbyBadge()
+  public lazy var badge: TabbyBadge = TabbyBadge()
 
   // MARK: - Configuration
 
-  func configureCell(_ item: TabbyBarItem, selected: Bool = false, count: Int?) {
+  open func configureCell(_ item: TabbyBarItem, selected: Bool = false, count: Int?) {
     let color = selected ? Constant.Color.selected : Constant.Color.disabled
 
     imageView.image = UIImage(named: item.image)?.withRenderingMode(.alwaysTemplate)
@@ -45,7 +45,7 @@ class TabbyCell: UICollectionViewCell {
 
   // MARK: - Helper methods
 
-  func handleBadge(_ count: Int?) {
+  open func handleBadge(_ count: Int?) {
     guard badge.number != count else { badge.number = count ?? 0; return }
 
     badge.number = count ?? 0
@@ -60,7 +60,7 @@ class TabbyCell: UICollectionViewCell {
       }, completion: nil)
   }
 
-  func handleBehaviors(_ selected: Bool) {
+  open func handleBehaviors(_ selected: Bool) {
     switch Constant.Behavior.labelVisibility {
     case .invisible:
       label.alpha = 0
@@ -73,7 +73,7 @@ class TabbyCell: UICollectionViewCell {
 
   // MARK: - Constraints
 
-  func setupConstraints() {
+  open func setupConstraints() {
     let offset: CGFloat = label.alpha == 1 ? 8 : 0
 
     imageView.translatesAutoresizingMaskIntoConstraints = false
