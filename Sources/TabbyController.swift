@@ -13,7 +13,7 @@ public protocol TabbyDelegate: class {
  */
 open class TabbyController: UIViewController, UINavigationControllerDelegate {
 
-  var heightConstraint: NSLayoutConstraint?
+  public var heightConstraint: NSLayoutConstraint?
 
   lazy var hiddenConstraint: NSLayoutConstraint = { [unowned self] in
     let constraint = NSLayoutConstraint(
@@ -250,7 +250,7 @@ open class TabbyController: UIViewController, UINavigationControllerDelegate {
     })
   }
 
-  func applyNewConstraints(_ controller: UIViewController) {
+  open func applyNewConstraints(_ controller: UIViewController) {
     var constant: CGFloat = 0
 
     if barVisible {
