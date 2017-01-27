@@ -50,6 +50,7 @@ open class TabbyDefaultCell: UICollectionViewCell, TabbyCell {
 
     handleBadge(count)
     handleBehaviors(selected)
+    setupConstraints()
 
     label.font = Constant.Font.title
   }
