@@ -67,6 +67,9 @@ public struct Constant {
 
     /// This represents the dimensions of the indicator.
     public struct Indicator {
+      /// The position of the indicator, either `.top` or `.bottom`.
+      public static var position: IndicatorPosition = .bottom
+
       /// The width of the indicator.
       public static var width: CGFloat = 25
 
