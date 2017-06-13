@@ -19,6 +19,7 @@
 		292B027B1D8189F700DCA1C1 /* TabbyBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292B02711D8189F700DCA1C1 /* TabbyBar.swift */; };
 		29BB21BD1D82C19E00FA2D92 /* Morgan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29BB21BB1D82C19E00FA2D92 /* Morgan.framework */; };
 		29BB21BE1D82C19E00FA2D92 /* Walker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29BB21BC1D82C19E00FA2D92 /* Walker.framework */; };
+		BD393B781EEFEFD100B5CB3F /* IndicatorPosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD393B771EEFEFD100B5CB3F /* IndicatorPosition.swift */; };
 		F631D20B1DF1A223002D0B8F /* TabbyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F631D20A1DF1A223002D0B8F /* TabbyTests.swift */; };
 		F631D20D1DF1A223002D0B8F /* Tabby.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5B2E89F1C3A780C00C0327D /* Tabby.framework */; };
 		F631D2141DF1A26D002D0B8F /* TabbyBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = F631D2131DF1A26D002D0B8F /* TabbyBadge.swift */; };
@@ -48,6 +49,7 @@
 		29BB21BB1D82C19E00FA2D92 /* Morgan.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Morgan.framework; path = Carthage/Build/iOS/Morgan.framework; sourceTree = "<group>"; };
 		29BB21BC1D82C19E00FA2D92 /* Walker.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Walker.framework; path = Carthage/Build/iOS/Walker.framework; sourceTree = "<group>"; };
 		29E9FD211CE318F1003F9384 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BD393B771EEFEFD100B5CB3F /* IndicatorPosition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndicatorPosition.swift; sourceTree = "<group>"; };
 		D5B2E89F1C3A780C00C0327D /* Tabby.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Tabby.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F631D2081DF1A223002D0B8F /* TabbyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TabbyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F631D20A1DF1A223002D0B8F /* TabbyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbyTests.swift; sourceTree = "<group>"; };
@@ -137,6 +139,7 @@
 			children = (
 				292B026D1D8189F700DCA1C1 /* Behavior.swift */,
 				292B026E1D8189F700DCA1C1 /* Constant.swift */,
+				BD393B771EEFEFD100B5CB3F /* IndicatorPosition.swift */,
 			);
 			path = Library;
 			sourceTree = "<group>";
@@ -316,6 +319,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BD393B781EEFEFD100B5CB3F /* IndicatorPosition.swift in Sources */,
 				292B02731D8189F700DCA1C1 /* TabbyCell.swift in Sources */,
 				292B02741D8189F700DCA1C1 /* UIView+Shadow.swift in Sources */,
 				292B02771D8189F700DCA1C1 /* TabbyLayout.swift in Sources */,
@@ -553,6 +557,7 @@
 				F631D2121DF1A223002D0B8F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

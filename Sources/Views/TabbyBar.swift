@@ -151,7 +151,11 @@ open class TabbyBar: UIView {
   func setupConstraints() {
     indicator.translatesAutoresizingMaskIntoConstraints = false
     addSubview(indicator)
-    constraint(indicator, attributes: .left, .bottom)
+
+    let indicatorLayoutAttribute: NSLayoutAttribute = Constant.Dimension.Indicator.position == .top
+      ? .top
+      : .bottom
+    constraint(indicator, attributes: .left, indicatorLayoutAttribute)
     addConstraints([
       NSLayoutConstraint(item: indicator,
         attribute: .width, relatedBy: .equal,
