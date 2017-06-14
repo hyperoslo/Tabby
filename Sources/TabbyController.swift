@@ -196,6 +196,10 @@ open class TabbyController: UIViewController, UINavigationControllerDelegate {
   open override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
 
+    guard childViewControllers.isEmpty else {
+      return
+    }
+
     tabbyButtonDidPress(index)
   }
 
