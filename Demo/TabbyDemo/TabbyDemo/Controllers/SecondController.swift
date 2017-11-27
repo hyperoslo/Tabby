@@ -15,6 +15,7 @@ class SecondController: GeneralController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
+    view.backgroundColor = .brown
     titleLabel.text = "Who doesn't like some donuts?"
   }
 

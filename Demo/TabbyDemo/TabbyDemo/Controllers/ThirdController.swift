@@ -15,6 +15,7 @@ class ThirdController: GeneralController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
+    view.backgroundColor = .magenta
     titleLabel.text = "Fish... Am I right?"
   }
 }
