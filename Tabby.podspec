@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = "Tabby"
-  s.summary          = "Just another fancy tabbar"
+  s.summary          = "A fancy tabbar"
   s.version          = "0.1.0"
   s.homepage         = "https://github.com/hyperoslo/Tabby"
   s.license          = 'MIT'
@@ -15,5 +15,4 @@ Pod::Spec.new do |s|
 
   s.requires_arc = true
   s.ios.source_files = 'Sources/**/*'
-  s.dependency 'Morgan'
 end

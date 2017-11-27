@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		292B02721D8189F700DCA1C1 /* TabbyAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292B02621D8189F700DCA1C1 /* TabbyAnimation.swift */; };
 		292B02731D8189F700DCA1C1 /* TabbyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292B02641D8189F700DCA1C1 /* TabbyCell.swift */; };
 		292B02741D8189F700DCA1C1 /* UIView+Shadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292B02661D8189F700DCA1C1 /* UIView+Shadow.swift */; };
 		292B02751D8189F700DCA1C1 /* UIViewController+Constraint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292B02671D8189F700DCA1C1 /* UIViewController+Constraint.swift */; };
@@ -17,8 +16,6 @@
 		292B02791D8189F700DCA1C1 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292B026E1D8189F700DCA1C1 /* Constant.swift */; };
 		292B027A1D8189F700DCA1C1 /* TabbyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292B026F1D8189F700DCA1C1 /* TabbyController.swift */; };
 		292B027B1D8189F700DCA1C1 /* TabbyBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 292B02711D8189F700DCA1C1 /* TabbyBar.swift */; };
-		29BB21BD1D82C19E00FA2D92 /* Morgan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29BB21BB1D82C19E00FA2D92 /* Morgan.framework */; };
-		29BB21BE1D82C19E00FA2D92 /* Walker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 29BB21BC1D82C19E00FA2D92 /* Walker.framework */; };
 		D2EB46A91FCC635100BA6307 /* Constraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2EB46A81FCC635100BA6307 /* Constraints.swift */; };
 		F631D20B1DF1A223002D0B8F /* TabbyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F631D20A1DF1A223002D0B8F /* TabbyTests.swift */; };
 		F631D20D1DF1A223002D0B8F /* Tabby.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5B2E89F1C3A780C00C0327D /* Tabby.framework */; };
@@ -36,7 +33,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		292B02621D8189F700DCA1C1 /* TabbyAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabbyAnimation.swift; sourceTree = "<group>"; };
 		292B02641D8189F700DCA1C1 /* TabbyCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabbyCell.swift; sourceTree = "<group>"; };
 		292B02661D8189F700DCA1C1 /* UIView+Shadow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Shadow.swift"; sourceTree = "<group>"; };
 		292B02671D8189F700DCA1C1 /* UIViewController+Constraint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIViewController+Constraint.swift"; sourceTree = "<group>"; };
@@ -46,8 +42,6 @@
 		292B026E1D8189F700DCA1C1 /* Constant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		292B026F1D8189F700DCA1C1 /* TabbyController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabbyController.swift; sourceTree = "<group>"; };
 		292B02711D8189F700DCA1C1 /* TabbyBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabbyBar.swift; sourceTree = "<group>"; };
-		29BB21BB1D82C19E00FA2D92 /* Morgan.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Morgan.framework; path = Carthage/Build/iOS/Morgan.framework; sourceTree = "<group>"; };
-		29BB21BC1D82C19E00FA2D92 /* Walker.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Walker.framework; path = Carthage/Build/iOS/Walker.framework; sourceTree = "<group>"; };
 		29E9FD211CE318F1003F9384 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D2EB46A81FCC635100BA6307 /* Constraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constraints.swift; sourceTree = "<group>"; };
 		D5B2E89F1C3A780C00C0327D /* Tabby.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Tabby.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -62,8 +56,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				29BB21BE1D82C19E00FA2D92 /* Walker.framework in Frameworks */,
-				29BB21BD1D82C19E00FA2D92 /* Morgan.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -81,7 +73,6 @@
 		292B02601D8189F700DCA1C1 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				292B02611D8189F700DCA1C1 /* Animations */,
 				292B02631D8189F700DCA1C1 /* Cells */,
 				292B02651D8189F700DCA1C1 /* Extensions */,
 				292B02681D8189F700DCA1C1 /* Items */,
@@ -91,14 +82,6 @@
 				292B02701D8189F700DCA1C1 /* Views */,
 			);
 			path = Sources;
-			sourceTree = "<group>";
-		};
-		292B02611D8189F700DCA1C1 /* Animations */ = {
-			isa = PBXGroup;
-			children = (
-				292B02621D8189F700DCA1C1 /* TabbyAnimation.swift */,
-			);
-			path = Animations;
 			sourceTree = "<group>";
 		};
 		292B02631D8189F700DCA1C1 /* Cells */ = {
@@ -164,8 +147,6 @@
 		D5B2E8951C3A780C00C0327D = {
 			isa = PBXGroup;
 			children = (
-				29BB21BB1D82C19E00FA2D92 /* Morgan.framework */,
-				29BB21BC1D82C19E00FA2D92 /* Walker.framework */,
 				292B02601D8189F700DCA1C1 /* Sources */,
 				29E9FD201CE318F1003F9384 /* Resources */,
 				F631D2091DF1A223002D0B8F /* TabbyTests */,
@@ -212,7 +193,6 @@
 				D5B2E89B1C3A780C00C0327D /* Frameworks */,
 				D5B2E89C1C3A780C00C0327D /* Headers */,
 				D5B2E89D1C3A780C00C0327D /* Resources */,
-				29BB21BF1D82C1BC00FA2D92 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -296,24 +276,6 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		29BB21BF1D82C1BC00FA2D92 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-				"$(SRCROOT)/Carthage/Build/iOS/Walker.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/Morgan.framework",
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "/usr/local/bin/carthage copy-frameworks";
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
 		D5B2E89A1C3A780C00C0327D /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -324,7 +286,6 @@
 				292B02771D8189F700DCA1C1 /* TabbyLayout.swift in Sources */,
 				292B02791D8189F700DCA1C1 /* Constant.swift in Sources */,
 				D2EB46A91FCC635100BA6307 /* Constraints.swift in Sources */,
-				292B02721D8189F700DCA1C1 /* TabbyAnimation.swift in Sources */,
 				292B027A1D8189F700DCA1C1 /* TabbyController.swift in Sources */,
 				292B02751D8189F700DCA1C1 /* UIViewController+Constraint.swift in Sources */,
 				292B02761D8189F700DCA1C1 /* TabbyBarItem.swift in Sources */,

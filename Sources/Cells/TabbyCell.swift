@@ -45,7 +45,7 @@ open class TabbyDefaultCell: UICollectionViewCell, TabbyCell {
     label.textColor = color
 
     if selected {
-      TabbyAnimation.animate(imageView, kind: item.animation)
+      Constant.tapItemAnimation(imageView)
     }
 
     handleBadge(count)
