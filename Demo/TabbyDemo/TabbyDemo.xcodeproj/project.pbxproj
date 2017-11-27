@@ -7,12 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1C711C24DFA29252CE823784 /* Pods_TabbyDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56FCA001056EB91FC430DDCA /* Pods_TabbyDemo.framework */; };
 		298F6CAD1CE4A9BE00F2558F /* GeneralController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 298F6CAC1CE4A9BE00F2558F /* GeneralController.swift */; };
 		29E9FD311CE31E2C003F9384 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E9FD301CE31E2C003F9384 /* AppDelegate.swift */; };
 		29E9FD341CE31E41003F9384 /* FirstController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E9FD331CE31E41003F9384 /* FirstController.swift */; };
 		29E9FD361CE31E4D003F9384 /* SecondController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E9FD351CE31E4D003F9384 /* SecondController.swift */; };
 		29E9FD381CE31E55003F9384 /* ThirdController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29E9FD371CE31E55003F9384 /* ThirdController.swift */; };
-		B3BF80601278C45CA1048F2F /* Pods_TabbyDemo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 31E60871132C7A0A15044996 /* Pods_TabbyDemo.framework */; };
 		D5C7F74E1C3BC9CE008CDDBA /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D5C7F74C1C3BC9CE008CDDBA /* LaunchScreen.storyboard */; };
 		D5C7F75B1C3BCA1E008CDDBA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D5C7F7571C3BCA1E008CDDBA /* Assets.xcassets */; };
 /* End PBXBuildFile section */
@@ -23,9 +23,9 @@
 		29E9FD331CE31E41003F9384 /* FirstController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirstController.swift; sourceTree = "<group>"; };
 		29E9FD351CE31E4D003F9384 /* SecondController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecondController.swift; sourceTree = "<group>"; };
 		29E9FD371CE31E55003F9384 /* ThirdController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThirdController.swift; sourceTree = "<group>"; };
-		31E60871132C7A0A15044996 /* Pods_TabbyDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TabbyDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		44D3E4FACFACFD7AE58A90DC /* Pods-TabbyDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TabbyDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TabbyDemo/Pods-TabbyDemo.debug.xcconfig"; sourceTree = "<group>"; };
-		665AA3614CCD22B4758B9A0D /* Pods-TabbyDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TabbyDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-TabbyDemo/Pods-TabbyDemo.release.xcconfig"; sourceTree = "<group>"; };
+		3288F9407B8A4A8901883929 /* Pods-TabbyDemo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TabbyDemo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TabbyDemo/Pods-TabbyDemo.debug.xcconfig"; sourceTree = "<group>"; };
+		56FCA001056EB91FC430DDCA /* Pods_TabbyDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TabbyDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9CFB8E7A6DC9EFB2FBDE529C /* Pods-TabbyDemo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TabbyDemo.release.xcconfig"; path = "Pods/Target Support Files/Pods-TabbyDemo/Pods-TabbyDemo.release.xcconfig"; sourceTree = "<group>"; };
 		D5C7F7401C3BC9CE008CDDBA /* TabbyDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TabbyDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5C7F74D1C3BC9CE008CDDBA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D5C7F74F1C3BC9CE008CDDBA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -37,13 +37,21 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B3BF80601278C45CA1048F2F /* Pods_TabbyDemo.framework in Frameworks */,
+				1C711C24DFA29252CE823784 /* Pods_TabbyDemo.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1F7639D0D38EB9290BB75FD9 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				56FCA001056EB91FC430DDCA /* Pods_TabbyDemo.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		29E9FD321CE31E41003F9384 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -55,12 +63,13 @@
 			path = Controllers;
 			sourceTree = "<group>";
 		};
-		8E58D6855E427FF92AD2C75A /* Frameworks */ = {
+		6D7B5C6DF09B3EC0735FBC73 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				31E60871132C7A0A15044996 /* Pods_TabbyDemo.framework */,
+				3288F9407B8A4A8901883929 /* Pods-TabbyDemo.debug.xcconfig */,
+				9CFB8E7A6DC9EFB2FBDE529C /* Pods-TabbyDemo.release.xcconfig */,
 			);
-			name = Frameworks;
+			name = Pods;
 			sourceTree = "<group>";
 		};
 		D5C7F7371C3BC9CE008CDDBA = {
@@ -68,8 +77,8 @@
 			children = (
 				D5C7F7421C3BC9CE008CDDBA /* TabbyDemo */,
 				D5C7F7411C3BC9CE008CDDBA /* Products */,
-				D7849D36B7035A4E9F4BB35C /* Pods */,
-				8E58D6855E427FF92AD2C75A /* Frameworks */,
+				6D7B5C6DF09B3EC0735FBC73 /* Pods */,
+				1F7639D0D38EB9290BB75FD9 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -109,15 +118,6 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		D7849D36B7035A4E9F4BB35C /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				44D3E4FACFACFD7AE58A90DC /* Pods-TabbyDemo.debug.xcconfig */,
-				665AA3614CCD22B4758B9A0D /* Pods-TabbyDemo.release.xcconfig */,
-			);
-			name = Pods;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -125,15 +125,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D5C7F7521C3BC9CE008CDDBA /* Build configuration list for PBXNativeTarget "TabbyDemo" */;
 			buildPhases = (
-				E85B755FD419EC493C3B4945 /* [CP] Check Pods Manifest.lock */,
-				19392C674997285AAFEC58FA /* [CP] Check Pods Manifest.lock */,
+				5A73BA6C5F05AA1883D4E88A /* [CP] Check Pods Manifest.lock */,
 				D5C7F73C1C3BC9CE008CDDBA /* Sources */,
 				D5C7F73D1C3BC9CE008CDDBA /* Frameworks */,
 				D5C7F73E1C3BC9CE008CDDBA /* Resources */,
-				F5F87F910E3DD097898F9A5A /* [CP] Embed Pods Frameworks */,
-				E1819ACC5A023584EC8773E9 /* [CP] Copy Pods Resources */,
-				274B2B038DDAE1D24144C4C3 /* 📦 Embed Pods Frameworks */,
-				F73B1009C953444E921FFBD8 /* 📦 Copy Pods Resources */,
+				BB0D9BC8BF14AC894175D3ED /* [CP] Embed Pods Frameworks */,
+				93CFC8638D5F9BCAE475619B /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -151,7 +148,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0810;
-				LastUpgradeCheck = 0800;
+				LastUpgradeCheck = 0910;
 				ORGANIZATIONNAME = "Hyper Interaktiv AS";
 				TargetAttributes = {
 					D5C7F73F1C3BC9CE008CDDBA = {
@@ -191,37 +188,25 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		19392C674997285AAFEC58FA /* [CP] Check Pods Manifest.lock */ = {
+		5A73BA6C5F05AA1883D4E88A /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
 			);
 			name = "[CP] Check Pods Manifest.lock";
 			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-TabbyDemo-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		274B2B038DDAE1D24144C4C3 /* 📦 Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "📦 Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TabbyDemo/Pods-TabbyDemo-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		E1819ACC5A023584EC8773E9 /* [CP] Copy Pods Resources */ = {
+		93CFC8638D5F9BCAE475619B /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -236,49 +221,22 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TabbyDemo/Pods-TabbyDemo-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		E85B755FD419EC493C3B4945 /* [CP] Check Pods Manifest.lock */ = {
+		BB0D9BC8BF14AC894175D3ED /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputPaths = (
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		F5F87F910E3DD097898F9A5A /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-TabbyDemo/Pods-TabbyDemo-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/Tabby/Tabby.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Tabby.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TabbyDemo/Pods-TabbyDemo-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		F73B1009C953444E921FFBD8 /* 📦 Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "📦 Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TabbyDemo/Pods-TabbyDemo-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -318,14 +276,20 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -353,7 +317,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 			};
 			name = Debug;
 		};
@@ -365,14 +329,20 @@
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
@@ -393,14 +363,14 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
 		};
 		D5C7F7531C3BC9CE008CDDBA /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 44D3E4FACFACFD7AE58A90DC /* Pods-TabbyDemo.debug.xcconfig */;
+			baseConfigurationReference = 3288F9407B8A4A8901883929 /* Pods-TabbyDemo.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -410,13 +380,12 @@
 				PRODUCT_BUNDLE_IDENTIFIER = no.hyper.TabbyDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
 		D5C7F7541C3BC9CE008CDDBA /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 665AA3614CCD22B4758B9A0D /* Pods-TabbyDemo.release.xcconfig */;
+			baseConfigurationReference = 9CFB8E7A6DC9EFB2FBDE529C /* Pods-TabbyDemo.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -425,7 +394,6 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = no.hyper.TabbyDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};

@@ -16,6 +16,7 @@ class FirstController: GeneralController {
   override func viewDidLoad() {
     super.viewDidLoad()
 
+    view.backgroundColor = .orange
     titleLabel.text = "Here be cows"
   }
 }

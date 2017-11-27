@@ -68,7 +68,7 @@ public struct Constant {
     /// This represents the dimensions of the indicator.
     public struct Indicator {
       /// The position of the indicator, either `.top` or `.bottom`.
-      public static var position: IndicatorPosition = .bottom
+      public static var position: NSLayoutAttribute = .bottom
 
       /// The width of the indicator.
       public static var width: CGFloat = 25
@@ -93,15 +93,26 @@ public struct Constant {
     }
   }
 
-  /// The default animation the tab bar will have.
-  public struct Animation {
-    /// The initial animation the tab bar will have.
-    public static var initial: TabbyAnimation.Kind = .pop
-  }
-
   /// Different kinds of behaviors for the tab bar.
   public struct Behavior {
     /// Label visibility behavior.
     public static var labelVisibility: Tabby.Behavior.Label = .invisible
+  }
+
+  /// Animation when tapping on the tabbar item
+  public static var tapItemAnimation: (UIView) -> Void = { view in
+    UIView.animate(withDuration: 0.1, animations: {
+      view.transform = CGAffineTransform(scaleX: 0.8, y: 0.8)
+    }, completion: { _ in
+      UIView.animate(
+        withDuration: 0.4,
+        delay: 0,
+        usingSpringWithDamping: 0.4,
+        initialSpringVelocity: 0,
+        options: UIViewAnimationOptions(),
+        animations: {
+          view.transform = CGAffineTransform.identity
+      }, completion: nil)
+    })
   }
 }
