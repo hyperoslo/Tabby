@@ -44,7 +44,14 @@ open class TabbyController: UIViewController, UINavigationControllerDelegate {
     tabby.delegate = self
 
     return tabby
-    }()
+  }()
+
+  /// A view behind TabbyBar to patch in the bottom in case of safeArea
+  private lazy var patchyView: UIView = {
+    let view = UIView()
+    view.backgroundColor = Constant.Color.background
+    return view
+  }()
 
   /**
    The current selected controller in the tab bar.
@@ -176,6 +183,7 @@ open class TabbyController: UIViewController, UINavigationControllerDelegate {
 
     super.init(nibName: nil, bundle: nil)
 
+    view.addSubview(patchyView)
     view.addSubview(tabbyBar)
 
     setupConstraints()
@@ -286,8 +294,28 @@ open class TabbyController: UIViewController, UINavigationControllerDelegate {
   // MARK: - Constraints
 
   func setupConstraints() {
-    view.constraint(tabbyBar, attributes: .leading, .trailing, .bottom)
     view.addConstraint(shownConstraint)
+
+    Constraint.on(
+      tabbyBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+      tabbyBar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+
+      patchyView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+      patchyView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+      patchyView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+    )
+
+    if #available(iOS 11, *) {
+      Constraint.on(
+        tabbyBar.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+        patchyView.heightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.heightAnchor)
+      )
+    } else {
+      Constraint.on(
+        tabbyBar.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+        patchyView.heightAnchor.constraint(equalToConstant: 0)
+      )
+    }
   }
 
   // MARK: - Tabbar
