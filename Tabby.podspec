@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
   s.name             = "Tabby"
   s.summary          = "A fancy tabbar"
-  s.version          = "0.1.0"
+  s.version          = "0.2.0"
   s.homepage         = "https://github.com/hyperoslo/Tabby"
   s.license          = 'MIT'
   s.author           = { "Hyper Interaktiv AS" => "ios@hyper.no" }
