@@ -2,14 +2,10 @@ import UIKit
 import Tabby
 
 class MainController: TabbyController {
-  override init(items: [TabbyBarItem]) {
-    super.init(items: items)
+  override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(animated)
 
     setIndex = 1
-  }
-
-  required init?(coder aDecoder: NSCoder) {
-    fatalError()
   }
 }
 
