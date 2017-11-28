@@ -75,7 +75,7 @@ open class TabbyBar: UIView {
     self.items = items
     super.init(frame: .zero)
 
-    backgroundColor = Constant.Color.background
+    backgroundColor = .clear
 
     collectionView.addObserver(
       self, forKeyPath: TabbyBar.collectionObserver,
@@ -128,7 +128,7 @@ open class TabbyBar: UIView {
       initialSpringVelocity: 0, options: [.curveEaseIn], animations: {
         self.indicator.center.x = source.collectionView(
           self.collectionView, cellForItemAt: IndexPath(row: index, section: 0)).center.x
-      }, completion: nil)
+    }, completion: nil)
   }
 
   // MARK: - Translucency
@@ -157,25 +157,27 @@ open class TabbyBar: UIView {
       : .bottom
     constraint(indicator, attributes: .left, indicatorLayoutAttribute)
     addConstraints([
-      NSLayoutConstraint(item: indicator,
+      NSLayoutConstraint(
+        item: indicator,
         attribute: .width, relatedBy: .equal,
         toItem: nil, attribute: .notAnAttribute,
         multiplier: 1, constant: Constant.Dimension.Indicator.width),
 
-      NSLayoutConstraint(item: indicator,
+      NSLayoutConstraint(
+        item: indicator,
         attribute: .height, relatedBy: .equal,
         toItem: nil, attribute: .notAnAttribute,
         multiplier: 1, constant: Constant.Dimension.Indicator.height)
-      ])
+    ])
 
     separator.translatesAutoresizingMaskIntoConstraints = false
     addSubview(separator)
     constraint(separator, attributes: .width, .top, .right)
     addConstraint(
       NSLayoutConstraint(item: separator,
-        attribute: .height, relatedBy: .equal,
-        toItem: nil, attribute: .notAnAttribute,
-        multiplier: 1, constant: Constant.Dimension.Separator.height)
+                         attribute: .height, relatedBy: .equal,
+                         toItem: nil, attribute: .notAnAttribute,
+                         multiplier: 1, constant: Constant.Dimension.Separator.height)
     )
 
     collectionView.translatesAutoresizingMaskIntoConstraints = false
@@ -209,8 +211,8 @@ extension TabbyBar: UICollectionViewDataSource {
   }
 
   public func collectionView(_ collectionView: UICollectionView,
-    cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-    
+                             cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+
     guard let cell = collectionView.dequeueReusableCell(
       withReuseIdentifier: Constant.cellType.reusableIdentifier, for: indexPath)
       as? TabbyCell else { return UICollectionViewCell() }

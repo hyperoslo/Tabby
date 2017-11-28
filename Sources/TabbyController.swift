@@ -17,7 +17,6 @@ open class TabbyController: UIViewController, UINavigationControllerDelegate {
 
   /// Used when toggling tabbyBar visibility
   private var tabbyBarBottomConstraint: NSLayoutConstraint?
-  private var patchyViewBottomConstraint: NSLayoutConstraint?
 
   /**
    The actual tab bar that will contain the buttons, indicator, separator, etc.
@@ -28,10 +27,10 @@ open class TabbyController: UIViewController, UINavigationControllerDelegate {
     tabby.delegate = self
 
     return tabby
-  }()
+    }()
 
   /// A view behind TabbyBar to patch in the bottom in case of safeArea
-  private lazy var patchyView: UIView = {
+  fileprivate lazy var patchyView: UIView = {
     let view = UIView()
     view.backgroundColor = Constant.Color.background
     return view
@@ -222,7 +221,7 @@ open class TabbyController: UIViewController, UINavigationControllerDelegate {
     controller.view.translatesAutoresizingMaskIntoConstraints = false
 
     addChildViewController(controller)
-    view.insertSubview(controller.view, belowSubview: tabbyBar)
+    view.insertSubview(controller.view, belowSubview: patchyView)
     tabbyBar.prepareTranslucency(translucent)
     applyNewConstraints(controller)
   }
@@ -280,18 +279,15 @@ open class TabbyController: UIViewController, UINavigationControllerDelegate {
   // MARK: - Constraints
 
   func setupConstraints() {
-    patchyViewBottomConstraint = patchyView.bottomAnchor.constraint(
-      equalTo: view.bottomAnchor
-    )
-
     Constraint.on(
       tabbyBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
       tabbyBar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
       tabbyBar.heightAnchor.constraint(equalToConstant: Constant.Dimension.height),
 
+      patchyView.topAnchor.constraint(equalTo: tabbyBar.bottomAnchor),
       patchyView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
       patchyView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-      patchyViewBottomConstraint!
+      patchyView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
     )
 
     if #available(iOS 11, *) {
@@ -300,8 +296,7 @@ open class TabbyController: UIViewController, UINavigationControllerDelegate {
       )
 
       Constraint.on(
-        tabbyBarBottomConstraint!,
-        patchyView.heightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.heightAnchor)
+        tabbyBarBottomConstraint!
       )
     } else {
       tabbyBarBottomConstraint = tabbyBar.bottomAnchor.constraint(
@@ -309,8 +304,7 @@ open class TabbyController: UIViewController, UINavigationControllerDelegate {
       )
 
       Constraint.on(
-        tabbyBarBottomConstraint!,
-        patchyView.heightAnchor.constraint(equalToConstant: 0)
+        tabbyBarBottomConstraint!
       )
     }
   }
@@ -319,7 +313,6 @@ open class TabbyController: UIViewController, UINavigationControllerDelegate {
 
   public func showTabbar() {
     tabbyBarBottomConstraint?.constant = 0
-    patchyViewBottomConstraint?.constant = 0
     tabbyBar.indicator.alpha = showIndicator ? 1 : 0
 
     UIView.animate(withDuration: 0.25) {
@@ -329,7 +322,6 @@ open class TabbyController: UIViewController, UINavigationControllerDelegate {
 
   public func hideTabbar() {
     tabbyBarBottomConstraint?.constant = 200
-    patchyViewBottomConstraint?.constant = -200
     tabbyBar.indicator.alpha = 0
 
     UIView.animate(withDuration: 0.25) {
@@ -389,7 +381,7 @@ extension TabbyController: TabbyBarDelegate {
     controller.view.translatesAutoresizingMaskIntoConstraints = false
 
     addChildViewController(controller)
-    view.insertSubview(controller.view, belowSubview: tabbyBar)
+    view.insertSubview(controller.view, belowSubview: patchyView)
 
     applyNewConstraints(controller)
   }
