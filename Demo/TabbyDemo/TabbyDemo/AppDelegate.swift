@@ -1,6 +1,14 @@
 import UIKit
 import Tabby
 
+class MainController: TabbyController {
+  override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(animated)
+
+    setIndex = 1
+  }
+}
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -10,8 +18,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     TabbyBarItem(controller: self.thirdNavigation, image: "fish")
   ]
 
-  lazy var mainController: TabbyController = { [unowned self] in
-    let controller = TabbyController(items: self.items)
+  lazy var mainController: MainController = { [unowned self] in
+    let controller = MainController(items: self.items)
 
     controller.delegate = self
     controller.translucent = false

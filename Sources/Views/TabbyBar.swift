@@ -13,9 +13,6 @@ public protocol TabbyBarDelegate: class {
  */
 open class TabbyBar: UIView {
 
-  static let collectionObserver = "contentSize"
-  static let KVOContext = UnsafeMutableRawPointer(mutating: nil)
-
   lazy var translucentView: UIVisualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .light))
 
   lazy var layout: TabbyLayout = {
@@ -54,7 +51,6 @@ open class TabbyBar: UIView {
   var selectedItem: Int = 0 {
     didSet {
       positionIndicator(selectedItem)
-      collectionView.reloadData()
     }
   }
 
@@ -77,22 +73,8 @@ open class TabbyBar: UIView {
 
     backgroundColor = .clear
 
-    collectionView.addObserver(
-      self, forKeyPath: TabbyBar.collectionObserver,
-      options: .old, context: TabbyBar.KVOContext)
-
     setupCollectionView()
     setupConstraints()
-  }
-
-  open override func observeValue(
-    forKeyPath keyPath: String?, of object: Any?,
-    change: [NSKeyValueChangeKey : Any]?,
-    context: UnsafeMutableRawPointer?) {
-    guard context == TabbyBar.KVOContext else {
-      return
-    }
-    positionIndicator(selectedItem, animate: false)
   }
 
   /**
@@ -100,10 +82,6 @@ open class TabbyBar: UIView {
    */
   public required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
-  }
-
-  deinit {
-    collectionView.removeObserver(self, forKeyPath: TabbyBar.collectionObserver)
   }
 
   // MARK: - Collection View setup
@@ -121,13 +99,20 @@ open class TabbyBar: UIView {
   // Animations
 
   func positionIndicator(_ index: Int, animate: Bool = true) {
-    guard let source = collectionView.dataSource , index < items.count else { return }
+    guard collectionView.dataSource != nil,
+      index < items.count else {
+        return
+    }
+
+    let indexPath = IndexPath(row: index, section: 0)
+    guard let cell = collectionView.cellForItem(at: indexPath) else {
+      return
+    }
 
     UIView.animate(
       withDuration: animate ? 0.7 : 0, delay: 0, usingSpringWithDamping: 0.6,
       initialSpringVelocity: 0, options: [.curveEaseIn], animations: {
-        self.indicator.center.x = source.collectionView(
-          self.collectionView, cellForItemAt: IndexPath(row: index, section: 0)).center.x
+        self.indicator.center.x = cell.center.x
     }, completion: nil)
   }
 
@@ -184,6 +169,25 @@ open class TabbyBar: UIView {
     addSubview(collectionView)
     constraint(collectionView, attributes: .top, .bottom, .leading, .trailing)
   }
+
+  // MAKR: - Selection
+
+  /// Handle selection on a cell
+  /// This call Constant.tapItemAnimation on the found UIImageView by default.
+  ///
+  /// - Parameter indexPath: The indexPath of the selected cell
+  open func handleSelection(indexPath: IndexPath) {
+    guard let cell = collectionView.cellForItem(at: indexPath) else {
+      return
+    }
+
+    guard let imageView = cell.contentView.subviews
+      .flatMap({ $0 as? UIImageView }).first else {
+      return
+    }
+
+    Constant.tapItemAnimation(imageView)
+  }
 }
 
 extension TabbyBar: UICollectionViewDelegate {
@@ -200,6 +204,7 @@ extension TabbyBar: UICollectionViewDelegate {
       selectedItem = position
     }
 
+    handleSelection(indexPath: indexPath)
     delegate?.tabbyButtonDidPress(position)
   }
 }

@@ -44,10 +44,6 @@ open class TabbyDefaultCell: UICollectionViewCell, TabbyCell {
     label.text = item.controller.title
     label.textColor = color
 
-    if selected {
-      Constant.tapItemAnimation(imageView)
-    }
-
     handleBadge(count)
     handleBehaviors(selected)
     setupConstraints()
