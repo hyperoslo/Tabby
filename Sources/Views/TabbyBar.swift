@@ -51,7 +51,6 @@ open class TabbyBar: UIView {
   var selectedItem: Int = 0 {
     didSet {
       positionIndicator(selectedItem)
-      collectionView.reloadData()
     }
   }
 
