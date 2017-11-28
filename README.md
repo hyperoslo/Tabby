@@ -19,7 +19,7 @@
 
 **Tabby** is the ultimate tab bar, a full substitution for those UITabBarControllers, UITabBars and UITabBarItems that are not customizable at all. **Tabby** has animations, behaviors and it has the easiness you would expect from any of our libraries.
 
-`// TODO: Add a gif here.`
+![sample](/Web/sample.gif)
 
 ## Usage
 
