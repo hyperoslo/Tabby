@@ -101,11 +101,15 @@ open class TabbyBar: UIView {
   func positionIndicator(_ index: Int, animate: Bool = true) {
     guard let source = collectionView.dataSource , index < items.count else { return }
 
+    let x = source.collectionView(
+      self.collectionView,
+      cellForItemAt: IndexPath(row: index, section: 0)
+    ).center.x
+
     UIView.animate(
       withDuration: animate ? 0.7 : 0, delay: 0, usingSpringWithDamping: 0.6,
       initialSpringVelocity: 0, options: [.curveEaseIn], animations: {
-        self.indicator.center.x = source.collectionView(
-          self.collectionView, cellForItemAt: IndexPath(row: index, section: 0)).center.x
+        self.indicator.center.x = x
     }, completion: nil)
   }
 
