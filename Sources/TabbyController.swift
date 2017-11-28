@@ -15,25 +15,9 @@ open class TabbyController: UIViewController, UINavigationControllerDelegate {
 
   public var heightConstraint: NSLayoutConstraint?
 
-  lazy var hiddenConstraint: NSLayoutConstraint = { [unowned self] in
-    let constraint = NSLayoutConstraint(
-      item: self.tabbyBar, attribute: .height,
-      relatedBy: .equal, toItem: nil,
-      attribute: .notAnAttribute,
-      multiplier: 1, constant: 0)
-
-    return constraint
-    }()
-
-  lazy var shownConstraint: NSLayoutConstraint = { [unowned self] in
-    let constraint = NSLayoutConstraint(
-      item: self.tabbyBar, attribute: .height,
-      relatedBy: .equal, toItem: nil,
-      attribute: .notAnAttribute,
-      multiplier: 1, constant: Constant.Dimension.height)
-
-    return constraint
-    }()
+  /// Used when toggling tabbyBar visibility
+  private var tabbyBarBottomConstraint: NSLayoutConstraint?
+  private var patchyViewBottomConstraint: NSLayoutConstraint?
 
   /**
    The actual tab bar that will contain the buttons, indicator, separator, etc.
@@ -69,7 +53,7 @@ open class TabbyController: UIViewController, UINavigationControllerDelegate {
       // to UINavigationController for instance. The inner constraints change (and break).
       let when = DispatchTime.now() + 0.1
       DispatchQueue.main.asyncAfter(deadline: when) {
-        self.hideBar()
+        self.toggleBar()
       }
     }
   }
@@ -243,13 +227,15 @@ open class TabbyController: UIViewController, UINavigationControllerDelegate {
     applyNewConstraints(controller)
   }
 
-  func hideBar() {
+  func toggleBar() {
     animateNewConstraints()
 
     UIView.animate(withDuration: 0.3, animations: {
-      self.tabbyBar.transform = self.barHidden
-        ? .init(translationX: 0, y: self.tabbyBar.frame.height)
-        : .identity
+      if self.barHidden {
+        self.hideTabbar()
+      } else {
+        self.showTabbar()
+      }
     }, completion: { _ in
       self.tabbyBar.positionIndicator(self.index)
     })
@@ -294,25 +280,36 @@ open class TabbyController: UIViewController, UINavigationControllerDelegate {
   // MARK: - Constraints
 
   func setupConstraints() {
-    view.addConstraint(shownConstraint)
+    patchyViewBottomConstraint = patchyView.bottomAnchor.constraint(
+      equalTo: view.bottomAnchor
+    )
 
     Constraint.on(
       tabbyBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
       tabbyBar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+      tabbyBar.heightAnchor.constraint(equalToConstant: Constant.Dimension.height),
 
       patchyView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
       patchyView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-      patchyView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+      patchyViewBottomConstraint!
     )
 
     if #available(iOS 11, *) {
+      tabbyBarBottomConstraint = tabbyBar.bottomAnchor.constraint(
+        equalTo: view.safeAreaLayoutGuide.bottomAnchor
+      )
+
       Constraint.on(
-        tabbyBar.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+        tabbyBarBottomConstraint!,
         patchyView.heightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.heightAnchor)
       )
     } else {
+      tabbyBarBottomConstraint = tabbyBar.bottomAnchor.constraint(
+        equalTo: view.bottomAnchor
+      )
+
       Constraint.on(
-        tabbyBar.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+        tabbyBarBottomConstraint!,
         patchyView.heightAnchor.constraint(equalToConstant: 0)
       )
     }
@@ -321,28 +318,22 @@ open class TabbyController: UIViewController, UINavigationControllerDelegate {
   // MARK: - Tabbar
 
   public func showTabbar() {
-    if view.constraints.contains(hiddenConstraint) {
-      view.removeConstraint(hiddenConstraint)
-      view.addConstraint(shownConstraint)
-      heightConstraint?.constant = -Constant.Dimension.height
-      tabbyBar.indicator.alpha = showIndicator ? 1 : 0
+    tabbyBarBottomConstraint?.constant = 0
+    patchyViewBottomConstraint?.constant = 0
+    tabbyBar.indicator.alpha = showIndicator ? 1 : 0
 
-      UIView.animate(withDuration: 0.25) {
-        self.view.layoutIfNeeded()
-      }
+    UIView.animate(withDuration: 0.25) {
+      self.view.layoutIfNeeded()
     }
   }
 
   public func hideTabbar() {
-    if view.constraints.contains(shownConstraint) {
-      heightConstraint?.constant = 0
-      view.removeConstraint(shownConstraint)
-      view.addConstraint(hiddenConstraint)
-      tabbyBar.indicator.alpha = 0.0
+    tabbyBarBottomConstraint?.constant = 200
+    patchyViewBottomConstraint?.constant = -200
+    tabbyBar.indicator.alpha = 0
 
-      UIView.animate(withDuration: 0.25) {
-        self.view.layoutIfNeeded()
-      }
+    UIView.animate(withDuration: 0.25) {
+      self.view.layoutIfNeeded()
     }
   }
 }
