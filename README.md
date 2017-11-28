@@ -1,5 +1,7 @@
 # Tabby
 
+⚠️ DEPRECATED, NO LONGER MAINTAINED
+
 `// TODO: Add the image here.`
 
 <div align = "center">
