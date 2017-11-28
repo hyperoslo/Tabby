@@ -13,9 +13,6 @@ public protocol TabbyBarDelegate: class {
  */
 open class TabbyBar: UIView {
 
-  static let collectionObserver = "contentSize"
-  static let KVOContext = UnsafeMutableRawPointer(mutating: nil)
-
   lazy var translucentView: UIVisualEffectView = UIVisualEffectView(effect: UIBlurEffect(style: .light))
 
   lazy var layout: TabbyLayout = {
@@ -77,22 +74,8 @@ open class TabbyBar: UIView {
 
     backgroundColor = .clear
 
-    collectionView.addObserver(
-      self, forKeyPath: TabbyBar.collectionObserver,
-      options: .old, context: TabbyBar.KVOContext)
-
     setupCollectionView()
     setupConstraints()
-  }
-
-  open override func observeValue(
-    forKeyPath keyPath: String?, of object: Any?,
-    change: [NSKeyValueChangeKey : Any]?,
-    context: UnsafeMutableRawPointer?) {
-    guard context == TabbyBar.KVOContext else {
-      return
-    }
-    positionIndicator(selectedItem, animate: false)
   }
 
   /**
@@ -100,10 +83,6 @@ open class TabbyBar: UIView {
    */
   public required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
-  }
-
-  deinit {
-    collectionView.removeObserver(self, forKeyPath: TabbyBar.collectionObserver)
   }
 
   // MARK: - Collection View setup
