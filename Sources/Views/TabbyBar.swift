@@ -162,6 +162,25 @@ open class TabbyBar: UIView {
     addSubview(collectionView)
     constraint(collectionView, attributes: .top, .bottom, .leading, .trailing)
   }
+
+  // MAKR: - Selection
+
+  /// Handle selection on a cell
+  /// This call Constant.tapItemAnimation on the found UIImageView by default.
+  ///
+  /// - Parameter indexPath: The indexPath of the selected cell
+  open func handleSelection(indexPath: IndexPath) {
+    guard let cell = collectionView.cellForItem(at: indexPath) else {
+      return
+    }
+
+    guard let imageView = cell.contentView.subviews
+      .flatMap({ $0 as? UIImageView }).first else {
+      return
+    }
+
+    Constant.tapItemAnimation(imageView)
+  }
 }
 
 extension TabbyBar: UICollectionViewDelegate {
@@ -178,6 +197,7 @@ extension TabbyBar: UICollectionViewDelegate {
       selectedItem = position
     }
 
+    handleSelection(indexPath: indexPath)
     delegate?.tabbyButtonDidPress(position)
   }
 }
