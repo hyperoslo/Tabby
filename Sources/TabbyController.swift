@@ -279,16 +279,20 @@ open class TabbyController: UIViewController, UINavigationControllerDelegate {
   // MARK: - Constraints
 
   func setupConstraints() {
-    Constraint.on(
-      tabbyBar.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-      tabbyBar.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-      tabbyBar.heightAnchor.constraint(equalToConstant: Constant.Dimension.height),
-
-      patchyView.topAnchor.constraint(equalTo: tabbyBar.bottomAnchor),
-      patchyView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-      patchyView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-      patchyView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
-    )
+    if #available(iOS 9.0, *) {
+        Constraint.on(
+            tabbyBar.rightAnchor.constraint(equalTo: view.rightAnchor),
+            tabbyBar.leftAnchor.constraint(equalTo: view.leftAnchor),
+            tabbyBar.heightAnchor.constraint(equalToConstant: Constant.Dimension.height),
+            
+            patchyView.topAnchor.constraint(equalTo: tabbyBar.bottomAnchor),
+            patchyView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            patchyView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            patchyView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        )
+    } else {
+        // Fallback on earlier versions
+    }
 
     if #available(iOS 11, *) {
       tabbyBarBottomConstraint = tabbyBar.bottomAnchor.constraint(
@@ -299,9 +303,13 @@ open class TabbyController: UIViewController, UINavigationControllerDelegate {
         tabbyBarBottomConstraint!
       )
     } else {
-      tabbyBarBottomConstraint = tabbyBar.bottomAnchor.constraint(
-        equalTo: view.bottomAnchor
-      )
+        if #available(iOS 9.0, *) {
+            tabbyBarBottomConstraint = tabbyBar.bottomAnchor.constraint(
+                equalTo: view.bottomAnchor
+            )
+        } else {
+            // Fallback on earlier versions
+        }
 
       Constraint.on(
         tabbyBarBottomConstraint!
